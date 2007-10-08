@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9D28BEDE-2CC4-4311-9EB0-3DF11355272F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pavel</RootNamespace>
+    <AssemblyName>Pavel</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+    <ApplicationIcon>Resources\Pavel.ico</ApplicationIcon>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>en</TargetCulture>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="src\framework\Pavel.cd">
+      <SubType>
+      </SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="src\clustering\ArgsDescriptionAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\clustering\Cluster.cs" />
+    <Compile Include="src\clustering\ClusteringAlgorithm.cs" />
+    <Compile Include="src\clustering\ClusteringArgumentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\clustering\ClusteringSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\clustering\ClusteringSelectDialog.Designer.cs">
+      <DependentUpon>ClusteringSelectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\clustering\ClusterSet.cs" />
+    <Compile Include="src\clustering\ExtendedHACM.cs" />
+    <Compile Include="src\clustering\HierarchicalClusterList.cs" />
+    <Compile Include="src\clustering\KMeans.cs" />
+    <Compile Include="src\clustering\MLA.cs" />
+    <Compile Include="src\Common.cs" />
+    <Compile Include="src\framework\ColumnProperty.cs" />
+    <Compile Include="src\framework\CSVParser.cs" />
+    <Compile Include="src\framework\ColumnSet.cs" />
+    <Compile Include="src\framework\DataTag.cs" />
+    <Compile Include="src\framework\ParetoFinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\framework\PointList.cs" />
+    <Compile Include="src\framework\PointSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\framework\Project.cs" />
+    <Compile Include="src\framework\IndividualColumns.cs" />
+    <Compile Include="src\framework\Selection.cs" />
+    <Compile Include="src\framework\Column.cs" />
+    <Compile Include="src\framework\IParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\framework\IUseCase.cs" />
+    <Compile Include="src\framework\Space.cs" />
+    <Compile Include="src\framework\STLParser.cs" />
+    <Compile Include="src\gui\AboutPavel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\AboutPavel.Designer.cs">
+      <DependentUpon>AboutPavel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\CheckComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\CheckComboBoxItem.cs" />
+    <Compile Include="src\gui\ColumnPropertyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\ColumnPropertyDialog.Designer.cs">
+      <DependentUpon>ColumnPropertyDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\SaveSpaceAsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\SaveSpaceAsDialog.Designer.cs">
+      <DependentUpon>SaveSpaceAsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\solutionVisualizations\CompareManyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\gui\solutionVisualizations\ComparisonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\gui\DataToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\framework\LogBook.cs" />
+    <Compile Include="src\gui\Export.cs" />
+    <Compile Include="src\gui\FreeToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\solutionVisualizations\GlyphControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\IndividualColumnWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\IndividualColumnWindow.Designer.cs">
+      <DependentUpon>IndividualColumnWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\Legend.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\LogWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\LogWindow.Designer.cs">
+      <DependentUpon>LogWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\MainMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\MainStatusStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\NewSpaceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\NewSpaceDialog.Designer.cs">
+      <DependentUpon>NewSpaceDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\PointSetManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\PointSetManager.Designer.cs">
+      <DependentUpon>PointSetManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\ProjectStarter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\ProjectStarter.Designer.cs">
+      <DependentUpon>ProjectStarter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\ProjectStarterPageFileOpener.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\gui\ProjectToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\PropertyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\gui\PropertyControl.Designer.cs">
+      <DependentUpon>PropertyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\PropertyEditor.cs" />
+    <Compile Include="src\gui\PropertySliderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\PropertySliderForm.Designer.cs">
+      <DependentUpon>PropertySliderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\SpaceManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\SpaceManager.Designer.cs">
+      <DependentUpon>SpaceManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\FreeToolStripForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\FreeToolStripForm.designer.cs">
+      <DependentUpon>FreeToolStripForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\framework\ProjectController.cs" />
+    <Compile Include="src\framework\ParserResult.cs" />
+    <Compile Include="src\framework\Point.cs" />
+    <Compile Include="src\framework\PavelMain.cs" />
+    <Compile Include="src\gui\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\SpaceSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\SpaceSelectDialog.Designer.cs">
+      <DependentUpon>SpaceSelectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\framework\PluginManager.cs" />
+    <Compile Include="src\gui\TabableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\ColorManagement.cs" />
+    <Compile Include="src\gui\visualizations\ColorOGL.cs" />
+    <Compile Include="src\gui\visualizations\DirtyLittleOpenGlHelper.cs" />
+    <Compile Include="src\gui\visualizations\Listing.cs" />
+    <Compile Include="src\gui\visualizations\OpenGLControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\ParallelPlot.cs" />
+    <Compile Include="src\gui\visualizations\ParallelPlotControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\ScatterPlot.cs" />
+    <Compile Include="src\gui\visualizations\ScatterPlotControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\solutionVisualizations\Solution.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\Vector.cs" />
+    <Compile Include="src\gui\visualizations\ScatterMatrix.cs" />
+    <Compile Include="src\gui\visualizations\ScatterMatrixControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\Visualization.cs" />
+    <Compile Include="src\gui\visualizations\VisualizationStandardToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\VisualizationWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\VisualizationWindow.Designer.cs">
+      <DependentUpon>VisualizationWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\gui\ProjectStarterPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\gui\ProjectStarterPageHandler.cs" />
+    <Compile Include="src\gui\solutionVisualizations\ZapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.Compatibility" />
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tao.FreeGlut, Version=2.4.0.1, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d, processorArchitecture=MSIL" />
+    <Reference Include="Tao.OpenGl, Version=2.1.0.4, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL" />
+    <Reference Include="Tao.Platform.Windows, Version=1.0.0.4, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\clustering\ClusteringArgumentControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ClusteringArgumentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\clustering\ClusteringSelectDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ClusteringSelectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\AboutPavel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AboutPavel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\ColumnPropertyDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ColumnPropertyDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\SaveSpaceAsDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SaveSpaceAsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\solutionVisualizations\CompareManyControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CompareManyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\solutionVisualizations\ComparisonControl.resx">
+      <DependentUpon>ComparisonControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\IndividualColumnWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>IndividualColumnWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\LogWindow.resx">
+      <DependentUpon>LogWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\NewSpaceDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NewSpaceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\PointSetManager.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PointSetManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\ProjectStarter.resx">
+      <DependentUpon>ProjectStarter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\PropertyControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PropertyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\PropertySliderForm.resx">
+      <DependentUpon>PropertySliderForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\SpaceManager.resx">
+      <DependentUpon>SpaceManager.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\SpaceSelectDialog.resx">
+      <DependentUpon>SpaceSelectDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\FreeToolStripForm.resx">
+      <DependentUpon>FreeToolStripForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\visualizations\VisualizationWindow.resx">
+      <DependentUpon>VisualizationWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Freeze.bmp" />
+    <None Include="src\gui\GUI.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="COMPILING.txt" />
+    <Content Include="Pavel.chm" />
+    <None Include="Resources\CascadeWindowsHS.png" />
+    <None Include="Resources\DelCol.png" />
+    <None Include="Resources\ShowVisualizationHS.png" />
+    <None Include="Resources\DeleteFolderHS.png" />
+    <None Include="Resources\graphhs.png" />
+    <None Include="Resources\GoToPreviousMessage.png" />
+    <None Include="Resources\Edit_UndoHS.png" />
+    <None Include="Resources\EditTableHS.png" />
+    <None Include="Resources\Matrix.png" />
+    <None Include="Resources\MoveCol.png" />
+    <None Include="Resources\DeleteHS.png" />
+    <None Include="Resources\Filter.bmp" />
+    <None Include="Resources\Cluster.bmp" />
+    <None Include="Resources\ArrowToLeft.PNG" />
+    <None Include="Resources\ArrowToRight.PNG" />
+    <None Include="Resources\Down.bmp" />
+    <Content Include="freeglut.dll" />
+    <Content Include="README.txt" />
+    <None Include="Resources\MoveDown.bmp" />
+    <None Include="Resources\MoveUp.bmp" />
+    <None Include="Resources\pointSetEditor.bmp" />
+    <None Include="Resources\saveButton.png" />
+    <None Include="Resources\Pavel.ico" />
+    <None Include="Resources\Pavel.jpg" />
+    <None Include="Resources\openHS.png" />
+    <None Include="Resources\PieChartHS.png" />
+    <None Include="Resources\NewDocumentHS.png" />
+    <None Include="Resources\PushpinHS.png" />
+    <None Include="Resources\RadialChartHS.png" />
+    <None Include="Resources\Pi.png" />
+    <None Include="Resources\PP.png" />
+    <None Include="Resources\Pareto.bmp" />
+    <None Include="Resources\Rename.bmp" />
+    <None Include="Resources\Scatterplot.png" />
+    <None Include="Resources\saveAsButton.png" />
+    <None Include="Resources\screenshot.bmp" />
+    <Content Include="LICENSE.txt" />
+    <Content Include="TAO-LICENSE.txt" />
+    <None Include="Resources\xroot.png" />
+    <None Include="Resources\Up.bmp" />
+    <None Include="Resources\TableHS.png" />
+    <None Include="Resources\zoomOut.png" />
+    <None Include="Resources\zoomNew.png" />
+    <None Include="Resources\zoom.png" />
+    <None Include="Resources\TileWindowsVerticallyHS.png" />
+    <None Include="Resources\RepeatHS.png" />
+    <None Include="Resources\TileWindowsHorizontallyHS.png" />
+    <None Include="Resources\saveHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+</Project>

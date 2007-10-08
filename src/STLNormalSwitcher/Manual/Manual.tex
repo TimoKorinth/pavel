@@ -1,0 +1,89 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Autor: PG 500 Informatik Universität Dortmund														
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+a4paper,							% Papierformat Din A4
+12pt,									% Schriftgröße 12pt
+DIVcalc,							% führt die Satzspiegelberechnung neu aus
+cleardoubleempty,			% Leere Seiten zwischen den Kapiteln ohne Seitennummern
+]
+{scrbook}
+
+%% Einstellungen für Kopf- und Fußzeile %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{scrpage2}					% Ergänzung für Kopf- und Fußzeilen bei
+															% KOMA-Script Dokumenten
+\clearscrheadfoot							% Löscht vorige Einstellungen für Kopf und Fuß
+\pagestyle{scrheadings}				% Neuer Seitenstil
+\ihead{\headmark}							% Kolumnentitel oben, innen:
+																% Kapitel auf geraden Seiten
+																% Abschnitt auf ungeraden Seiten
+\ohead[\pagemark]{\pagemark}	% Seitenzahl oben, außen
+\setheadsepline{0.4pt}			  % Linie unter Kopfzeile
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Sprachbezogene Pakete %%%%%%%%%%%%%%%%%%%%%
+\usepackage{cmap}				% Verbessert Copy & Paste in PDF-Viewer
+\usepackage{lmodern}		% Bessere Schriftart	
+\usepackage[english]{babel}			% Silbentrennung nach neuer
+																	% deutscher Rechtschreibung
+\usepackage[T1]{fontenc}				% Erlaubt erweiterte TEX-Zeichensätze
+\usepackage[latin1, ansinew]{inputenc}	% Ermöglicht Ausgabe von sprachabhängigen
+																				% Sonderzeichen, im Deutschen z.B. Umlaute
+\usepackage{unitsdef}		% Fügt Zeichen für Maßeinheiten (Winkel etc.) hinzu
+\usepackage{amssymb}		% Mathematische Symbole
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Graphikbezogene Pakete %%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}					% Dieses Paket erlaubt das Einbinden von Bildern
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}		% Zulässige Endungen für
+																								%Graphikdateien
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Sonstige Pakete %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{microtype}	% Optischer Randausgleich und Zeichendehnung
+\usepackage{makeidx}		% Indexerstellung
+\usepackage{multicol}		% Für mehrspaltigen Index genutzt
+\usepackage[english]{varioref}							% Erweiterte Querverweise	
+\usepackage{amsmath}		% Ermöglicht eine bessere Darstellung mathematischer Formel
+\usepackage[pdftex,
+						hyperindex=true,
+						linktocpage=true]{hyperref}						% Clickbare Links im Dokument
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Indexerstellung %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+% Gruppenkopf
+\newcommand*{\heading}[1]{
+	\makebox[0pt][l]{
+		\rule[-3pt]{\linewidth}{0.5pt}}
+	\textsf{\textbf{\Large #1}}\hfil\nopagebreak\vspace{4pt}}
+
+% zweispaltige theindex-Umgebung
+\renewenvironment{theindex}{
+	\setlength{\columnseprule}{0.4pt}
+	\setlength{\columnsep}{2em}
+	\begin{multicols}{2}[\chapter*{\indexname}]
+	\parindent\z@
+	\parskip\z@ \@plus .3\p@\relax
+	\let\item\@idxitem}
+{\end{multicols}\clearpage}
+\makeatother
+\makeindex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	\frontmatter
+		\include{Titel}
+		\tableofcontents
+		
+	\mainmatter	
+	
+	  \include{Help}
+	
+	\backmatter
+	
+		\printindex
+		
+\end{document}

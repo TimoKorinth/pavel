@@ -1,0 +1,13 @@
+#Evolver by Thomas Michelitsch (ISF)
+#
+#Decision Space Values
+#
+### Column 0 Vertex x
+### Column 1 Vertex y
+### Column 2 Vertex z
+### Column 3 Drill Direction
+
+
+# Individual 0
+200	47.755668	110.21526	1
+

@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pavel", "Pavel.csproj", "{9D28BEDE-2CC4-4311-9EB0-3DF11355272F}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Pavel Setup", "setup\Pavel Setup.vdproj", "{C704FD86-6540-4447-B293-60C541ED6F8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pavel Tests", "test\Pavel Tests.csproj", "{944C7254-C911-424A-8055-AAF4D7BB41FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{8218C872-D31D-4EDE-8318-479DBEDD4FDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefaultSolution", "plugins\DefaultSolution\DefaultSolution.csproj", "{9B2F7DF0-729C-4EE6-BC1F-506F9300CC9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillingOptimizationSolution", "plugins\MillingOptimizationSolution\MillingOptimizationSolution.csproj", "{5ED62CBA-4107-4C20-B986-4A10872F3920}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouldTemperatureSolution", "plugins\MouldTemperatureSolution\MouldTemperatureSolution.csproj", "{55476612-B03D-43C5-8A35-A3EAD83BBA38}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D28BEDE-2CC4-4311-9EB0-3DF11355272F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D28BEDE-2CC4-4311-9EB0-3DF11355272F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D28BEDE-2CC4-4311-9EB0-3DF11355272F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D28BEDE-2CC4-4311-9EB0-3DF11355272F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C704FD86-6540-4447-B293-60C541ED6F8E}.Debug|Any CPU.ActiveCfg = Debug
+		{C704FD86-6540-4447-B293-60C541ED6F8E}.Release|Any CPU.ActiveCfg = Release
+		{944C7254-C911-424A-8055-AAF4D7BB41FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{944C7254-C911-424A-8055-AAF4D7BB41FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B2F7DF0-729C-4EE6-BC1F-506F9300CC9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B2F7DF0-729C-4EE6-BC1F-506F9300CC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B2F7DF0-729C-4EE6-BC1F-506F9300CC9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B2F7DF0-729C-4EE6-BC1F-506F9300CC9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ED62CBA-4107-4C20-B986-4A10872F3920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED62CBA-4107-4C20-B986-4A10872F3920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED62CBA-4107-4C20-B986-4A10872F3920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED62CBA-4107-4C20-B986-4A10872F3920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55476612-B03D-43C5-8A35-A3EAD83BBA38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55476612-B03D-43C5-8A35-A3EAD83BBA38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55476612-B03D-43C5-8A35-A3EAD83BBA38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55476612-B03D-43C5-8A35-A3EAD83BBA38}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B2F7DF0-729C-4EE6-BC1F-506F9300CC9C} = {8218C872-D31D-4EDE-8318-479DBEDD4FDD}
+		{5ED62CBA-4107-4C20-B986-4A10872F3920} = {8218C872-D31D-4EDE-8318-479DBEDD4FDD}
+		{55476612-B03D-43C5-8A35-A3EAD83BBA38} = {8218C872-D31D-4EDE-8318-479DBEDD4FDD}
+	EndGlobalSection
+EndGlobal

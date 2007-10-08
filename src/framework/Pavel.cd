@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Font Name="Trebuchet MS" Size="8.25" />
+  <Class Name="Pavel.Framework.ColumnSet" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\ColumnSet.cs</FileName>
+      <HashCode>AGAAAAAAEAAgABQEggAGAAAAABAAQAAACAAAAQgQAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Columns" />
+    </ShowAsCollectionAssociation>
+    <Compartments>
+      <Compartment Name="Protected" Collapsed="true" />
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Columns" Type="Pavel.Framework.Column">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.888" Y="0.402" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pavel.Framework.Column" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\Column.cs</FileName>
+      <HashCode>AAAAAAAAEAAAABQAAAAAAAAAAAAAABAAAAEQAAABAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.242" />
+  </Class>
+  <Class Name="Pavel.Framework.PavelMain" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\PavelMain.cs</FileName>
+      <HashCode>AAAAAABAQAAAAAgAgAAECAAARAAAAAAAgAAABAIAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pavel.Framework.Project" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\Project.cs</FileName>
+      <HashCode>AAIAACAAAAAgAAAAAAAAAAAAAQAAAAECCAAAAggCAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pavel.Framework.Point" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\Point.cs</FileName>
+      <HashCode>AAAAACAAAAAggAAAiAAAAAAAAAAAACBEAAAgAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ColumnSet" />
+    </ShowAsAssociation>
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+      <Compartment Name="Protected" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="ColumnSet" Type="Pavel.Framework.ColumnSet" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="4.75" />
+        <Point X="7.375" Y="4.75" />
+        <Point X="7.375" Y="2.625" />
+        <Point X="8.5" Y="2.625" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.425" Y="-2.15" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pavel.Framework.PointSet" Collapsed="true">
+    <Position X="5.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\PointSet.cs</FileName>
+      <HashCode>gCIAACAAEAAgABQEDAAAAARAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ColumnSet" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="PointLists" />
+    </ShowAsCollectionAssociation>
+    <Compartments>
+      <Compartment Name="Protected" Collapsed="true" />
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="PointLists" Type="Pavel.Framework.PointList">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.932" Y="0.352" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ColumnSet" Type="Pavel.Framework.ColumnSet" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="2.375" />
+        <Point X="8.5" Y="2.375" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.662" Y="0.133" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pavel.Framework.ProjectController" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\ProjectController.cs</FileName>
+      <HashCode>AAACAiAAAAECAgAAAQAAAAEAAQgAAQAAAAAAAgghAAg=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="Pavel.Framework.PluginManager" Collapsed="true">
+    <Position X="3.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\PluginManager.cs</FileName>
+      <HashCode>AQgAEAAAFBAAEAAAABAAIAIAAAABRAAACAQAAAEAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentUseCase" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="AvailableParsers" />
+      <Property Name="AvailableSolutions" />
+      <Property Name="AvailableUseCases" />
+    </ShowAsCollectionAssociation>
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="AvailableUseCases" Type="Pavel.Framework.IUseCase">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.102" Y="0.36" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="CurrentUseCase" Type="Pavel.Framework.IUseCase">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.112" Y="0.277" Height="0.16" Width="1.198" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="Pavel.Framework.LogBook" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\LogBook.cs</FileName>
+      <HashCode>AAAAAAAQAACAEQAAAAEAABAAAAAAAAAAAAAEIAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pavel.Framework.PointList" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\PointList.cs</FileName>
+      <HashCode>ACIAACCAAAAgABQACAAAAAQAAAAAAAAAAAAAAAAEAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ColumnSet" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="points" />
+    </ShowAsCollectionAssociation>
+    <AssociationLine Name="ColumnSet" Type="Pavel.Framework.ColumnSet" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="3.75" />
+        <Point X="7.375" Y="3.75" />
+        <Point X="7.375" Y="2.625" />
+        <Point X="8.5" Y="2.625" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.456" Y="-1.192" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="points" Type="Pavel.Framework.Point">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.786" Y="0.206" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <Lollipop Position="0.981" />
+  </Class>
+  <Interface Name="Pavel.Framework.IParser" Collapsed="true">
+    <Position X="1.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\IParser.cs</FileName>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <InheritanceLine Type="Pavel.Framework.IPlugin" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.375" Y="3.749" />
+        <Point X="1.375" Y="5.188" />
+        <Point X="1.75" Y="5.188" />
+      </Path>
+    </InheritanceLine>
+  </Interface>
+  <Interface Name="Pavel.Framework.IPlugin" Collapsed="true">
+    <Position X="1.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\IPlugin.cs</FileName>
+      <HashCode>AAAAAAAAECAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pavel.Framework.ISolution" Collapsed="true">
+    <Position X="1.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\ISolution.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <InheritanceLine Type="Pavel.Framework.IPlugin" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.375" Y="3.749" />
+        <Point X="1.375" Y="4.188" />
+        <Point X="1.75" Y="4.188" />
+      </Path>
+    </InheritanceLine>
+  </Interface>
+  <Interface Name="Pavel.Framework.IUseCase" Collapsed="true">
+    <Position X="1.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>src\framework\IUseCase.cs</FileName>
+      <HashCode>AAAAAAAAEAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAgI=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ParserInstance" />
+      <Property Name="SolutionInstance" />
+    </ShowAsAssociation>
+    <AssociationLine Name="ParserInstance" Type="Pavel.Framework.IParser" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.5" />
+        <Point X="0.125" Y="2.5" />
+        <Point X="0.125" Y="5.375" />
+        <Point X="1.75" Y="5.375" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.475" Y="-0.263" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="SolutionInstance" Type="Pavel.Framework.ISolution" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.5" />
+        <Point X="0.115" Y="2.5" />
+        <Point X="0.115" Y="4.312" />
+        <Point X="1.292" Y="4.312" Type="JumpStart" />
+        <Point X="1.458" Y="4.312" Type="JumpEnd" />
+        <Point X="1.75" Y="4.312" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.373" Y="-0.296" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Interface>
+</ClassDiagram>

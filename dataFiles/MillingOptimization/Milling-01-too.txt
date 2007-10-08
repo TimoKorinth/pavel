@@ -1,0 +1,4 @@
+# tool rad
+# shank length
+
+5.0 100.0

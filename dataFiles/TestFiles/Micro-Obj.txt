@@ -1,0 +1,12 @@
+#Evolver by Thomas Michelitsch (ISF)
+#
+#Objective Function Values
+#
+### Column 0 Fitness
+### Column 1 Objective 1
+
+
+# Individual 0
+0.2024792 0.135311
+
+

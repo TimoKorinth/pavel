@@ -1,0 +1,13 @@
+quote 		'\''
+preamble 	"\\begin{theindex}\n\n\\small\n"
+postamble "\n\\end{theindex}\n"
+%
+delim_0 	"\\dotfill"
+delim_1		"\\dotfill"
+delim_2 	"\\dotfill"
+%
+headings_flag				1
+symhead_positive	"\Symbols"
+numhead_positive	"\Numbers"
+heading_prefix		"\\heading{"
+heading_suffix		"}\n"

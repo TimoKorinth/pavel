@@ -1,0 +1,31 @@
+COMPILING
+=========
+
+Pavel was developed in Microsoft Visual Studio 2005 Professional
+using C# 2.0.
+
+In order to successfully compile Pavel you should have installed:
+
+- .NET Framework 2.0 (later versions _might_ work)
+- The TAO Framework 2.0.0 (again, later versions might work)
+  http://downloads.sourceforge.net/taoframework/tao-2.0.0-setup.exe
+
+Load the Pavel.sln into Visual Studio and compile. This compiles
+the Projects "Pavel" as well as the external Plugin Projects.
+
+TESTS
+=====
+
+In order to run the tests in the "Pavel Tests" Project, you need
+the nUnit Framework (http://www.nunit.org) installed. During the
+development of Pavel NUnit-Net-2.0 2.2.8 was used.
+
+http://prdownloads.sourceforge.net/nunit/NUnit-2.2.8-net-2.0.msi?download
+
+MONO
+====
+
+Pavel was not developed for or tested on Mono (http://www.mono-project.com).
+It doesn't use many Win32-specific API calls though and while a port will
+definetly be more complicated than just a recompilation of the sources under mono,
+there shouldn't be too many adjustments necessary.

@@ -1,0 +1,61 @@
+#Evolver by Thomas Michelitsch (ISF)
+#
+#Objective Function Values
+#
+### Column 0 Fitness
+### Column 1 Objective 1
+### Column 2 Objective 2
+### Column 3 Objective 3
+### Column 4 Objective 4
+### Column 5 Objective 5
+### Column 6 Temp overall
+### Column 7 Cost overall
+### Column 8 Res  overall
+### Column 9 Temp worst
+### Column 10 Temp var
+### Column 11 Temp avg
+### Column 12 Temp best
+### Column 13 Cost bore len
+### Column 14 Cost bore prep
+### Column 15 Cost conn
+### Column 16 Cost plug
+### Column 17 Cost insert
+### Column 18 Res  angle dril
+### Column 19 Res  angle outer
+### Column 20 Res  bounding box
+### Column 21 Res  cavity
+### Column 22 Res  drill
+### Column 23 Res  not inside
+### Column 24 Res  obstacles
+
+
+# Individual 0
+0.2243532 0.1620628 0.05360335 0 0 0 1.162063 1.053603 1 27.404 0.00062711 0.075345 7.6028 37.603 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 1
+0.2955322 0.2362838 0.04792459 0 0 0 1.236284 1.047925 1 44.192 0.00023477 0.045693 12.309 31.925 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 2
+0.2245764 0.1627162 0.05320324 0 0 0 1.162716 1.053203 1 27.545 0.00062455 0.075358 7.6014 37.203 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 3
+0.2922837 0.2326404 0.04838658 0 0 0 1.23264 1.048387 1 43.452 0.00023654 0.046784 13.056 32.387 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 4
+0.2264219 0.1647798 0.05292171 0 0 0 1.16478 1.052922 1 28.254 0.00055266 0.070826 8.0893 36.922 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 5
+0.292646 0.2333041 0.04811618 0 0 0 1.233304 1.048116 1 43.641 0.000228 0.046058 12.871 32.116 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 6
+0.2884524 0.2280293 0.04920331 0 0 0 1.228029 1.049203 1 42.469 0.00024596 0.04735 12.27 33.203 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 7
+0.2288478 0.1676353 0.05242434 0 0 0 1.167635 1.052424 1 28.443 0.00064621 0.075741 7.6818 36.424 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 8
+0.2955628 0.2367446 0.04755889 0 0 0 1.236745 1.047559 1 44.54 0.00019725 0.044246 14.081 31.559 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
+# Individual 9
+0.2229017 0.1606104 0.05367114 0 0 0 1.16061 1.053671 1 27.209 0.00060338 0.074701 7.8211 37.671 0 10 6 0 0 0 0 0 0 0 0 4.2571e-307
+
