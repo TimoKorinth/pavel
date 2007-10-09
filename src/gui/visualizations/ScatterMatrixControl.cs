@@ -858,6 +858,7 @@ namespace Pavel.GUI.Visualizations {
                 ScatterPlot sp = visWindow.Visualization as ScatterPlot;
                 sp.AxisX = sp.VisualizationWindow.Space.ColumnProperties[sel.X];
                 sp.AxisY = sp.VisualizationWindow.Space.ColumnProperties[sel.Y];
+                sp.AxisZ = null;
                 visWindow.EnableTab(PavelMain.MainWindow.TabControl);
                 visWindow.Show();
             } else if ((selected.Count > 1) && (selected.Count <= displayed.Count)) {
