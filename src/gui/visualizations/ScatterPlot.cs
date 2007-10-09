@@ -175,8 +175,8 @@ namespace Pavel.GUI.Visualizations {
         private ColorOGL[] colorTable;
 
         private ColumnProperty axisX, axisY, axisZ, axisC;
-        private int   pointsAlpha = 50;
-        private float pointSize   = 3;
+        private int   pointsAlpha;
+        private float pointSize;
         #endregion
 
         #region Properties
@@ -285,7 +285,7 @@ namespace Pavel.GUI.Visualizations {
         [ShowInProperties]
         [Category("Points")]
         [DisplayName("Transparency")]
-        [Description("Default is 50%.")]
+        [Description("Default is 80%.")]
         [Editor(typeof(PropertySliderEditor), typeof(System.Drawing.Design.UITypeEditor)), Range(0, 100)]
         public int PointsAlpha {
             get { return pointsAlpha; }
@@ -298,7 +298,7 @@ namespace Pavel.GUI.Visualizations {
         [ShowInProperties]
         [Category("Points")]
         [DisplayName("Size")]
-        [Description("Default is 3.")]
+        [Description("Default is 8.0f.")]
         public float PointSize {
             get { return pointSize; }
             set {
