@@ -33,7 +33,7 @@ namespace Pavel.Plugins {
     /// <summary>
     /// A parser to parse csv-files.
     /// </summary>
-    public class CSVParser : IParser {
+    public class CSVParser {
 
         #region Fields
 
@@ -71,8 +71,6 @@ namespace Pavel.Plugins {
         #endregion
 
         #region Methods
-
-        #region IParser Members
 
         /// <summary>
         /// Creates a ParserResult object from the given input files.
@@ -142,12 +140,6 @@ namespace Pavel.Plugins {
             spaces.Add(new Space(masterSpaceColumnSet, "Master Space"));
             return new ParserResult(masterPointSet, spaces);
         }
-
-        public void Initialize() { }
-
-        public void Dispose() { }
-
-        #endregion
 
         private static bool RowEmpty(String row) {
             return (row.Length == 0) || (row.StartsWith("#"));

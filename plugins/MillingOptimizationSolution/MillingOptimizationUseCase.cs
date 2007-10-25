@@ -60,9 +60,6 @@ namespace Pavel.Plugins {
         /// <value> Gets a label "Milling Optimization". </value>
         public string Label { get { return "Milling Optimization"; } }
 
-        /// <value> Gets the IParser instance of this useCase. </value>
-        public IParser ParserInstance { get { return null; } }
-
         /// <value> Gets the Solution instance of this useCase. </value>
         public Solution SolutionInstance { get { return new MillingOptimizationSolution(); } }
 

@@ -51,9 +51,6 @@ namespace Pavel.Framework {
         /// <value>Gets a label for the plugin</value>
         String Label { get; }
 
-        /// <value>Gets a new parser-instance for this UseCase </value>
-        IParser ParserInstance { get; }
-
         /// <value>Gets a new solution-instance for this UseCase</value>
         Solution SolutionInstance { get; }
 

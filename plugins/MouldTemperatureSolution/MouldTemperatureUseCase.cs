@@ -58,9 +58,6 @@ namespace Pavel.Plugins {
         /// <value> Gets a label "Mould Temperature Control Drilling". </value>
         public string Label { get { return "Mould Temperature Control Drilling"; } }
 
-        /// <value> Gets the IParser instance of this useCase. </value>
-        public IParser ParserInstance { get { return new MouldTemperatureParser(); } }
-
         /// <value> Gets the Solution instance of this useCase. </value>
         public Solution SolutionInstance { get { return new MouldTemperatureSolution(); } }
 

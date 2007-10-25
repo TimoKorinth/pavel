@@ -35,7 +35,7 @@ namespace Pavel.Plugins {
     /// Expects two files (-obj and -dec) for the objective and the decision space.
     /// A third reader for the sim values can be added.
     /// </summary>
-    public class MouldTemperatureParser : IParser {
+    public class MouldTemperatureParser {
 
         #region Fields
 
@@ -211,8 +211,6 @@ namespace Pavel.Plugins {
 
         #endregion
 
-        #region IParser Members
-
         /// <summary>
         /// Creates a ParserResult object from the given input files.
         /// </summary>
@@ -285,12 +283,6 @@ namespace Pavel.Plugins {
 
             return new ParserResult(masterPointSet, spaces);
         }
-
-        public void Initialize() { }
-
-        public void Dispose() { }
-
-        #endregion
 
         #endregion
     }
