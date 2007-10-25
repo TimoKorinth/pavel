@@ -1,3 +1,4 @@
+* CSVParser.Parse(StreamReader) instead of CSVParser.Parse(StreamReader)
 * IParser Interface removed
   Class Diagram removed
 * Updated the FileOpener StarterPage for the DefaultUseCae, so you can only select one file

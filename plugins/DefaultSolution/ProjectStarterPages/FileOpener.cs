@@ -61,7 +61,7 @@ namespace Pavel.Plugins.ProjectStarterPages {
         /// </summary>
         override public Boolean Execute() {
             Boolean flag = true;
-            StreamReader[] reader = new StreamReader[] { new StreamReader(fileNameBox.Text) };
+            StreamReader reader = new StreamReader(fileNameBox.Text);
             try {
                 this.Parent.Parent.Cursor = Cursors.WaitCursor;
                 Pavel.Framework.ParserResult pr = new CSVParser().Parse(reader);
@@ -75,7 +75,7 @@ namespace Pavel.Plugins.ProjectStarterPages {
 #endif
             } finally {
                 this.Parent.Parent.Cursor = Cursors.Default;
-                if (null != reader[0]) { reader[0].Close(); }
+                reader.Close();
             }
             return flag;
         }

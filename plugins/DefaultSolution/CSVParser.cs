@@ -79,17 +79,14 @@ namespace Pavel.Plugins {
         /// <returns>New ParserResult</returns>
         /// <exception cref="ApplicationException">Wrong number of parameters, must be one</exception>
         /// <exception cref="InvalidDataException">The parameter file has an invalid format</exception>
-        public ParserResult Parse(params StreamReader[] reader) {
+        public ParserResult Parse(StreamReader reader) {
             int rownum = 0;
-            if (reader.Length != 1) {
-                throw new ApplicationException("Wrong number of parameters, one StreamReader expected");
-            }
             String completeRow = "";
 
-            completeRow = reader[0].ReadLine().Trim();
+            completeRow = reader.ReadLine().Trim();
             ++rownum;
             while (RowEmpty(completeRow)) {
-                completeRow = reader[0].ReadLine();
+                completeRow = reader.ReadLine();
                 ++rownum;
             }
             
@@ -116,8 +113,8 @@ namespace Pavel.Plugins {
             //Parse Points
             double[] pointValues = new double[masterSpaceColumnSet.Columns.Length];
 
-            while (!reader[0].EndOfStream) {
-                completeRow = reader[0].ReadLine().Trim();
+            while (!reader.EndOfStream) {
+                completeRow = reader.ReadLine().Trim();
                 ++rownum;
                 if (!RowEmpty(completeRow)) {
                     splittedRow = completeRow.Split(splitter);
