@@ -41,12 +41,6 @@ namespace Pavel.Plugins.ProjectStarterPages {
     /// </summary>
     public partial class FileOpener : Pavel.GUI.ProjectStarterPage {
 
-        #region Fields
-
-        private List<string> fileNames = new List<string>();
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -67,10 +61,7 @@ namespace Pavel.Plugins.ProjectStarterPages {
         /// </summary>
         override public Boolean Execute() {
             Boolean flag = true;
-            StreamReader[] reader = new StreamReader[fileNames.Count];
-            for ( int i = 0; i < fileNames.Count; i++ ) {
-                reader[i] = new StreamReader(fileNames[i]);
-            }
+            StreamReader[] reader = new StreamReader[] { new StreamReader(fileNameBox.Text) };
             try {
                 this.Parent.Parent.Cursor = Cursors.WaitCursor;
                 Pavel.Framework.ParserResult pr = new CSVParser().Parse(reader);
@@ -84,9 +75,7 @@ namespace Pavel.Plugins.ProjectStarterPages {
 #endif
             } finally {
                 this.Parent.Parent.Cursor = Cursors.Default;
-                for ( int i = 0; i < fileNames.Count; i++ ) {
-                    if (null != reader[i]) { reader[i].Close(); }
-                }
+                if (null != reader[0]) { reader[0].Close(); }
             }
             return flag;
         }
@@ -102,19 +91,17 @@ namespace Pavel.Plugins.ProjectStarterPages {
         /// Clears the list of selected files.
         /// </summary>
         override public void Reset() {
-            filesListBox.Items.Clear();
-            fileNames.Clear();
+            this.fileNameBox.Text = "";
         }
 
         /// <summary>
         /// Checks whether at least one file is selected.
         /// </summary>
         override public Boolean HasCorrectInput() {
-            if (filesListBox.Items.Count != 0) {
+            if (File.Exists(this.fileNameBox.Text)) {
                 return true;
-            }
-            else {
-                Pavel.Framework.PavelMain.LogBook.Warning("Please select at least one space file!", true);
+            } else {
+                Pavel.Framework.PavelMain.LogBook.Warning("Please select an existing file!", true);
                 return false;
             };
         }
@@ -132,32 +119,12 @@ namespace Pavel.Plugins.ProjectStarterPages {
         /// <param name="e">Standard EventArgs</param>
         private void BrowseObj_Click(object sender, EventArgs e) {
             OpenFileDialog fD = new OpenFileDialog();
-            fD.Filter = "All Files|*.*;|" +
-                        "Objective ColumnSet|*-obj.txt;|" +
-                        "Decision ColumnSet|*-dec.txt;";
+            fD.Filter = "All Files|*.*;";
             fD.CheckFileExists = true;
-            fD.Multiselect = true;
-            fD.Title = "Choose ColumnSet Files";
+            fD.Multiselect = false;
+            fD.Title = "Choose ColumnSet File";
             if (fD.ShowDialog() == DialogResult.OK) {
-                foreach (string s in fD.FileNames) {
-                    if (!fileNames.Contains(s)) {
-                        this.fileNames.Add(s);
-                        string[] fileNameParts = s.Split('\\');
-                        filesListBox.Items.Add(fileNameParts[fileNameParts.Length - 1]);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Removes the selected files from the list.
-        /// </summary>
-        /// <param name="sender">The remBtn button</param>
-        /// <param name="e">Standard EventArgs</param>
-        private void RemBtn_Click(object sender, EventArgs e) {
-            while (filesListBox.SelectedItems.Count > 0) {
-                fileNames.RemoveAt(filesListBox.SelectedIndices[0]);
-                filesListBox.Items.Remove(filesListBox.SelectedItems[0]);
+                this.fileNameBox.Text = fD.FileName;
             }
         }
 

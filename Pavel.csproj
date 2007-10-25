@@ -189,7 +189,7 @@
       <DependentUpon>PointSetManager.cs</DependentUpon>
     </Compile>
     <Compile Include="src\gui\ProjectStarter.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\gui\ProjectStarter.Designer.cs">
       <DependentUpon>ProjectStarter.cs</DependentUpon>

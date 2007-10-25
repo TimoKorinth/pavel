@@ -1,3 +1,5 @@
+* Updated the FileOpener StarterPage for the DefaultUseCae, so you can only select one file
+  DefaultParser.cs removed
 * DefaultSolution uses the CSVParser per default
   Dont't hide Exceptions during Project Start in Debug mode
   CSVParser gives meaningful error message if a line contains the wrong number of columns

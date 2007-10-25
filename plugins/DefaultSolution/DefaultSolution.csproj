@@ -36,7 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSVParser.cs" />
-    <Compile Include="DefaultParser.cs" />
     <Compile Include="DefaultSolution.cs">
       <SubType>Form</SubType>
     </Compile>

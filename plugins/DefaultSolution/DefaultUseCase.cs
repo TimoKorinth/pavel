@@ -53,7 +53,7 @@ namespace Pavel.Plugins {
         public string Label { get { return "Default"; } }
 
         /// <value> Gets the IParser instance of this useCase. </value>
-        public IParser ParserInstance { get { return new DefaultParser(); } }
+        public IParser ParserInstance { get { return new CSVParser(); } }
 
         /// <value> Gets the Solution instance of this useCase. </value>
         public Solution SolutionInstance { get { return new DefaultSolution(); }}
