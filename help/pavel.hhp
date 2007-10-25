@@ -1,0 +1,18 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=pavel.chm
+Contents file=Table of Contents.hhc
+Default topic=index.html
+Display compile progress=No
+Error log file=d:\jan\Uni\Semester 7\PG500\pavel\help\log.txt
+Index file=Index.hhk
+Language=0x409 Englisch (USA)
+Title=Pavel
+
+
+[FILES]
+file_formats.htm
+index.html
+
+[INFOTYPES]
+

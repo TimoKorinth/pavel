@@ -1,0 +1,7 @@
+* CHM-help project added
+* Simplified the csv-parser to enable easier import. Added support for different splitter-symbols and decimal-Seperators.
+* Corrected some descriptions of the properties of the Scatterplot (Default value for point size is 8, but was said to be 3, Default for Alpha-value is 80%, but the description said 50%).
+* Opening a Scatterplot from the Scattermatrix now results in a 2D Scatterplot instead of a 3D Scatterplot.
+* Removed the STLNormalSwitcher, as it is no longer part of Pavel, but has its own repository.
+* RTF Versions of License files removed
+* Init (from Revision 2231)
