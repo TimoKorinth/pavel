@@ -315,22 +315,32 @@ namespace Pavel.GUI {
         /// Must be a subclass of Visualization.
         /// </param>
         public void OpenVisualizationWindow(Type visualizationType) {
-            SpaceSelectDialog sSD = new SpaceSelectDialog(ProjectController.Project.pointSets);
-            if (sSD.ShowDialog() == DialogResult.OK && sSD.SelectedSpace != null) {
-                try {
-                    VisualizationWindow visWindow = new VisualizationWindow(sSD.SelectedPointSet, sSD.SelectedSpace, visualizationType.Name);
-                    visWindow.EnableTab(this.tabControl);
-                    visWindow.MdiParent = this;
-                    visWindow.Show();
-                } catch (Exception e) {
-#if DEBUG
-                    throw e;
-#else
-                    MessageBox.Show(e.Message, "Error");
-#endif
+            try {
+                Space    selectedSpace;
+                PointSet selectedPointSet;
+                if (ProjectController.Project.pointSets.Count != 1 || ProjectController.Project.spaces.Count != 1) {
+                    SpaceSelectDialog sSD = new SpaceSelectDialog(ProjectController.Project.pointSets);
+                    if (sSD.ShowDialog() == DialogResult.OK && sSD.SelectedSpace != null) {
+                        selectedSpace    = sSD.SelectedSpace;
+                        selectedPointSet = sSD.SelectedPointSet;
+                    } else {
+                        return;
+                    }
+                } else {
+                    selectedSpace    = ProjectController.Project.spaces[0];
+                    selectedPointSet = ProjectController.Project.pointSets[0];
                 }
+                VisualizationWindow visWindow = new VisualizationWindow(selectedPointSet, selectedSpace, visualizationType.Name);
+                visWindow.EnableTab(this.tabControl);
+                visWindow.MdiParent = this;
+                visWindow.Show();
+            } catch (Exception e) {
+#if DEBUG
+                throw e;
+#else
+                MessageBox.Show(e.Message, "Error");
+#endif
             }
-
         }
 
         /// <summary>

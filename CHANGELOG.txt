@@ -1,3 +1,4 @@
+* Only show SpaceSelectDialog if there is more than one Space or PointSet
 * Removed a tiny bug in the new CSV-Parser
 * CHM-help project added
 * Simplified the csv-parser to enable easier import. Added support for different splitter-symbols and decimal-Seperators.
