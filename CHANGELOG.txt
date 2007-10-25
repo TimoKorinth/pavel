@@ -1,3 +1,4 @@
+* Added parameter-less constructor for CSV-Parser, this fixed a bug with instantiating the CSV-Parser through reflection
 * Only show SpaceSelectDialog if there is more than one Space or PointSet
 * Removed a tiny bug in the new CSV-Parser
 * CHM-help project added
