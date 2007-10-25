@@ -55,6 +55,6 @@ using System.Resources;
 //      Buildnummer
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1.18")]
+[assembly: AssemblyFileVersion("1.0.1.18")]
 [assembly: NeutralResourcesLanguageAttribute("en")]
