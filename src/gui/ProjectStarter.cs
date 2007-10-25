@@ -107,8 +107,13 @@ namespace Pavel.GUI {
             // Obtains the next ProjectStarter page
             try {
                 contr = selectedUseCase.ProjectStarterPages.nextPageControl();
+            } catch(Exception e) {
+#if !DEBUG
+                return;
+#else
+                throw e;
+#endif
             }
-            catch { return; }
 
             // The last page is reached and this form closed
             if (contr == null) {

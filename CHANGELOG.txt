@@ -1,3 +1,6 @@
+* DefaultSolution uses the CSVParser per default
+  Dont't hide Exceptions during Project Start in Debug mode
+  CSVParser gives meaningful error message if a line contains the wrong number of columns
 * Made the ProjectStarterPage a normal class, otherwise the Visual Studio Designer can't display the derived classes
 * Moved CSVParser from Pavel to the DefaultSolution Plugin
 * Added parameter-less constructor for CSV-Parser, this fixed a bug with instantiating the CSV-Parser through reflection

@@ -73,13 +73,16 @@ namespace Pavel.Plugins.ProjectStarterPages {
             }
             try {
                 this.Parent.Parent.Cursor = Cursors.WaitCursor;
-                Pavel.Framework.ParserResult pr = new DefaultParser().Parse(reader);
+                Pavel.Framework.ParserResult pr = new CSVParser().Parse(reader);
                 Pavel.Framework.ProjectController.NewProject(pr);
             } catch (Exception e) {
-                Pavel.Framework.PavelMain.LogBook.Error(e.Message, true);
                 flag = false;
-            }
-            finally {
+#if !DEBUG
+                Pavel.Framework.PavelMain.LogBook.Error(e.Message, true);
+#else
+                throw e;
+#endif
+            } finally {
                 this.Parent.Parent.Cursor = Cursors.Default;
                 for ( int i = 0; i < fileNames.Count; i++ ) {
                     if (null != reader[i]) { reader[i].Close(); }
