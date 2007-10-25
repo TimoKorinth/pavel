@@ -32,7 +32,7 @@ namespace Pavel.GUI {
     /// This class is an abstract class to create ProjectStarterPages for the different useCases.
     /// It is a simple user control with additional methods especially for executing tasks (e.g. parsing) during the project start.
     /// </summary>
-    public abstract class ProjectStarterPage : UserControl {
+    public class ProjectStarterPage : UserControl {
 
         #region Execution of the page's task
 
@@ -40,22 +40,30 @@ namespace Pavel.GUI {
         /// Executes the task of this page (e.g. parsing).
         /// </summary>
         /// <returns>True if the operation was successful</returns>
-        abstract public Boolean Execute();
+        virtual public Boolean Execute() {
+            throw new NotImplementedException("ProjectStarterPage.Execute() hasn't been overridden!");
+        }
 
         /// <summary>
         /// Undoes the results of this page's task (e.g. clears the project).
         /// </summary>
-        abstract public void Undo();
+        virtual public void Undo() {
+            throw new NotImplementedException("ProjectStarterPage.Undo() hasn't been overridden!");
+        }
 
         /// <summary>
         /// Resets this page (e.g. when going back).
         /// </summary>
-        abstract public void Reset();
+        virtual public void Reset() {
+            throw new NotImplementedException("ProjectStarterPage.Reset() hasn't been overridden!");
+        }
 
         /// <summary>
         /// Checks whether the page has a correct input for execution.
         /// </summary>
-        abstract public Boolean HasCorrectInput();
+        virtual public Boolean HasCorrectInput() {
+            throw new NotImplementedException("ProjectStarterPage.HasCorrectInput() hasn't been overridden!");
+        }
 
         #endregion
 
