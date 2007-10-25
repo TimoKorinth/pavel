@@ -43,6 +43,10 @@
       <Project>{9D28BEDE-2CC4-4311-9EB0-3DF11355272F}</Project>
       <Name>Pavel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\plugins\DefaultSolution\DefaultSolution.csproj">
+      <Project>{9B2F7DF0-729C-4EE6-BC1F-506F9300CC9C}</Project>
+      <Name>DefaultSolution</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clustering\ExtendedHACMTest.cs" />

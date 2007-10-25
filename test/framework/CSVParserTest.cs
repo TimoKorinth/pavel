@@ -12,23 +12,23 @@ namespace Pavel.Test.Framework {
 
         [Test]
         public void SimpleTest() {
-            new Pavel.Framework.CSVParser(",", new char[] { ';' }).Parse(new StreamReader(@"../..\..\dataFiles\TestFiles\Testdaten-CSV.csv")); 
+            new Pavel.Plugins.CSVParser(",", new char[] { ';' }).Parse(new StreamReader(@"../..\..\dataFiles\TestFiles\Testdaten-CSV.csv")); 
         }
 
         [Test]
         [ExpectedException(typeof(NullReferenceException))]
-        public void TestParseNullString( ) { new Pavel.Framework.CSVParser(",", new char[] { ';' }).Parse(null); }
+        public void TestParseNullString( ) { new Pavel.Plugins.CSVParser(",", new char[] { ';' }).Parse(null); }
 
         [Test]
         [ExpectedException(typeof(InvalidDataException))]
         public void TestParseWrongParameter1() {
-            new Pavel.Framework.CSVParser(",", new char[] { ';' }).Parse(new StreamReader(@"../..\..\dataFiles\TestFiles\EA_test-dec.txt"));
+            new Pavel.Plugins.CSVParser(",", new char[] { ';' }).Parse(new StreamReader(@"../..\..\dataFiles\TestFiles\EA_test-dec.txt"));
         }
 
         [Test]
         public void TestParseTestdaten() {
             StreamReader allReader = new StreamReader(@"../..\..\dataFiles\TestFiles\Testdaten-CSV.csv");
-            ParserResult masterData = new Pavel.Framework.CSVParser(",", new char[] { ';' }).Parse(allReader);
+            ParserResult masterData = new Pavel.Plugins.CSVParser(",", new char[] { ';' }).Parse(allReader);
             Assert.AreEqual(5, masterData.Spaces[0].Dimension);
             Assert.AreEqual(49, masterData.MasterPointSet.Length);
         }

@@ -27,8 +27,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Globalization;
+using Pavel.Framework;
 
-namespace Pavel.Framework {
+namespace Pavel.Plugins {
     /// <summary>
     /// A parser to parse csv-files.
     /// </summary>

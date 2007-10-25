@@ -97,7 +97,6 @@
     <Compile Include="src\clustering\MLA.cs" />
     <Compile Include="src\Common.cs" />
     <Compile Include="src\framework\ColumnProperty.cs" />
-    <Compile Include="src\framework\CSVParser.cs" />
     <Compile Include="src\framework\ColumnSet.cs" />
     <Compile Include="src\framework\DataTag.cs" />
     <Compile Include="src\framework\ParetoFinder.cs">
