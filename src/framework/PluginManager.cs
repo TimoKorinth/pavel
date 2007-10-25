@@ -38,7 +38,6 @@ namespace Pavel.Framework {
 
         #region Fields
 
-        private List<IParser>   availableParsers   = new List<IParser>();
         private List<IUseCase>   availableUseCases = new List<IUseCase>();
         private List<ClusteringAlgorithm> availableClusteringAlgorithms = new List<ClusteringAlgorithm>();
 
@@ -46,8 +45,6 @@ namespace Pavel.Framework {
 
         #region Properties
 
-        /// <value> Gets the list of available parsers</value>
-        public List<IParser>   AvailableParsers   { get { return new List<IParser>(availableParsers);     } }
         /// <value> Gets the list of available useCases </value>
         public List<IUseCase>  AvailableUseCases  { get { return new List<IUseCase>(availableUseCases);   } }
         /// <value> Gets the list of available ClusteringAlgorithms </value>
@@ -99,9 +96,7 @@ namespace Pavel.Framework {
             foreach (Type type in pluginAssembly.GetTypes() ) {
                 if ( type.IsPublic && !type.IsAbstract ) {
                     foreach (Type interFace in type.GetInterfaces()) {
-                        if (interFace == typeof(IParser)  )
-                            availableParsers.Add(  Activator.CreateInstance(type) as IParser  );
-                        else if (interFace == typeof(IUseCase))
+                        if (interFace == typeof(IUseCase))
                             availableUseCases.Add( Activator.CreateInstance(type) as IUseCase );
                     }
                     if (type.IsSubclassOf(typeof(ClusteringAlgorithm))) {
@@ -118,9 +113,7 @@ namespace Pavel.Framework {
             foreach (Type type in Assembly.GetExecutingAssembly().GetTypes()) {
                 if (type.IsPublic && !type.IsAbstract) {
                     foreach (Type interFace in type.GetInterfaces()) {
-                        if (interFace == typeof(IParser))
-                            availableParsers.Add(Activator.CreateInstance(type) as IParser);
-                        else if (interFace == typeof(IUseCase))
+                        if (interFace == typeof(IUseCase))
                             availableUseCases.Add(Activator.CreateInstance(type) as IUseCase);
                     }
                     if (type.IsSubclassOf(typeof(ClusteringAlgorithm))) {
