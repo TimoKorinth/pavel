@@ -1,3 +1,4 @@
+* Removed a tiny bug in the new CSV-Parser
 * CHM-help project added
 * Simplified the csv-parser to enable easier import. Added support for different splitter-symbols and decimal-Seperators.
 * Corrected some descriptions of the properties of the Scatterplot (Default value for point size is 8, but was said to be 3, Default for Alpha-value is 80%, but the description said 50%).

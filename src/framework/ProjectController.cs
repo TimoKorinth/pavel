@@ -189,7 +189,7 @@ namespace Pavel.Framework {
 
         /// <summary>
         /// Creates a default ColumnProperty for each Column in the ColumnSet without a ColumnProperty.
-        /// The default values for the ColumnProperties are the min&max of the Column in the PointSet.
+        /// The default values for the ColumnProperties are the min&amp;max of the Column in the PointSet.
         /// </summary>
         /// <param name="ps">The PointSet for which the ColumnProperties have to be created</param>
         public static void CreateMinMaxColumnProperties(PointSet ps) {

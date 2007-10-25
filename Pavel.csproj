@@ -395,6 +395,7 @@
     <None Include="src\gui\GUI.cd" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CHANGELOG.txt" />
     <None Include="COMPILING.txt" />
     <Content Include="Pavel.chm" />
     <None Include="Resources\CascadeWindowsHS.png" />

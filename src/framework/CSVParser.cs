@@ -74,7 +74,7 @@ namespace Pavel.Framework {
             String completeRow = "";
 
             completeRow = reader[0].ReadLine().Trim();
-            while ((completeRow.Length == 0) || (completeRow.StartsWith("#"))) {
+            while (RowEmpty(completeRow)) {
                 completeRow = reader[0].ReadLine();
             }
             
@@ -91,25 +91,25 @@ namespace Pavel.Framework {
             for ( int i = 0; i < splittedRow.Length; i++ ) {
                 masterSpaceColumnList.Add(new Column(splittedRow[i]));
             }
-            ColumnSet masterSpace = new ColumnSet(masterSpaceColumnList);
+            ColumnSet masterSpaceColumnSet = new ColumnSet(masterSpaceColumnList);
 
             //Create MasterPointList and MasterPointSet
-            PointList masterPointList = new PointList(masterSpace);
-            PointSet masterPointSet = new PointSet("MasterPointSet", masterSpace, true);
+            PointList masterPointList = new PointList(masterSpaceColumnSet);
+            PointSet masterPointSet = new PointSet("MasterPointSet", masterSpaceColumnSet, true);
             masterPointSet.Add(masterPointList);
 
             //Parse Points
-            double[] pointValues = new double[masterSpace.Columns.Length];
+            double[] pointValues = new double[masterSpaceColumnSet.Columns.Length];
 
             while (!reader[0].EndOfStream) {
                 completeRow = reader[0].ReadLine().Trim();
-                if ((completeRow.Length != 0) || (completeRow.StartsWith("#"))) {
+                if (!RowEmpty(completeRow)) {
                     splittedRow = completeRow.Split(splitter);
-                    pointValues = new double[masterSpace.Columns.Length];
+                    pointValues = new double[masterSpaceColumnSet.Columns.Length];
                     for (int i = 0; i < splittedRow.Length; i++) {
                         pointValues[i] = Double.Parse(splittedRow[i], NumberStyles.Float, numberFormatInfo);
                     }
-                    masterPointList.Add(new Point(masterSpace, pointValues));
+                    masterPointList.Add(new Point(masterSpaceColumnSet, pointValues));
                 }
             }
           
@@ -117,7 +117,7 @@ namespace Pavel.Framework {
             ProjectController.CreateMinMaxColumnProperties(masterPointSet);
 
             List<Space> spaces = new List<Space>();
-            spaces.Add(new Space(masterSpace, "Master Space"));
+            spaces.Add(new Space(masterSpaceColumnSet, "Master Space"));
             return new ParserResult(masterPointSet, spaces);
         }
 
@@ -126,6 +126,10 @@ namespace Pavel.Framework {
         public void Dispose() { }
 
         #endregion
+
+        private static bool RowEmpty(String row) {
+            return (row.Length == 0) || (row.StartsWith("#"));
+        }
 
         #endregion
     }
