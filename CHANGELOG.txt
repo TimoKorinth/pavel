@@ -1,3 +1,6 @@
+Changes since last release
+* Added possibity to invert the current selection in every visualization for the visible pointset
+
 1.0.1beta:
 ----------
 * CSVParser.Parse(StreamReader) instead of CSVParser.Parse(StreamReader)

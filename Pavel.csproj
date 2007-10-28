@@ -146,7 +146,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\gui\solutionVisualizations\GlyphControl.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\gui\IndividualColumnWindow.cs">
       <SubType>Form</SubType>
@@ -182,7 +182,7 @@
       <DependentUpon>PointSetManager.cs</DependentUpon>
     </Compile>
     <Compile Include="src\gui\ProjectStarter.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\gui\ProjectStarter.Designer.cs">
       <DependentUpon>ProjectStarter.cs</DependentUpon>
@@ -427,6 +427,7 @@
     <None Include="Resources\saveAsButton.png" />
     <None Include="Resources\screenshot.bmp" />
     <Content Include="LICENSE.txt" />
+    <None Include="Resources\InvertSelection.png" />
     <Content Include="TAO-LICENSE.txt" />
     <None Include="Resources\xroot.png" />
     <None Include="Resources\Up.bmp" />

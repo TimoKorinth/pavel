@@ -169,10 +169,24 @@ namespace Pavel.GUI.Visualizations {
         }
 
         /// <summary>
-        /// Deletes all selected Points from the PointSet and cleares the Selection.
+        /// Deletes all selected Points from the PointSet and clears the CurrentSelection.
         /// </summary>
         public void DeleteSelectedPoints() {
             this.visualizationWindow.PointSet.DeleteSelectedPoints();
+        }
+
+        /// <summary>
+        /// Inverts the selection of the PointSet, first it clears the current selection, 
+        /// then adds all previously unselected points
+        /// </summary>
+        public void InvertSelection( ) {
+            List<Point> unselectedPoints = new List<Point>();
+            foreach ( Point p in visualizationWindow.PointSet ) {
+                if ( !ProjectController.CurrentSelection.Contains(p) ) {
+                    unselectedPoints.Add(p);
+                }
+            }
+            ProjectController.CurrentSelection.ClearAndAddRange(unselectedPoints);
         }
 
         /// <summary>

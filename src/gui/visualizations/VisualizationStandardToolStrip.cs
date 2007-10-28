@@ -52,6 +52,14 @@ namespace Pavel.GUI.Visualizations {
         public VisualizationStandardToolStrip(Visualization vis) {
             this.visualization = vis;
 
+            ToolStripButton invertSelectionButton = new ToolStripButton(Pavel.Properties.Resources.InvertSelection);
+            invertSelectionButton.ToolTipText = "Invert selection";
+            invertSelectionButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            invertSelectionButton.Click += delegate(object sender, EventArgs e) {
+                vis.InvertSelection();
+            };
+            this.Items.Add(invertSelectionButton);
+
             ToolStripButton deleteButton = new ToolStripButton(Pavel.Properties.Resources.Delete);
             deleteButton.ToolTipText = "Delete selected points";
             deleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
