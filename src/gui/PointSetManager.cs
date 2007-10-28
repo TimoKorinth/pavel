@@ -139,12 +139,6 @@ namespace Pavel.GUI {
             } else {
                 pointSetFromClusterButton.Enabled = false;
             }
-
-            if (ProjectController.CurrentSelection.Length == 0) {
-                this.createButton.Enabled = this.createComplementaryButton.Enabled = false;
-            } else {
-                this.createButton.Enabled = this.createComplementaryButton.Enabled = true;
-            }
         }
 
         /// <summary>
@@ -168,62 +162,25 @@ namespace Pavel.GUI {
         }
 
         /// <summary>
-        /// Creates a PointSet from the currently selected Points.
+        /// Copies the selected pointSet
         /// </summary>
         /// <param name="sender">createButton</param>
         /// <param name="e">Standard EventArgs</param>
-        private void CreateButton_Click(object sender, EventArgs e) {
-            if (( this.pointSetNameBox.Text != "" ) && ( this.UniqueName() )) {
+        private void CopyPointSetButton_Click(object sender, EventArgs e) {
+            if (( this.pointSetNameBox.Text.Trim() != "" ) && ( this.UniqueName() )) {
                 //Create new PointSet
                 PointSet newPointSet = new PointSet(this.pointSetNameBox.Text, this.selectedPointSet.ColumnSet);
                 foreach (PointList pl in this.selectedPointSet.PointLists) {
                     PointList newPointList = new PointList(pl.ColumnSet);
-                    for (int i = 0; i < pl.Count; i++) {
-                        if (ProjectController.CurrentSelection.Contains(pl[i])) {
-                            newPointList.Add(pl[i]);
-                        }
+                    if ( pl.Count != 0 ) {
+                        newPointList.AddRange(pl);
                     }
-                    if (newPointList.Count != 0) {
-                        newPointSet.Add(newPointList);
-                    }
+                    newPointSet.Add(newPointList);
                 }
-                if (newPointSet.Length != 0) {
-                    ProjectController.Project.pointSets.Add(newPointSet);
-                    this.UpdateList();
-                    this.pointSetList.SelectedIndex = this.pointSetList.Items.IndexOf(newPointSet);
-                    ProjectController.SetProjectChanged(true);
-                } else { MessageBox.Show("The PointSet you tried to create is empty.\nIt will not be created."); }
-
-            } else { MessageBox.Show("Please enter a valid & unique name!", "Error"); }
-        }
-
-        /// <summary>
-        /// Creates a PointSet from the currently not selected Points.
-        /// </summary>
-        /// <param name="sender">createComplementaryButton</param>
-        /// <param name="e">Standard EventArgs</param>
-        private void CreateComplementaryButton_Click(object sender, EventArgs e) {
-            if (( this.pointSetNameBox.Text != "" ) && ( this.UniqueName() )) {
-                //Create new PointSet
-                PointSet newPointSet = new PointSet(this.pointSetNameBox.Text, this.selectedPointSet.ColumnSet);
-                foreach (PointList pl in this.selectedPointSet.PointLists) {
-                    PointList newPointList = new PointList(pl.ColumnSet);
-                    for (int i = 0; i < pl.Count; i++) {
-                        if (!( ProjectController.CurrentSelection.Contains(pl[i]) )) {
-                            newPointList.Add(pl[i]);
-                        }
-                    }
-                    if (newPointList.Count != 0) {
-                        newPointSet.Add(newPointList);
-                    }
-                }
-                if (newPointSet.Length != 0) {
-                    ProjectController.Project.pointSets.Add(newPointSet);
-                    this.UpdateList();
-                    this.pointSetList.SelectedIndex = this.pointSetList.Items.IndexOf(newPointSet);
-                    ProjectController.SetProjectChanged(true);
-                } else { MessageBox.Show("The PointSet you tried to create is empty.\nIt will not be created."); }
-
+                ProjectController.Project.pointSets.Add(newPointSet);
+                this.UpdateList();
+                this.pointSetList.SelectedIndex = this.pointSetList.Items.IndexOf(newPointSet);
+                ProjectController.SetProjectChanged(true);
             } else { MessageBox.Show("Please enter a valid & unique name!", "Error"); }
         }
 

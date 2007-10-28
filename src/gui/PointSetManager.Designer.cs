@@ -52,8 +52,7 @@ namespace Pavel.GUI {
             this.pointSetNameBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.changeToolStrip = new System.Windows.Forms.ToolStrip();
-            this.createButton = new System.Windows.Forms.ToolStripButton();
-            this.createComplementaryButton = new System.Windows.Forms.ToolStripButton();
+            this.copyPointSetButton = new System.Windows.Forms.ToolStripButton();
             this.pointSetFromClusterButton = new System.Windows.Forms.ToolStripButton();
             this.renameButton = new System.Windows.Forms.ToolStripButton();
             this.eraseButton = new System.Windows.Forms.ToolStripButton();
@@ -94,8 +93,7 @@ namespace Pavel.GUI {
             this.changeToolStrip.CanOverflow = false;
             this.changeToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.changeToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createButton,
-            this.createComplementaryButton,
+            this.copyPointSetButton,
             this.pointSetFromClusterButton,
             this.renameButton,
             this.eraseButton});
@@ -107,27 +105,16 @@ namespace Pavel.GUI {
             this.changeToolStrip.TabIndex = 4;
             this.changeToolStrip.Text = "toolStrip1";
             // 
-            // createButton
+            // copyPointSetButton
             // 
-            this.createButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.createButton.Image = global::Pavel.Properties.Resources.NewFromSelectedHS;
-            this.createButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.createButton.Name = "createButton";
-            this.createButton.Size = new System.Drawing.Size(23, 20);
-            this.createButton.Text = "createButton";
-            this.createButton.ToolTipText = "Create a new PointSet containing the currently selected points.";
-            this.createButton.Click += new System.EventHandler(this.CreateButton_Click);
-            // 
-            // createComplementaryButton
-            // 
-            this.createComplementaryButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.createComplementaryButton.Image = global::Pavel.Properties.Resources.NewFromUnselectedHS;
-            this.createComplementaryButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.createComplementaryButton.Name = "createComplementaryButton";
-            this.createComplementaryButton.Size = new System.Drawing.Size(23, 20);
-            this.createComplementaryButton.Text = "createComplementaryButton";
-            this.createComplementaryButton.ToolTipText = "Create a new PointSet containing all points, but the currently selected.";
-            this.createComplementaryButton.Click += new System.EventHandler(this.CreateComplementaryButton_Click);
+            this.copyPointSetButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.copyPointSetButton.Image = global::Pavel.Properties.Resources.NewFromUnselectedHS;
+            this.copyPointSetButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copyPointSetButton.Name = "copyPointSetButton";
+            this.copyPointSetButton.Size = new System.Drawing.Size(23, 20);
+            this.copyPointSetButton.Text = "copyPointSetButton";
+            this.copyPointSetButton.ToolTipText = "Copy the selected PointSet.";
+            this.copyPointSetButton.Click += new System.EventHandler(this.CopyPointSetButton_Click);
             // 
             // pointSetFromClusterButton
             // 
@@ -203,8 +190,7 @@ namespace Pavel.GUI {
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStrip changeToolStrip;
-        private System.Windows.Forms.ToolStripButton createButton;
-        private System.Windows.Forms.ToolStripButton createComplementaryButton;
+        private System.Windows.Forms.ToolStripButton copyPointSetButton;
         private System.Windows.Forms.ToolStripButton eraseButton;
         private System.Windows.Forms.ToolStripButton renameButton;
         private System.Windows.Forms.ToolStripButton pointSetFromClusterButton;
