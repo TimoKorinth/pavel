@@ -96,33 +96,13 @@ namespace Pavel.Clustering {
         /// </summary>
         /// <returns>The PointList with Clusters</returns>
         protected override PointList DoClustering() {
-            PointList clusterList = new PointList(ColumnSet);
-
             //Check:
             if (PointSet.Length < NumberOfClusters) {
                 ErrorMessage = "Number of Clusters is greater than the size of the PointSet!";
                 return null;
             }
 
-            //Report
-            SignalProgress(0, "Initialize Clusters");
-
-            //Create Clusters
-            Random r = new Random(RandomSeed);
-            int[] randoms = CreateDifferentRandoms(r, NumberOfClusters, 0, PointSet.Length);
-            Array.Sort(randoms);
-            int pointIndex = 0;
-            int randomIndex = 0;
-            foreach (Point point in PointSet) {
-                if (pointIndex == randoms[randomIndex]) {
-                    Cluster c = new Cluster(randomIndex.ToString(), point.Trim(ColumnSet));
-                    clusterList.Add(c);
-                    randomIndex++;
-                    if (randomIndex == randoms.Length)
-                        break;
-                }
-                pointIndex++;
-            }
+            PointList clusterList = CreateInitialClusterList();
 
             double min;
             Cluster minCluster = null;
@@ -159,7 +139,7 @@ namespace Pavel.Clustering {
                         if (progress % 1000 == 0) {
                             //Report
                             SignalProgress((int)((1000 / MaximumIterations) * (iteration + ((double)progress / (double)PointSet.Length))),
-                                "Last Change: " + (float)change + " - Assign Points to Cluster: " + progress);
+                                "Last Change: " + (float)change + " - Assign Points to Clusters. Iteration: " + iteration + " Points: " + progress);
                         }
                     }
                 }
@@ -182,6 +162,37 @@ namespace Pavel.Clustering {
 
         #endregion
 
+        /// <summary>
+        /// Creates with the given global Clusteringarguments random initial
+        /// Clusters
+        /// </summary>
+        /// <returns>A ClusterList with random initial Clusters</returns>
+        protected virtual PointList CreateInitialClusterList() {
+            //Report
+            SignalProgress(0, "Initialize Clusters by random");
+
+            PointList clusterList = new PointList(ColumnSet);
+
+            //Create Clusters
+            Random r = new Random(RandomSeed);
+            int[] randoms = CreateDifferentRandoms(r, NumberOfClusters, 0, PointSet.Length);
+            Array.Sort(randoms);
+            int pointIndex = 0;
+            int randomIndex = 0;
+            foreach (Point point in PointSet) {
+                if (pointIndex == randoms[randomIndex]) {
+                    Cluster c = new Cluster(randomIndex.ToString(), point.Trim(ColumnSet));
+                    clusterList.Add(c);
+                    randomIndex++;
+                    if (randomIndex == randoms.Length)
+                        break;
+                }
+                pointIndex++;
+            }
+
+            return clusterList;
+        }
+        
         /// <summary>
         /// Creates a List of random values.
         /// </summary>

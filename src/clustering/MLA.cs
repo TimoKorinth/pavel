@@ -33,55 +33,15 @@ namespace Pavel.Clustering {
     /// <summary>
     /// Maximum-Linkage-Clustering
     /// </summary>
-    public class MLA : ClusteringAlgorithm  {
-        #region Fields
-
-        // Specific MLA-Clustering-Arguments
-        private int numberOfClusters = 10;
-        private int randomSeed = (int)DateTime.Now.Ticks;
-
-        #endregion
-
-        #region Properties
-
-        /// <value>Gets the number of clusters or set it</value>
-        [Spinner("Number of Clusters",
-                "Specifies the number of clusters.",
-                1.0, 1000000.0, 0, 1)]
-        public int NumberOfClusters {
-            get { return numberOfClusters; }
-            set { numberOfClusters = value; }
-        }
-
-        /// <value>Gets the random seed or set it</value>
-        [Spinner("Random Seed",
-                "Initializes the Clustering-Algorithm-Random-Generator. Use for repeatable behaviour",
-                int.MinValue, int.MaxValue, 0, 1)]
-        public int RandomSeed {
-            get { return randomSeed; }
-            set { randomSeed = value; }
-        }
-
-        #endregion
-
+    public class MLA : KMeans  {
+        
         #region Methods
 
-        #region DoClustering
+        protected override PointList CreateInitialClusterList() {
+            //Report
+            SignalProgress(0, "Initialize Clusters by maximum distance");
 
-        /// <summary>
-        /// k-means runns iteratively untile some aborting criterion is met.
-        /// It assignes all points to the nearest initial cluster (number is given)
-        /// and recomputes cluster-centers. Then the procedure iterates.
-        /// </summary>
-        /// <returns>The PointList with Clusters</returns>
-        protected override PointList DoClustering() {
             PointList clusterList = new PointList(ColumnSet);
-
-            //Check:
-            if (PointSet.Length < NumberOfClusters) {
-                ErrorMessage = "Number of Clusters is greater than the size of the PointSet!";
-                return null;
-            }
 
             // Remaining Indices
             int[] r = new int[PointSet.Length];
@@ -96,72 +56,49 @@ namespace Pavel.Clustering {
             r[centers[0]] = -1;
 
             // Centers
-            for (int i = 1; i < NumberOfClusters; i++) {
-                // Compare all Points to all previous centers
+            for (int clusterIndex = 1; clusterIndex < NumberOfClusters; clusterIndex++) {
+                // Compare all Points to all previous centers and find
+                // for each remaining Point the closest center. From these minimum
+                // distances the maximum is taken as next center
                 double max = double.MinValue;
                 int maxIndex = 0;
-                for (int k = 0; k < PointSet.Length; k++) {
-                    if (r[k] != -1) {
-                        SignalProgress(i / NumberOfClusters * 1000, "Compute centers");
+                // Iterate over all remaining Points
+                for (int remainingIndex = 0; remainingIndex < PointSet.Length; remainingIndex++) {
+                    if (r[remainingIndex] != -1) {
+                        SignalProgress(clusterIndex / NumberOfClusters * 1000, "Compute centers");
                         double min = double.MaxValue;
                         int minIndex = 0;
                         // All centers
-                        for (int j = 0; j < i; j++) {
-                            double dist = Point.Distance(ScaledFlatData[k], ScaledFlatData[j]);
+                        for (int index = 0; index < clusterIndex; index++) {
+                            double dist = Point.Distance(ScaledFlatData[remainingIndex], ScaledFlatData[index]);
                             if (dist < min) {
                                 min = dist;
-                                minIndex = k;
+                                minIndex = remainingIndex;
                             }
                         }
+                        // Nearest Cluster found
+                        // If this nearest distance is bigger than any other minimum
+                        // save as a candidat for next cluster
                         if (min > max) {
                             max = min;
                             maxIndex = minIndex;
                         }
                     }
                 }
-                centers[i] = maxIndex;
-                r[centers[i]] = -1;
+                centers[clusterIndex] = maxIndex;
+                r[maxIndex] = -1;
             }
 
-            //foreach (int center in centers) {
-            //    PointSet ps = 
-            //    Cluster cluster = new Cluster("", null);
-            //    clusterList.Add(cluster);
-            //}
+            foreach (int center in centers) {
+                Cluster cluster = new Cluster(center.ToString(), PointSet[center].Trim(ColumnSet));
+                clusterList.Add(cluster);
+            }
 
             return clusterList;
         }
 
-        #endregion
-
         /// <summary>
-        /// Creates a List of random values.
-        /// </summary>
-        /// <param name="r">Random-Generator</param>
-        /// <param name="count">Count of randoms</param>
-        /// <param name="min">Minimum Value (included)</param>
-        /// <param name="max">Maximum Value (included)</param>
-        /// <returns></returns>
-        public static int[] CreateDifferentRandoms(Random r, int count, int min, int max) {
-            if (count < 1 || min < 0 || max < min) throw new ArgumentException("IllegalArguments: Count=" + count + " Min=" + min + " Max=" + max);
-            if (count > (max - min + 1)) throw new ArgumentException("Not enought range for unique Randoms");
-
-            int[] nums = new int[count];
-            bool ok;
-            for (int i = 0; i < count; i++) {
-                do {
-                    ok = true;
-                    nums[i] = r.Next(min, max);
-                    for (int j = 0; j < i; j++) {
-                        if (nums[j] == nums[i]) { ok = false; }
-                    }
-                } while (!ok);
-            }
-            return nums;
-        }
-
-        /// <summary>
-        /// Overrides the ToString method to return "K-Means".
+        /// Overrides the ToString method to return "MLA".
         /// </summary>
         /// <returns>"K-Means"</returns>
         public override string ToString() { return "MLA"; }
