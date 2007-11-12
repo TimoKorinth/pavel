@@ -34,7 +34,7 @@ Unfortunately, there is no english-language user documentation available.
 The API-description is stored as doc-comments in the sourcecode.
 The final report for the Pavel project run at ISF Uni Dortmund contains a
 german-language user manual.
-It can be found at http://pavel.sourceforge.net/endbericht.pdf
+It can be found at http://downloads.sourceforge.net/pavel/pavel_endbericht.pdf
 
 ________________________________________________________________________________
 
