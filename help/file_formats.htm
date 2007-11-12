@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 	<title>File formats</title>
@@ -7,5 +7,59 @@
 </head>
 <body>
 	<h1>File formats</h1>
+	<p>
+	When using the DefaultSolution Plugin, data is parsed from CSV-files during project setup.
+	CSV files (<em>comma-seperated-values</em>) can be exported by many programs including Excel.
+	</p>
+	<p>
+	For CSV files to be understood by Pavel, several requirements have to be met:
+	</p>
+	<ul>
+	    <li>Each line contains one set of data</li>
+	    <li>The first line in the file contains the column names</li>
+	    <li>Lines are ended with the only the newline character (Unix-style) or the carriage-return/newline combination (Windows-style).</li>
+	    <li>The lines themselves are split into columns by semicolons (";") or tabs.</li>
+	    <li>The columns themselves cannot contain semicolons or tabs, there is no method to escape semicolons or tabs from being interpreted as column seperators.</li>
+	    <li>The lines after the first one (which contains the column names) contain floating point numbers in decimal notation. A dot (".") is used as the decimal seperator.</li>
+	</ul>
+	<h2>Example</h2>
+	<p>An example of a valid CSV file:</p>
+	<pre>
+ID;Objective 1;Objective 2;Decision 1;Decision 2
+1;0.183313112;0.816823979;0.367574482;0.76432276
+2;0.157797783;0.197928838;0.383161673;0.470935199
+3;0.621424966;0.680952492;0.756178818;0.020358257
+4;0.354613646;0.18948416;0.282566675;0.952404084
+5;0.605238636;0.326424239;0.737450885;0.313417004
+	</pre>
+	<p>This will create 5 columns named "ID", "Objective 1", "Objective 2", "Decision 1", and "Decision 2" and 5 Points</p>
+	
+	<h2>Spaces</h2>
+	<p>
+	    If you simply name the columns like shown in the example, no spaces will be generated during the start of the project, only a single
+	    master space that contains all columns.
+	    You can, however, <strong>define spaces by preceding the column names with the name of a space, followed by a colon</strong>.
+	    Using the above example, a file using this feature might look like this:
+	</p>
+	<pre>
+ID;Objective Space: Column 1;Objective Space: Column 2;Decision Space: Parameter 1: Speed;Decision Space: Parameter 2: Mass
+1;0.183313112;0.816823979;0.367574482;0.76432276
+2;0.157797783;0.197928838;0.383161673;0.470935199
+3;0.621424966;0.680952492;0.756178818;0.020358257
+4;0.354613646;0.18948416;0.282566675;0.952404084
+5;0.605238636;0.326424239;0.737450885;0.313417004
+	</pre>
+    <p>Upon creation of the project this will result in 3 Spaces being generated:</p>
+    <ol>
+        <li>The master space containing all columns</li>
+        <li>A space called "Objective Space", containing "Column 1" and "Column 2"</li>
+        <li>A space called "Decision Space", containing "Parameter 1: Speed" and "Parameter 2: Mass"</li>
+    </ol>
+    <p>
+        There are two things to note here:<br />
+        The "ID" column is not assigned to a space and thus only appears in the master space.<br />
+        The label of the fourth column in the file is "Decision Space: Parameter 1: Speed".
+        If a column name contains two colons, the first colon is used so separate the space name from the column name, subsequent colons are regarded as part of the column name.
+	</p>
 </body>
 </html>
