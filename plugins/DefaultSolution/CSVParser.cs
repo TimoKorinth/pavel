@@ -124,13 +124,6 @@ namespace Pavel.Plugins {
             }
             ColumnSet masterSpaceColumnSet = new ColumnSet(masterSpaceColumnList);
 
-            // Create Spaces
-            List<Space> spaces = new List<Space>();
-            foreach (KeyValuePair<String, List<Column>> pair in columnSetsDictionary) {
-                spaces.Add(new Space(new ColumnSet(pair.Value), pair.Key));
-            }
-            spaces.Add(new Space(masterSpaceColumnSet, "Master Space"));
-
             // Create MasterPointList and MasterPointSet
             PointList masterPointList = new PointList(masterSpaceColumnSet);
             PointSet masterPointSet = new PointSet("MasterPointSet", masterSpaceColumnSet, true);
@@ -158,6 +151,13 @@ namespace Pavel.Plugins {
           
             // Create default ColumProperties
             ProjectController.CreateMinMaxColumnProperties(masterPointSet);
+
+            // Create Spaces
+            List<Space> spaces = new List<Space>();
+            foreach (KeyValuePair<String, List<Column>> pair in columnSetsDictionary) {
+                spaces.Add(new Space(new ColumnSet(pair.Value), pair.Key));
+            }
+            spaces.Add(new Space(masterSpaceColumnSet, "Master Space"));
 
             return new ParserResult(masterPointSet, spaces);
         }
