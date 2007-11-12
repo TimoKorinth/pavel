@@ -12,7 +12,7 @@ namespace Pavel.Test.Framework {
         [Test]
         public void SerializeDeserializeTest() {
             //Load
-            ProjectController.NewProject(new Pavel.Plugins.CSVParser(",", new char[] { ';' }).Parse(new StreamReader(@"../..\..\dataFiles\TestFiles\Testdaten-CSV.csv"))); 
+            ProjectController.NewProject(new Pavel.Plugins.CSVParser().Parse(new StreamReader(@"../..\..\dataFiles\TestFiles\Testdaten-CSV.csv"))); 
             int pointSets = ProjectController.Project.pointSets.Count;
             int points = ProjectController.Project.pointSets[0].Length;
             try {

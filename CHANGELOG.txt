@@ -1,4 +1,5 @@
 Changes since last release
+* Removed parametrized constructor from the CSV parser.
 * CSV-Parser now allows to define Spaces in the Column Heads.
   Just seperate the space and the column Name by a ":". A column named "Decision Space: Parameter X" will be
   named "Parameter X" in Pavel and added to a space called "Decision Space". See the unit test for an example.

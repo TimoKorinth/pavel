@@ -52,16 +52,6 @@ namespace Pavel.Plugins {
             this.splitter = new char[] {';', '\t'};
         }
 
-        /// <summary>
-        /// Creates a CSVParser with given decimal seperator and splitters
-        /// </summary>
-        /// <param name="numberDecimalSeperator">A decimal seperator like "." or ";"</param>
-        /// <param name="splitter">An array of characters used to split a line into fields</param>
-        public CSVParser(string numberDecimalSeperator, params char[] splitter) {
-            numberFormatInfo.NumberDecimalSeparator = numberDecimalSeperator;
-            this.splitter = splitter;
-        }
-
         #endregion
 
         #region Properties
