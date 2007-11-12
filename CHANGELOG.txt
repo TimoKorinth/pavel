@@ -1,4 +1,5 @@
 Changes since last release
+* MLA Clustering implemented
 * Replaced "Copy selected points into new PointSet" and "Copy not selected points into new PointSet" with a simply copy function in the PointSetManager.
   The same functions can easily and more intuitivly achieved by the deleting- and inverting functions in the visualizations.
 * Added possibity to invert the current selection in every visualization for the visible pointset
