@@ -63,6 +63,7 @@ namespace Pavel.Plugins {
         }
 
         #endregion
+
         #region Properties
 
         /// <value> Gets a label "CSV Parser".</value>
@@ -98,19 +99,44 @@ namespace Pavel.Plugins {
                 throw new InvalidDataException("No labels read while parsing, wrong Dataformat?");
             }
 
-            //Parsing header for Spaces
+            // Parsing header for Spaces
             List<Column> masterSpaceColumnList = new List<Column>();
+            Dictionary<String, List<Column>> columnSetsDictionary = new Dictionary<string, List<Column>>();
             for ( int i = 0; i < splittedRow.Length; i++ ) {
-                masterSpaceColumnList.Add(new Column(splittedRow[i]));
+                String[] splittedColumn = splittedRow[i].Split(new char[] { ':' }, 2);
+                String colName;
+                Column column;
+                if (splittedColumn.Length < 2) {
+                    // No Spaces defined
+                    colName = splittedColumn[0].Trim();
+                    column  = new Column(colName); 
+                } else {
+                    // Spaces defined
+                    String spaceName = splittedColumn[0];
+                    colName   = splittedColumn[1].Trim();
+                    column    = new Column(colName);
+                    if (!columnSetsDictionary.ContainsKey(spaceName)) {
+                        columnSetsDictionary.Add(spaceName, new List<Column>());
+                    }
+                    columnSetsDictionary[spaceName].Add(column);
+                }
+                masterSpaceColumnList.Add(column);
             }
             ColumnSet masterSpaceColumnSet = new ColumnSet(masterSpaceColumnList);
 
-            //Create MasterPointList and MasterPointSet
+            // Create Spaces
+            List<Space> spaces = new List<Space>();
+            foreach (KeyValuePair<String, List<Column>> pair in columnSetsDictionary) {
+                spaces.Add(new Space(new ColumnSet(pair.Value), pair.Key));
+            }
+            spaces.Add(new Space(masterSpaceColumnSet, "Master Space"));
+
+            // Create MasterPointList and MasterPointSet
             PointList masterPointList = new PointList(masterSpaceColumnSet);
             PointSet masterPointSet = new PointSet("MasterPointSet", masterSpaceColumnSet, true);
             masterPointSet.Add(masterPointList);
 
-            //Parse Points
+            // Parse Points
             double[] pointValues = new double[masterSpaceColumnSet.Columns.Length];
 
             while (!reader.EndOfStream) {
@@ -130,11 +156,9 @@ namespace Pavel.Plugins {
                 }
             }
           
-            //Create default ColumProperties
+            // Create default ColumProperties
             ProjectController.CreateMinMaxColumnProperties(masterPointSet);
 
-            List<Space> spaces = new List<Space>();
-            spaces.Add(new Space(masterSpaceColumnSet, "Master Space"));
             return new ParserResult(masterPointSet, spaces);
         }
 
@@ -144,4 +168,5 @@ namespace Pavel.Plugins {
 
         #endregion
     }
+
 }

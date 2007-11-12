@@ -1,4 +1,7 @@
 Changes since last release
+* CSV-Parser now allows to define Spaces in the Column Heads.
+  Just seperate the space and the column Name by a ":". A column named "Decision Space: Parameter X" will be
+  named "Parameter X" in Pavel and added to a space called "Decision Space". See the unit test for an example.
 * MLA Clustering implemented
 * Replaced "Copy selected points into new PointSet" and "Copy not selected points into new PointSet" with a simply copy function in the PointSetManager.
   The same functions can easily and more intuitivly achieved by the deleting- and inverting functions in the visualizations.
