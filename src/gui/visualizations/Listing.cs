@@ -229,7 +229,8 @@ namespace Pavel.GUI.Visualizations {
                     VisualizationWindow.Space.ColumnProperties[e.ColumnIndex]);
 
                 if ( relValue > 1 ) { relValue = 1; }
-                if ( relValue < 0 ) { relValue = 0; }
+                if ( relValue < 0 || Double.IsNaN(relValue)
+                    || Double.IsInfinity(relValue)) { relValue = 0; }
                 if ( relValue > 0.5 ) { backgroundColor = Color.FromArgb(255, (int)(255 - (relValue - 0.5) * 2 * 255), 0); }
                 else { backgroundColor = Color.FromArgb((int)((relValue * 2) * 255), 255, 0); }
                 if ( ProjectController.CurrentSelection.Contains(cachePoint.point) ) {
