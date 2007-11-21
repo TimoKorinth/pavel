@@ -48,6 +48,7 @@ namespace Pavel.Plugins.ProjectStarterPages {
         /// </summary>
         public FileOpener() {
             InitializeComponent();
+            decimalSeperatorComboBox.SelectedIndex = 0;
         }
 
         #endregion
@@ -64,7 +65,7 @@ namespace Pavel.Plugins.ProjectStarterPages {
             StreamReader reader = new StreamReader(fileNameBox.Text);
             try {
                 this.Parent.Parent.Cursor = Cursors.WaitCursor;
-                Pavel.Framework.ParserResult pr = new CSVParser().Parse(reader);
+                Pavel.Framework.ParserResult pr = new CSVParser((string)decimalSeperatorComboBox.Text).Parse(reader);
                 Pavel.Framework.ProjectController.NewProject(pr);
             } catch (Exception e) {
                 flag = false;
@@ -129,5 +130,6 @@ namespace Pavel.Plugins.ProjectStarterPages {
         }
 
         #endregion
+
     }
 }

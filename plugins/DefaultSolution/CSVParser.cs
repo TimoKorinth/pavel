@@ -45,6 +45,18 @@ namespace Pavel.Plugins {
         #region Constructor
 
         /// <summary>
+        /// Creates a CSVParser with given decimal seperator and ";" or "\t" as splitters
+        /// <param name="numberFormat">numberDecimalSeperator, "," and "." are allowed</param>
+        /// </summary>
+        public CSVParser(string numberFormat) {
+            if (!numberFormat.Equals(".") && (!numberFormat.Equals(",")) ){
+                throw new ArgumentException("Only \".\" and \",\" are allowed as decimal seperators");
+            }
+            numberFormatInfo.NumberDecimalSeparator = numberFormat ;
+            this.splitter = new char[] {';', '\t'};
+        }
+
+        /// <summary>
         /// Creates a CSVParser with "." as decimal seperator and ";" or "\t" as splitters
         /// </summary>
         public CSVParser() {

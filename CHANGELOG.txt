@@ -1,5 +1,7 @@
 Changes since last release
 --------------------------
+* Added possibility to select different decimal-seperator characters for the csv-parser.
+  Supports "," and "." as seperators.
 * Listing BugFix (Crash on NaN-Values)
 * Removed parametrized constructor from the CSV parser.
 * CSV-Parser now allows to define Spaces in the Column Heads.
