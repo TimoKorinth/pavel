@@ -42,6 +42,7 @@ namespace Pavel.Clustering {
         private double convergionBound = 0.0;
         private int maximumIterations = 50;
         private int randomSeed = (int)DateTime.Now.Ticks;
+        private bool smartRepair = true;
 
         #endregion
 
@@ -83,6 +84,14 @@ namespace Pavel.Clustering {
             set { randomSeed = value; }
         }
 
+        /// <value>Gets the SmartRepair-Option or sets it</value>
+        [CheckBox("Smart Repair", "Avoids empty clusters and thus Number-Of-Cluster mismatches." +
+            "On empty Clusters these are moved to Regions where Points are far away from Clustercenters.")]
+        public bool SmartRepair {
+            get { return smartRepair; }
+            set { smartRepair = value; }
+        }
+
         #endregion
 
         #region Methods
@@ -104,12 +113,10 @@ namespace Pavel.Clustering {
 
             PointList clusterList = CreateInitialClusterList();
 
-            double min;
-            Cluster minCluster = null;
-            double distance;
-            int iteration = 0;
-            double change = 0.0;
-
+            int iteration = 0;          // iteration counter
+            double change = 0.0;        // modification in last iteration
+            SortedList<double, Point> mostFarestPoints = new SortedList<double, Point>(numberOfClusters);
+                
             do {
                 //Clear all Clusters
                 foreach (Cluster cluster in clusterList) {
@@ -120,21 +127,32 @@ namespace Pavel.Clustering {
                         cluster.PointSet.Add(newPointList);
                     }
                 }
+                mostFarestPoints.Clear();
 
                 //Assign Points to centers
                 int progress = 0;
+
                 int[] map = RelevantSpace.CalculateMap(ColumnSet);
                 for (int listIndex = 0; listIndex < PointSet.PointLists.Count; listIndex++) { // Lists
                     for (int i = 0; i < PointSet.PointLists[listIndex].Count; i++) { // Point in Lists
-                        min = double.PositiveInfinity;
+                        double min = double.PositiveInfinity;
+                        Cluster minCluster = null;  // local closest Cluster
+                        
                         for (int j = 0; j < clusterList.Count; j++) {
-                            distance = Point.Distance(ScaledData[listIndex][i], clusterList[j].ScaledValues(RelevantSpace, map));
+                            double distance = Point.Distance(ScaledData[listIndex][i], clusterList[j].ScaledValues(RelevantSpace, map));
                             if (distance < min) {
                                 min = distance;
                                 minCluster = clusterList[j] as Cluster;
                             }
                         }
                         minCluster.PointSet.PointLists[listIndex].Add(PointSet.PointLists[listIndex][i]);
+                        // check for most far-out Point
+                        if (smartRepair && (mostFarestPoints.Count < numberOfClusters || min > mostFarestPoints.Keys[0])) {
+                            // delete closest
+                            if (mostFarestPoints.Count >= 10) { mostFarestPoints.RemoveAt(0); }
+                            mostFarestPoints[min] = PointSet.PointLists[listIndex][i];
+                        }
+
                         progress++;
                         if (progress % 1000 == 0) {
                             //Report
@@ -147,6 +165,14 @@ namespace Pavel.Clustering {
                 //Recomputer Centers
                 change = 0.0;
                 for (int i = 0; i < clusterList.Count; i++) {
+                    // Empty Cluster?
+                    if (((Cluster)clusterList[i]).PointSet.Length == 0) {
+                        if (smartRepair) {
+                            (clusterList[i] as Cluster).SetValues(mostFarestPoints.Values[mostFarestPoints.Count - 1]);
+                            mostFarestPoints.RemoveAt(mostFarestPoints.Count - 1);
+                        }
+                        continue;
+                    }
                     Point mean = (clusterList[i] as Cluster).PointSet.MinMaxMean(ColumnSet)[Result.MEAN];
 
                     change += Point.Distance(mean, clusterList[i]);
