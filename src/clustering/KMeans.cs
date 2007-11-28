@@ -167,7 +167,7 @@ namespace Pavel.Clustering {
                 for (int i = 0; i < clusterList.Count; i++) {
                     // Empty Cluster?
                     if (((Cluster)clusterList[i]).PointSet.Length == 0) {
-                        if (smartRepair) {
+                        if (smartRepair && mostFarestPoints.Count > 0) {
                             (clusterList[i] as Cluster).SetValues(mostFarestPoints.Values[mostFarestPoints.Count - 1]);
                             mostFarestPoints.RemoveAt(mostFarestPoints.Count - 1);
                         }

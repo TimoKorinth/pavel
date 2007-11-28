@@ -1,5 +1,6 @@
 Changes since last release
 --------------------------
+* Buxfix of Clustering with Smart-Repair
 * Fixed Problem with empty clusters in k-means. SmartRepair option added for k-means and MLA
 * Added possibility to select different decimal-seperator characters for the csv-parser.
   Supports "," and "." as seperators.
