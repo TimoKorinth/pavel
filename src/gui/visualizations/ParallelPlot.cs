@@ -37,39 +37,8 @@ namespace Pavel.GUI.Visualizations {
         #region ParallelPlotToolStrip
 
         private class ParallelPlotToolStrip : VisualizationStandardToolStrip {
-            public ParallelPlotToolStrip(ParallelPlot pp)
-                : base(pp) {
-
-                ToolStripButton resetSpaceButton = new ToolStripButton(Pavel.Properties.Resources.RepeatHS);
-                resetSpaceButton.ToolTipText = "Reset Space";
-                resetSpaceButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-                resetSpaceButton.Click += delegate(object sender, EventArgs e) {
-                    pp.VisualizationWindow.Space = pp.VisualizationWindow.Space.Parent;
-                    pp.ResetProperties();
-                    pp.control.MakeCurrentContext();
-                };
-                this.Items.Add(resetSpaceButton);
-
-                ToolStripButton saveSpaceButton = new ToolStripButton(Pavel.Properties.Resources.saveButton);
-                saveSpaceButton.ToolTipText = "Save Space";
-                saveSpaceButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-                saveSpaceButton.Click += delegate(object sender, EventArgs e) {
-                    //Write back local modifications of the space to the parent space
-                    pp.VisualizationWindow.Space.WriteBack();
-                };
-                this.Items.Add(saveSpaceButton);
-
-                ToolStripButton saveSpaceAsButton = new ToolStripButton(Pavel.Properties.Resources.saveAsButton);
-                saveSpaceAsButton.ToolTipText = "Save Space as...";
-                saveSpaceAsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-                saveSpaceAsButton.Click += delegate(object sender, EventArgs e) {
-                    SaveSpaceAsDialog saveSpaceAsDialog = new SaveSpaceAsDialog(pp.VisualizationWindow.Space, false);
-                    if (saveSpaceAsDialog.ShowDialog() == DialogResult.OK) {
-                        pp.VisualizationWindow.Space = saveSpaceAsDialog.SavedSpace;
-                    }
-                };
-                this.Items.Add(saveSpaceAsButton);
-            }
+            // No own functionality ATM
+            public ParallelPlotToolStrip(ParallelPlot pp) : base(pp) {}
         }
 
         #endregion

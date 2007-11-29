@@ -42,45 +42,10 @@ namespace Pavel.GUI.Visualizations {
 
         private class ListViewTableToolStrip : VisualizationStandardToolStrip {
 
-            public ToolStripButton resetSpaceButton;
-            public ToolStripButton saveSpaceButton;
-            public ToolStripButton saveSpaceAsButton;
             public ToolStripButton jumpToButton;
 
             public ListViewTableToolStrip(Listing listing)
                 : base(listing) {
-
-                resetSpaceButton = new ToolStripButton(Pavel.Properties.Resources.RepeatHS);
-                resetSpaceButton.ToolTipText = "Reset Space";
-                resetSpaceButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-                resetSpaceButton.Click += delegate(object sender, EventArgs e) {
-                    //Get a new copy of the parent space
-                    listing.VisualizationWindow.Space = listing.VisualizationWindow.Space.Parent;
-
-                    listing.ResetProperties();
-                    listing.InitDrawing();
-                };
-                this.Items.Add(resetSpaceButton);
-
-                saveSpaceButton = new ToolStripButton(Pavel.Properties.Resources.saveButton);
-                saveSpaceButton.ToolTipText = "Save Space";
-                saveSpaceButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-                saveSpaceButton.Click += delegate(object sender, EventArgs e) {
-                    //Write back local modifications of the space to the parent space
-                    listing.VisualizationWindow.Space.WriteBack();
-                };
-                this.Items.Add(saveSpaceButton);
-
-                saveSpaceAsButton = new ToolStripButton(Pavel.Properties.Resources.saveAsButton);
-                saveSpaceAsButton.ToolTipText = "Save Space as...";
-                saveSpaceAsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-                saveSpaceAsButton.Click += delegate(object sender, EventArgs e) {
-                    SaveSpaceAsDialog saveSpaceAsDialog = new SaveSpaceAsDialog(listing.VisualizationWindow.Space, false);
-                    if (saveSpaceAsDialog.ShowDialog() == DialogResult.OK) {
-                        listing.VisualizationWindow.Space = saveSpaceAsDialog.SavedSpace;;
-                    }
-                };
-                this.Items.Add(saveSpaceAsButton);
 
                 jumpToButton = new ToolStripButton(Pavel.Properties.Resources.MoveDown);
                 jumpToButton.ToolTipText = "Jump to next selected point";

@@ -1,5 +1,7 @@
 Changes since last release
 --------------------------
+* Moved Reset/Save/SaveAs functions for spaces from the individual VisToolStrips to the common Baseclass.
+  Now it's possible to save/reset the space from the scatterplot too + no more duplicate code.
 * Picking in Scatterplot is faster now due to using glLoadName instead of glPushName/glPopName
 * Buxfix of Clustering with Smart-Repair
 * Fixed Problem with empty clusters in k-means. SmartRepair option added for k-means and MLA
