@@ -571,13 +571,14 @@ namespace Pavel.GUI.Visualizations {
 
             if (mode[0] == Gl.GL_SELECT) {
                 //Draw only Points, each point individually
+                Gl.glPushName(0);
                 for (int i = 0; i < vis.VisualizationWindow.DisplayedPointSet.Length; i++) {
-                    Gl.glPushName(i);  //TODO Push/Pop mit Load ersetzen
+                    Gl.glLoadName(i);
                     Gl.glBegin(Gl.GL_POINTS);
                     Gl.glArrayElement(i);
                     Gl.glEnd();
-                    Gl.glPopName();
                 }
+                Gl.glPopName();
             } else {
                 Gl.glDrawArrays(Gl.GL_POINTS, 0, vis.VisualizationWindow.DisplayedPointSet.Length);
                 if (vis.ShowLines != ScatterLines.None) {
