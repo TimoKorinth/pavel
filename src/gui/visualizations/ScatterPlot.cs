@@ -130,6 +130,7 @@ namespace Pavel.GUI.Visualizations {
             void paretoEvalHandler(object sender, EventArgs e) {
                 try {
                     scatterPlot.Control.Cursor = Cursors.WaitCursor;
+                    this.Cursor = Cursors.WaitCursor;
                     if ((scatterPlot.AxisX != null) && (scatterPlot.AxisY != null)) {
                         Selection sel;
                         if ((scatterPlot.AxisZ) != null) {
@@ -151,6 +152,7 @@ namespace Pavel.GUI.Visualizations {
                         PavelMain.LogBook.Error("no valid Column", true);
                     }
                 } finally {
+                    this.Cursor = Cursors.Default;
                     scatterPlot.Control.Cursor = Cursors.Default;
                 }
             }

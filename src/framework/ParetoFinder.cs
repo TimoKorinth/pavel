@@ -59,7 +59,12 @@ namespace Pavel.Framework {
         
         //------------------------2D: works and is fast-------------------------------------------------
         private static Selection Sort(PointSet pointSet, bool onlyPareto, ColumnProperty cp0, ColumnProperty cp1) {
+
             SortablePoint[] sorted = new SortablePoint[pointSet.Length];
+
+            Pavel.GUI.ParetoFinderWindow paretoFinderWindow = new Pavel.GUI.ParetoFinderWindow();
+            paretoFinderWindow.Show();
+
             int index = 0;
             foreach (PointList pl in pointSet.PointLists) {
                 int column0 = pl.ColumnSet.IndexOf(cp0.Column);
@@ -75,12 +80,17 @@ namespace Pavel.Framework {
             paretoFront.Active = true;
             paretoFront.Label = "Pareto-Front";
 
+            paretoFinderWindow.setParetoFinderWindow(sorted.Length - 1, 1);
+
             for (int i = 0; i < sorted.Length; i++) {
                 if (min >= sorted[i].Values[1]) {
                     paretoFront.Add(sorted[i].Point);
                     min = sorted[i].Values[1];
+                    paretoFinderWindow.progressBarStep();
+                    paretoFinderWindow.Refresh();
                 }
             }
+            paretoFinderWindow.Close();
             return paretoFront;  
         }
 
@@ -103,6 +113,10 @@ namespace Pavel.Framework {
             paretoFront.Label = "Pareto-Front";
             int zaehler;
 
+            Pavel.GUI.ParetoFinderWindow paretoFinderWindow = new Pavel.GUI.ParetoFinderWindow();
+            paretoFinderWindow.setParetoFinderWindow(sorted.Length -1 , 1);
+            paretoFinderWindow.Show();
+
             for (int p1 = 0; p1 < sorted.Length; p1++) {
                 zaehler = 0;
                 for (int p2 = 0; p2 < sorted.Length; p2++) {
@@ -112,8 +126,10 @@ namespace Pavel.Framework {
                         zaehler++;
                 }
                 if (zaehler == sorted.Length) { paretoFront.Add(sorted[p1].Point); }
+                paretoFinderWindow.progressBarStep();
+                paretoFinderWindow.Refresh();
             }
-
+            paretoFinderWindow.Close();
             return paretoFront;
         }
 
