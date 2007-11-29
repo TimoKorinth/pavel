@@ -32,7 +32,7 @@ namespace Pavel.GUI {
     /// <summary>
     /// ToolStrip containing Controls related to opening Projects and/or Files.
     /// </summary>
-    public class ProjectToolStrip : FreeToolStrip {
+    public class ProjectToolStrip : ToolStrip {
 
         #region Fields
 

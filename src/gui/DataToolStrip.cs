@@ -33,7 +33,7 @@ namespace Pavel.GUI {
     /// <summary>
     /// ToolStrip containing Controls related to viewing and editing data
     /// </summary>
-    class DataToolStrip : FreeToolStrip {
+    class DataToolStrip : ToolStrip {
 
         #region Fields
 

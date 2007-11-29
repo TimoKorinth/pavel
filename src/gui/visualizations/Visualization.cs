@@ -43,7 +43,7 @@ namespace Pavel.GUI.Visualizations {
 
         #region Properties
 
-        /// <value>Gets the FreeToolStrip of the Visualization</value>
+        /// <value>Gets the ToolStrip of the Visualization</value>
         public abstract VisualizationStandardToolStrip ToolStrip { get; }
 
         /// <value>Gets the Control of the Visualization</value>

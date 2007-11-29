@@ -39,7 +39,7 @@ namespace Pavel.GUI {
         #region Fields
 
         private MainStatusStrip statusBar;
-        private FreeToolStrip visualizationToolStrip;
+        private ToolStrip visualizationToolStrip;
         private TabControl tabControl;
 
         #endregion
@@ -53,7 +53,7 @@ namespace Pavel.GUI {
         public MainStatusStrip StatusBar { get { return statusBar; } }
 
         /// <value> Gets the visualizationToolStrip of this MainWindow </value>
-        public FreeToolStrip VisualizationToolStrip { get { return visualizationToolStrip; } }
+        public ToolStrip VisualizationToolStrip { get { return visualizationToolStrip; } }
 
         /// <value> Gets the tabControl of this MainWindow </value>
         public TabControl TabControl { get { return tabControl; } }
@@ -87,7 +87,7 @@ namespace Pavel.GUI {
         /// Initializes the ToolStrips.
         /// </summary>
         private void InitializeToolStrips() {
-            this.visualizationToolStrip = new FreeToolStrip();
+            this.visualizationToolStrip = new ToolStrip();
             this.topToolStripPanel.Controls.Add(this.visualizationToolStrip);
             this.topToolStripPanel.Controls.Add(new DataToolStrip());
             this.topToolStripPanel.Controls.Add(new ProjectToolStrip());
@@ -370,10 +370,10 @@ namespace Pavel.GUI {
         #region MainWindow-display related Methods
 
         /// <summary>
-        /// Adds a FreeToolStrip to the topToolStripPanel behind all other visible FreeToolStrips.
+        /// Adds a ToolStrip to the topToolStripPanel behind all other visible ToolStrips.
         /// </summary>
-        /// <param name="fts">The FreeToolStrip to be added</param>
-        public void AddToolStrip(FreeToolStrip fts) {
+        /// <param name="fts">The ToolStrip to be added</param>
+        public void AddToolStrip(ToolStrip ts) {
             if (topToolStripPanel.Controls.Count >= 1) {
                 int pos = 0;
                 for (int i = topToolStripPanel.Controls.Count - 1; i >= 0; i--) {
@@ -382,9 +382,9 @@ namespace Pavel.GUI {
                         break;
                     }
                 }
-                topToolStripPanel.Join(fts, pos, 0);
+                topToolStripPanel.Join(ts, pos, 0);
             } else {
-                topToolStripPanel.Controls.Add(fts);
+                topToolStripPanel.Controls.Add(ts);
             }
         }
 

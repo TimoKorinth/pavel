@@ -328,7 +328,7 @@ namespace Pavel.GUI.Visualizations {
         }
 
         /// <summary>
-        /// Merges the FreeToolStrip of the Visualization with the placeholder FreeToolStrip in PavelMain.MainWindow.
+        /// Merges the ToolStrip of the Visualization with the placeholder ToolStrip in PavelMain.MainWindow.
         /// </summary>
         private void MergeToolStrips() {
             if (null != this.visualization.ToolStrip) {
@@ -338,7 +338,7 @@ namespace Pavel.GUI.Visualizations {
         }
 
         /// <summary>
-        /// Reverts the merge of the FreeToolStrip of the Visualization and the placeholder FreeToolStrip in PavelMain.MainWindow.
+        /// Reverts the merge of the ToolStrip of the Visualization and the placeholder ToolStrip in PavelMain.MainWindow.
         /// </summary>
         private void RevertMergeToolStrips() {
             if (null != this.visualization.ToolStrip) {

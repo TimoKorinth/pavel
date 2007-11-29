@@ -30,9 +30,9 @@ using Pavel.Framework;
 
 namespace Pavel.GUI.Visualizations {
     /// <summary>
-    /// FreeToolStrip containing the elements common to all Visualizations.
+    /// ToolStrip containing the elements common to all Visualizations.
     /// </summary>
-    public class VisualizationStandardToolStrip : FreeToolStrip {
+    public class VisualizationStandardToolStrip : ToolStrip {
 
         #region Fields
 
