@@ -243,6 +243,12 @@
     <Compile Include="src\gui\visualizations\ParallelPlotControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\gui\visualizations\ParetoFinderWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\ParetoFinderWindow.Designer.cs">
+      <DependentUpon>ParetoFinderWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\gui\visualizations\ScatterPlot.cs" />
     <Compile Include="src\gui\visualizations\ScatterPlotControl.cs">
       <SubType>Component</SubType>
@@ -362,6 +368,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\gui\SpaceSelectDialog.resx">
       <DependentUpon>SpaceSelectDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\visualizations\ParetoFinderWindow.resx">
+      <DependentUpon>ParetoFinderWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="src\gui\visualizations\VisualizationWindow.resx">

@@ -1,5 +1,6 @@
 Changes since last release
 --------------------------
+* Progressbar added to the ParetoFinder
 * Got rid of the FreeToolStrip
 * Moved Reset/Save/SaveAs functions for spaces from the individual VisToolStrips to the common Baseclass.
   Now it's possible to save/reset the space from the scatterplot too + no more duplicate code.
