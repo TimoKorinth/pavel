@@ -1,5 +1,6 @@
 Changes since last release
 --------------------------
+* Bugfix: Scales in Scatterplot are rendered correctly now
 * Lines for Points in the CurrentSelection are now drawn correctly in front of all the other lines
 * Changed method for showing and hiding VisualizationToolstrips from the Merge/RevertMerge crap to just
   adding/removing them frmo the topToolStripPanel.

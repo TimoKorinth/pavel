@@ -222,24 +222,18 @@ namespace Pavel.GUI.Visualizations {
         /// of decimal digits displayed via the DecimalDigits Property of the ParallelPlot.
         /// </summary>
         public void CreateScaleText() {
-            //TODO Saubermachen, pruefen ob korrekt
             this.scaleText = new List<string>[this.vis.VisualizationWindow.Space.Dimension];
-            float scaleStep = 0.0F;
-            float desc = 0.0F;
-            float decimalDigits = (float)Math.Pow(10.0, (double)vis.DecimalDigits);
-            int tmp = 0;
-            int i = 0;
-            Space space = vis.VisualizationWindow.Space;
+
+            string format = "#.".PadRight(vis.DecimalDigits + 2,'#');
+            Space  space  = vis.VisualizationWindow.Space;
+
             for (int c = 0; c < space.Dimension; c++) {
-                List<String> tmpScaleList = new List<string>();
-                scaleStep = (float)((space.ColumnProperties[c].Max - space.ColumnProperties[c].Min) / this.vis.AxesScale);
+                scaleText[c] = new List<string>();
+                double scaleStep = ((space.ColumnProperties[c].Max - space.ColumnProperties[c].Min) / this.vis.AxesScale);
                 for (int j = 0; j <= this.vis.AxesScale; j++) {
-                    tmp = (int)((scaleStep * j + space.ColumnProperties[c].Min) * decimalDigits);
-                    desc = ((float)tmp) / decimalDigits;
-                    tmpScaleList.Add(desc.ToString());
+                    double tmp = (scaleStep * j + space.ColumnProperties[c].Min);
+                    scaleText[c].Add(tmp.ToString(format));
                 }
-                this.scaleText[i] = tmpScaleList;
-                i++;
             }
         }
 
