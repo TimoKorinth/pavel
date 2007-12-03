@@ -117,7 +117,7 @@ namespace Pavel.GUI.Visualizations {
             set {
                 if (Type.GetType("Pavel.GUI.Visualizations." + value, true, true).IsSubclassOf(typeof(Visualization))) {
                     if (null != this.visualization) {
-                        this.RevertMergeToolStrips();
+                        this.RemoveToolStrip();
                         this.visualization.UnbindEvents();
                         this.Controls.Remove(this.visualization.Control);
                     }
@@ -127,7 +127,7 @@ namespace Pavel.GUI.Visualizations {
                         throw e.InnerException;
                     }
                     this.Controls.Add(visualization.Control);
-                    this.MergeToolStrips();
+                    this.AddToolStrip();
                     UpdateTitle();
                     //Refresh PropertyControl
                     PavelMain.MainWindow.PropertyControl.VisualizationWindow = visualization.VisualizationWindow;
@@ -328,23 +328,21 @@ namespace Pavel.GUI.Visualizations {
         }
 
         /// <summary>
-        /// Merges the ToolStrip of the Visualization with the placeholder ToolStrip in PavelMain.MainWindow.
+        /// Adds the ToolStrip of the Visualization to the ToolStripPanel in PavelMain.MainWindow.
         /// </summary>
-        private void MergeToolStrips() {
-            if (null != this.visualization.ToolStrip) {
-                ToolStripManager.Merge(this.visualization.ToolStrip, PavelMain.MainWindow.VisualizationToolStrip);
-                PavelMain.MainWindow.VisualizationToolStrip.Visible = true;
-            }
+        private void AddToolStrip() {
+            if (null != this.visualization.ToolStrip)
+                PavelMain.MainWindow.AddToolStrip(this.visualization.ToolStrip);
+                this.visualization.ToolStrip.Visible = true;
         }
 
         /// <summary>
-        /// Reverts the merge of the ToolStrip of the Visualization and the placeholder ToolStrip in PavelMain.MainWindow.
+        /// Removes the ToolStrip of the Visualization from the ToolStripPanel in PavelMain.MainWindow.
         /// </summary>
-        private void RevertMergeToolStrips() {
-            if (null != this.visualization.ToolStrip) {
-                ToolStripManager.RevertMerge(PavelMain.MainWindow.VisualizationToolStrip);
-                PavelMain.MainWindow.VisualizationToolStrip.Visible = false;
-            }
+        private void RemoveToolStrip() {
+            if (null != this.visualization.ToolStrip)
+                this.visualization.ToolStrip.Visible = false;
+                PavelMain.MainWindow.RemoveToolStrip(this.visualization.ToolStrip);
         }
 
         #endregion
@@ -357,7 +355,7 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="o">The VisualiztaionWindow</param>
         /// <param name="e">Standard EventArgs</param>
         public void VisualizationWindow_Deactivated(object o, EventArgs e) {
-            this.RevertMergeToolStrips();
+            this.RemoveToolStrip();
         }
 
         /// <summary>
@@ -366,7 +364,7 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="o">The VisualizationWindow</param>
         /// <param name="e">Standard EventArgs</param>
         public void VisualizationWindow_Activate(object o, EventArgs e) {
-            this.MergeToolStrips();
+            this.AddToolStrip();
         }
 
         /// <summary>
@@ -375,13 +373,13 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="o">The VisualizationWindow</param>
         /// <param name="e">Standard EventArgs</param>
         public void VisualizationWindow_Closed(object o, EventArgs e) {
-            if (PavelMain.MainWindow.MdiChildren.Length == 1) { this.RevertMergeToolStrips(); }
+            this.RemoveToolStrip();
             this.visualization.UnbindEvents();
 
             ProjectController.SpaceRemoved -= SpaceRemoved;
             this.space.Parent.Changed -= SpaceChanged;
             this.Deactivate -= this.VisualizationWindow_Deactivated;
-            this.Activated -= VisualizationWindow_Activate;
+            this.Activated  -= VisualizationWindow_Activate;
             this.FormClosed -= VisualizationWindow_Closed;
         }
 

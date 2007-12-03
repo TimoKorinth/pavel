@@ -1,5 +1,7 @@
 Changes since last release
 --------------------------
+* Changed method for showing and hiding VisualizationToolstrips from the Merge/RevertMerge crap to just
+  adding/removing them frmo the topToolStripPanel.
 * Progressbar added to the ParetoFinder
 * Got rid of the FreeToolStrip
 * Moved Reset/Save/SaveAs functions for spaces from the individual VisToolStrips to the common Baseclass.

@@ -39,7 +39,6 @@ namespace Pavel.GUI {
         #region Fields
 
         private MainStatusStrip statusBar;
-        private ToolStrip visualizationToolStrip;
         private TabControl tabControl;
 
         #endregion
@@ -51,9 +50,6 @@ namespace Pavel.GUI {
 
         /// <value> Gets the statusBar of this MainWindow </value>
         public MainStatusStrip StatusBar { get { return statusBar; } }
-
-        /// <value> Gets the visualizationToolStrip of this MainWindow </value>
-        public ToolStrip VisualizationToolStrip { get { return visualizationToolStrip; } }
 
         /// <value> Gets the tabControl of this MainWindow </value>
         public TabControl TabControl { get { return tabControl; } }
@@ -87,11 +83,8 @@ namespace Pavel.GUI {
         /// Initializes the ToolStrips.
         /// </summary>
         private void InitializeToolStrips() {
-            this.visualizationToolStrip = new ToolStrip();
-            this.topToolStripPanel.Controls.Add(this.visualizationToolStrip);
             this.topToolStripPanel.Controls.Add(new DataToolStrip());
             this.topToolStripPanel.Controls.Add(new ProjectToolStrip());
-            this.visualizationToolStrip.Visible = false;
             MainMenuStrip mainMenu = new MainMenuStrip();
             this.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Top;
@@ -370,22 +363,24 @@ namespace Pavel.GUI {
         #region MainWindow-display related Methods
 
         /// <summary>
-        /// Adds a ToolStrip to the topToolStripPanel behind all other visible ToolStrips.
+        /// Adds a ToolStrip to the topToolStripPanel after all other visible ToolStrips.
         /// </summary>
-        /// <param name="fts">The ToolStrip to be added</param>
+        /// <param name="ts">The ToolStrip to be added</param>
         public void AddToolStrip(ToolStrip ts) {
-            if (topToolStripPanel.Controls.Count >= 1) {
-                int pos = 0;
-                for (int i = topToolStripPanel.Controls.Count - 1; i >= 0; i--) {
-                    if (topToolStripPanel.Controls[i].Visible == true) {
-                        pos += topToolStripPanel.Controls[i].Location.X + topToolStripPanel.Controls[i].Width;
-                        break;
-                    }
-                }
-                topToolStripPanel.Join(ts, pos, 0);
-            } else {
-                topToolStripPanel.Controls.Add(ts);
+            if (topToolStripPanel.Controls.Contains(ts)) return;
+            int pos = 0;
+            foreach (Control c in topToolStripPanel.Controls) {
+                if (c.Visible) pos = Math.Max(pos, c.Bounds.Right);
             }
+            topToolStripPanel.Join(ts,pos,0);
+        }
+
+        /// <summary>
+        /// Remove a ToolStrip from the topToolStripPanel
+        /// </summary>
+        /// <param name="ts">The ToolStrip to be removed</param>
+        public void RemoveToolStrip(ToolStrip ts) {
+            topToolStripPanel.Controls.Remove(ts);
         }
 
         /// <summary>
