@@ -165,7 +165,10 @@ namespace Pavel.GUI.Visualizations {
             }
 
             //Generate Displaylist
-            float tz = 0f;
+
+            List<int>      selectedPointNames  = new List<int>(cs.Length);
+            List<float[,]> selectedPointValues = new List<float[,]>(cs.Length);
+
             int pointName = 0;
             int[] map;
             Gl.glNewList(this.linesDisplayList, Gl.GL_COMPILE);
@@ -173,23 +176,43 @@ namespace Pavel.GUI.Visualizations {
             Gl.glPushName(0);
             foreach (PointList pl in ps.PointLists) {
                 map = space.CalculateMap(pl.ColumnSet);
-
                 for (int pointIndex = 0; pointIndex < pl.Count; pointIndex++) {
-                    if (cs.Contains(pl[pointIndex])) tz = 1f;
-                    else                             tz = 0f;
-
-                    //Set the color of the line with a current alpha-value
-                    Gl.glColor4fv(ProjectController.GetSelectionColor(pl[pointIndex]).RGBwithA(vis.LinesAlpha * 0.01f));
-                    Gl.glLoadName(pointName++);
-                    Gl.glBegin(Gl.GL_LINE_STRIP);
-                    for (int colIndex = 0; colIndex < dimension; colIndex++) {
-                        Gl.glVertex3f(
-                            tx[colIndex],
-                            sy[colIndex] * ((float)pl[pointIndex][map[colIndex]] + ty[colIndex]),
-                            tz);
+                    if (cs.Contains(pl[pointIndex])) {
+                        selectedPointNames.Add(pointName++);
+                        float[,] x = new float[dimension,2];
+                        for (int colIndex = 0; colIndex < dimension; colIndex++) {
+                            x[colIndex, 0] = tx[colIndex];
+                            x[colIndex, 1] = sy[colIndex] * ((float)pl[pointIndex][map[colIndex]] + ty[colIndex]);
+                        }
+                        selectedPointValues.Add(x);
+                    } else {
+                        //Set the color of the line with a current alpha-value
+                        Gl.glColor4fv(ProjectController.GetSelectionColor(pl[pointIndex]).RGBwithA(vis.LinesAlpha * 0.01f));
+                        Gl.glLoadName(pointName++);
+                        Gl.glBegin(Gl.GL_LINE_STRIP);
+                        for (int colIndex = 0; colIndex < dimension; colIndex++) {
+                            Gl.glVertex3f(
+                                tx[colIndex],
+                                sy[colIndex] * ((float)pl[pointIndex][map[colIndex]] + ty[colIndex]),
+                                0f);
+                        }
+                        Gl.glEnd();
                     }
-                    Gl.glEnd();
+
                 }
+            }
+            //Draw Current Selection over normal lines
+            Gl.glColor4fv(ColorManagement.CurrentSelectionColor.RGBwithA(vis.LinesAlpha * 0.01f));
+            for (int pointIndex=0; pointIndex < selectedPointValues.Count; ++pointIndex) {
+                Gl.glLoadName(selectedPointNames[pointIndex]);
+                Gl.glBegin(Gl.GL_LINE_STRIP);
+                for (int colIndex = 0; colIndex < dimension; colIndex++) {
+                    Gl.glVertex3f(
+                        selectedPointValues[pointIndex][colIndex, 0],
+                        selectedPointValues[pointIndex][colIndex, 1],
+                        1f);
+                }
+                Gl.glEnd();
             }
             Gl.glEndList();
         }
