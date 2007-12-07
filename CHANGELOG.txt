@@ -1,5 +1,6 @@
 Changes since last release
 --------------------------
+* Zooming out in a ScatterPlot retains Axis Orientation now.
 * Picking in ScatterPlot and ParallelPlot displays a hourglass now,
   indicating that something is happening.
 * Enhanced 3D-Paretofinder, decreased runtime drastically,

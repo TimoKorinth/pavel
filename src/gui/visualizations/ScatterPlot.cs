@@ -538,6 +538,13 @@ namespace Pavel.GUI.Visualizations {
             mm[Z] = new double[] { Double.PositiveInfinity, Double.NegativeInfinity };
             mm[C] = new double[] { Double.PositiveInfinity, Double.NegativeInfinity };
 
+            bool xAscending = AxisX.IsAscendingOrder();
+            bool yAscending = AxisY.IsAscendingOrder();
+            bool zAscending = true;
+            bool cAscending = true;
+            if (null != axisZ) zAscending = AxisZ.IsAscendingOrder();
+            if (null != axisC) cAscending = AxisC.IsAscendingOrder();
+
             Selection cs = ProjectController.CurrentSelection;
             foreach (Pavel.Framework.Point p in cs) {
                 if (p[axisX.Column] < mm[X][Result.MIN]) mm[X][Result.MIN] = p[axisX.Column];
@@ -561,11 +568,30 @@ namespace Pavel.GUI.Visualizations {
             if (null != axisC) {
                 axisC.SetMinMax(mm[C][Result.MIN], mm[C][Result.MAX]);
             }
+
+            if (!xAscending) axisX.SwitchOrientation();
+            if (!yAscending) axisY.SwitchOrientation();
+            if (axisZ != null && !zAscending) axisZ.SwitchOrientation();
+            if (axisC != null && !cAscending) axisC.SwitchOrientation();
+
             control.ColumnPropertiesChanged();
         }
 
         public void ResetCP() { //TODO: Auslagern nach Visualization?
+            bool xAscending = axisX.IsAscendingOrder();
+            bool yAscending = axisY.IsAscendingOrder();
+            bool zAscending = true;
+            bool cAscending = true;
+            if (null != axisZ) zAscending = axisZ.IsAscendingOrder();
+            if (null != axisC) cAscending = axisC.IsAscendingOrder();
+
             VisualizationWindow.Space.Reset();
+
+            if (!xAscending) axisX.SwitchOrientation();
+            if (!yAscending) axisY.SwitchOrientation();
+            if (axisZ != null && !zAscending) axisZ.SwitchOrientation();
+            if (axisC != null && !cAscending) axisC.SwitchOrientation();
+
             control.ColumnPropertiesChanged();
         }
 
