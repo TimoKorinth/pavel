@@ -1,6 +1,9 @@
 Changes since last release
 --------------------------
-* Enhanced 3D-Paretofinder, decreased runtime drastically, tieded up the code and replaced the ParetoFinder-ProgressBar with the ProgressBar in the MainWindow
+* Picking in ScatterPlot and ParallelPlot displays a hourglass now,
+  indicating that something is happening.
+* Enhanced 3D-Paretofinder, decreased runtime drastically,
+  tieded up the code and replaced the ParetoFinder-ProgressBar with the ProgressBar in the MainWindow
 * Bugfix: Scales in Scatterplot are rendered correctly now
 * Lines for Points in the CurrentSelection are now drawn correctly in front of all the other lines
 * Changed method for showing and hiding VisualizationToolstrips from the Merge/RevertMerge crap to just
@@ -20,8 +23,9 @@ Changes since last release
   Just seperate the space and the column Name by a ":". A column named "Decision Space: Parameter X" will be
   named "Parameter X" in Pavel and added to a space called "Decision Space". See the unit test for an example.
 * MLA Clustering implemented
-* Replaced "Copy selected points into new PointSet" and "Copy not selected points into new PointSet" with a simply copy function in the PointSetManager.
-  The same functions can easily and more intuitivly achieved by the deleting- and inverting functions in the visualizations.
+* Replaced "Copy selected points into new PointSet" and "Copy not selected points into new PointSet"
+  with a simple copy function in the PointSetManager. The same functions can easily and more intuitivly
+  achieved by the deleting- and inverting functions in the visualizations.
 * Added possibity to invert the current selection in every visualization for the visible pointset
 
 1.0.1beta:
@@ -41,7 +45,8 @@ Changes since last release
 * Removed a tiny bug in the new CSV-Parser
 * CHM-help project added
 * Simplified the csv-parser to enable easier import. Added support for different splitter-symbols and decimal-Seperators.
-* Corrected some descriptions of the properties of the Scatterplot (Default value for point size is 8, but was said to be 3, Default for Alpha-value is 80%, but the description said 50%).
+* Corrected some descriptions of the properties of the Scatterplot (Default value for point size is 8,
+  but was said to be 3, Default for Alpha-value is 80%, but the description said 50%).
 * Opening a Scatterplot from the Scattermatrix now results in a 2D Scatterplot instead of a 3D Scatterplot.
 * Removed the STLNormalSwitcher, as it is no longer part of Pavel, but has its own repository.
 * RTF Versions of License files removed

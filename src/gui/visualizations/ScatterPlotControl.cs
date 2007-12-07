@@ -786,6 +786,7 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="pickingEnd">Coordinates where the picking ended, window based (0,0) is left-top)</param>
         private void PickingEnd(Vector pickingEnd) {
             if (null != pickingStart) {
+                this.Cursor = Cursors.WaitCursor;
                 this.pickingEnd = pickingEnd;
 
                 Point[] pickedPoints;
@@ -810,6 +811,7 @@ namespace Pavel.GUI.Visualizations {
                     ProjectController.CurrentSelection.ClearAndAddRange(pickedPoints);
                 }
                 ColorizeSelection();
+                this.Cursor = Cursors.Default;
             }
             pickingStart = null;
             pickingEnd   = null;

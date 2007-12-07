@@ -732,6 +732,7 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="pickingEnd">Vector containing X and Y (window based coordinates, 0 is top) for the endpoint of the picking rectangle.</param>
         private void PickingEnd(Vector pickingEnd) {
             if (null != pickingStart) {
+                this.Cursor = Cursors.WaitCursor;
                 PickingRestoreArea(pickingStart, pickingEnd);
 
                 Point[] pickedPoints;
@@ -757,6 +758,7 @@ namespace Pavel.GUI.Visualizations {
                 } else {
                     ProjectController.CurrentSelection.ClearAndAddRange(pickedPoints);
                 }
+                this.Cursor = Cursors.Default;
             }
         }
 
