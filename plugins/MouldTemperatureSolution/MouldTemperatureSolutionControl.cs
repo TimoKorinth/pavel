@@ -578,6 +578,7 @@ namespace Pavel.Plugins {
             absMinValue = double.PositiveInfinity;
             foreach ( Pavel.Framework.Point p in points ) {
                 double[] simValues = (double[])p.Tag.Data;
+                if (simValues == null) continue;
 
                 for ( int i = 0; i < simValues.Length; i++ ) {
                     absMinValue = absMinValue > simValues[i] ? simValues[i] : absMinValue;
@@ -698,7 +699,7 @@ namespace Pavel.Plugins {
         /// <returns>The Colors for the temperature values</returns>
         private float[] CreateColorArray(bool nicerRendering, float[] vertexArray, Pavel.Framework.Point p, double min, double max) {
             float[] colorArray;
-            if ( p.Tag != null ) {
+            if ( p.Tag.Data != null ) {
                 ColorOGL[] colorTable = ColorOGL.InterpolationArray(Color.Red, Color.Orange, Color.Blue);
                 double[] tag = (double[])p.Tag.Data;
                 if ( nicerRendering ) {
