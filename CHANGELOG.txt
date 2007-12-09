@@ -1,5 +1,6 @@
 Changes since last release
 --------------------------
+* Colormanagement for many colors fixed and speedup
 * Zooming out in a ScatterPlot retains Axis Orientation now.
 * Picking in ScatterPlot and ParallelPlot displays a hourglass now,
   indicating that something is happening.

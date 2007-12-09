@@ -80,7 +80,7 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="count">Total number of colors</param>
         private static void InitializeSelectionColors(int count) {
             selectionColors = new List<ColorOGL>();
-            FillSelectionColors(count);
+            FillSelectionColors(count, true);
         }
 
         /// <summary>
@@ -94,43 +94,45 @@ namespace Pavel.GUI.Visualizations {
                 InitializeSelectionColors(position + 1);
             }
             if (position >= selectionColors.Count) {
-                FillSelectionColors(position+1);
+                FillSelectionColors(position + 1, false);
             }
             return selectionColors[position];
         }
 
+        /// TODO: Change from precomputed array to inline computation???
         /// <summary>
         /// Fills the selectionColors list with colors, which are optimized
-        /// for good readability.
+        /// for good readability. selectionColors will be filled up to the
+        /// next number that isgreater or eaqual to count and a power of two
         /// </summary>
         /// <param name="count">Total number of colors</param>
-        private static void FillSelectionColors(int count) {
-            int unselected = 180;
-            int selected = 0;
-            selectionColors.Clear();
-            selectionColors.Add(HSVToRGB(unselected, 1, 0.78f));
-            selectionColors.Add(HSVToRGB(selected, 1, 0.78f));
-            float h;
-            int index = 1;
+        /// <param name="clearList">Recreate list by clearing it before refill</param>
+        private static void FillSelectionColors(int count, bool clearList) {
+            if (clearList || selectionColors.Count <= 2) {
+                selectionColors.Clear();
+                float unselected = 180f;    //blue-green
+                float selected   = 0f;      //red
+                selectionColors.Add(HSVToRGB(unselected, 1, 0.78f));
+                selectionColors.Add(HSVToRGB(selected, 1, 0.78f));
+            }
+            // The colorvalues are taken from HSV-Colorspace, starting with
+            // angels 0° and 180° and iterating by bisecting each partition:
+            // basis: 2, 3, 4, 5, ...
+            double basis = (Math.Ceiling(Math.Log((double)selectionColors.Count + 1.0, 2.0)));
+            // 4, 8, 16, 32, ...
+            int index = (int)Math.Pow(2.0, basis);
+            // (1, 3), (1, 3, 5, 7), (1, 3, 5, 7, 9, 11, 13, 15), ...
+            int i = (int)Math.Pow(2.0, basis - 1) - selectionColors.Count + 1;
             while (selectionColors.Count < count) {
-                bool s = false;
-                for (int i = 1; i<index;i += 2 ) {
-                    h = 360/index*i;
-                    if (s) {
-                        if (h != unselected && h != selected) {
-                            selectionColors.Add(HSVToRGB(h, 0.5f, 0.97f));
-                            s = !s;
-                        }
-                    }
-                    else {
-                        if (h != unselected && h != selected) {
-                            selectionColors.Add(HSVToRGB(h, 1, 0.78f));
-                            s = !s;
-                        }
-                    }
+                for (; i < index /*&& selectionColors.Count < count*/; i += 2) {
+                    float h = (360.0f/index)*i;       //Values: 0, 180, 90, 270, 45, 135
+                    float s = 0.5f + (((basis - 2f) * 0.25f) % 0.5f); // Values: 0.5, 0.75, 1.0
+                    float v = 0.78f + (((basis - 2f) * 0.2f) % 0.2f);  // Values: 0.78, 0.98
+                    selectionColors.Add(HSVToRGB(h, s, v));
                 }
-                index *= 2;
-                if (index == 0) index++;
+                index *= 2;     // Next Index
+                basis++;        // Correxponding Base
+                i = 1;          // Restart local position in this index
             }
         }
 
