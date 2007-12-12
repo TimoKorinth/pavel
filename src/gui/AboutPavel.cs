@@ -138,6 +138,7 @@ namespace Pavel.GUI {
             this.labelCopyright.Text = String.Format("Copyright: {0}", AssemblyCopyright);
             this.labelCompanyName.Text = String.Format("Company: {0}",AssemblyCompany);
             this.textBoxDescription.Text = AssemblyDescription;
+            this.labelURL.Text = "URL: http://pavel.googlecode.com";
         }
 
         #endregion
