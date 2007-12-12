@@ -66,9 +66,12 @@ namespace Pavel.GUI.Visualizations {
         protected bool stereoMode = false;
 
         /// <summary>
-        /// Enumeration to create different projections, while in stereoMode
+        /// Enumeration to determine from which position and in which direction to render
+        /// LeftEye: View of left eye in stereo mode
+        /// RightEye: View of left eye in stereo mode
+        /// Picking: Intermediate view for picking in stereo mode
         /// </summary>
-        public enum StereoViewingMode { LeftEye, RightEye, Picking };
+        public enum StereoEye { LeftEye, RightEye, Picking };
 
         #endregion
 
@@ -268,13 +271,13 @@ namespace Pavel.GUI.Visualizations {
         /// Sets up the projection matrix for stereo viewing or picking
         /// </summary>
         /// <param name="mode">Selects matrix creation for left eye, right eye or picking</param>
-        protected void SetupProjectionStereo(StereoViewingMode mode) {
+        protected void SetupProjectionStereo(StereoEye mode) {
             Gl.glPushAttrib(Gl.GL_TRANSFORM_BIT);
 
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             //Prevent a loaded Pickmatrix from being overwritten:
             //TODO: Bad bad BAD Design! Making assumptions about things outside of the functions scope. No dinner for you!
-            if ( mode != StereoViewingMode.Picking ) { Gl.glLoadIdentity(); }
+            if ( mode != StereoEye.Picking ) { Gl.glLoadIdentity(); }
             double zNear = 0.5;
             double zFar  = 1000;
 
@@ -287,10 +290,10 @@ namespace Pavel.GUI.Visualizations {
             double bottom = viewPaneCorrection * (-HalfHeightCapped);
             double top    = viewPaneCorrection * ( HalfHeightCapped);
 
-            if ( mode == StereoViewingMode.LeftEye ) {
+            if ( mode == StereoEye.LeftEye ) {
                 left  = left  + halfEyeDistance * focus;
                 right = right + halfEyeDistance * focus;
-            } else if ( mode == StereoViewingMode.RightEye ) {
+            } else if ( mode == StereoEye.RightEye ) {
                 left  = left  - halfEyeDistance * focus;
                 right = right - halfEyeDistance * focus;
             }
@@ -300,9 +303,9 @@ namespace Pavel.GUI.Visualizations {
 
             //Eye Position
             Gl.glTranslatef(0, 0, -(2 * halfHeight));
-            if ( mode == StereoViewingMode.LeftEye ) {
+            if ( mode == StereoEye.LeftEye ) {
                 Gl.glTranslatef(+halfEyeDistance, 0, 0);
-            } else if ( mode == StereoViewingMode.RightEye ) {
+            } else if ( mode == StereoEye.RightEye ) {
                 Gl.glTranslatef(-halfEyeDistance, 0, 0);
             }
             Gl.glPopAttrib();
@@ -502,12 +505,12 @@ namespace Pavel.GUI.Visualizations {
                 SetupProjection(true);
                 RenderContent();
             } else {
-                SetupProjectionStereo(StereoViewingMode.LeftEye);
+                SetupProjectionStereo(StereoEye.LeftEye);
                 Gl.glColorMask(0, 1, 1, 1);
 
                 RenderContent();
 
-                SetupProjectionStereo(StereoViewingMode.RightEye);
+                SetupProjectionStereo(StereoEye.RightEye);
                 Gl.glDrawBuffer(Gl.GL_BACK);
                 Gl.glClear(Gl.GL_DEPTH_BUFFER_BIT);
                 Gl.glColorMask(1, 0, 0, 1);

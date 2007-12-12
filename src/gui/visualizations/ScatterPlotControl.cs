@@ -859,7 +859,7 @@ namespace Pavel.GUI.Visualizations {
             if ( !this.stereoMode ) {
                 SetupProjection(false);
             } else {
-                SetupProjectionStereo(StereoViewingMode.Picking);
+                SetupProjectionStereo(StereoEye.Picking);
             }
 
             SetupModelView(true);
