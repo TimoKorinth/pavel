@@ -7,7 +7,7 @@ interactively displaying and evaluating large sets of highdimensional data.
 Its main intended use is the analysis of result sets from multi-objective
 evolutionary algorithms. 
 
-http://www.sourceforge.net/projects/pavel/
+http://pavel.googlecode.com
 
 REQUIREMENTS
 ------------
@@ -34,11 +34,11 @@ Unfortunately, there is no english-language user documentation available.
 The API-description is stored as doc-comments in the sourcecode.
 The final report for the Pavel project run at ISF Uni Dortmund contains a
 german-language user manual.
-It can be found at http://downloads.sourceforge.net/pavel/pavel_endbericht.pdf
+It can be found at http://pavel.googlecode.com/files/pavel_endbericht.pdf
 
 ________________________________________________________________________________
 
-Copyright ©2007 PG500 ISF Uni Dortmund
+Copyright ©2007 PG500 ISF TU Dortmund
   Christoph Begau, Christoph Heuel,  Raffael Joliet,   Jan Kolanski,
   Mandy Kröller,   Christian Moritz, Daniel Niggemann, Mathias Stöber,
   Timo Stönner,    Jan Varwig,       Dafan Zhai
