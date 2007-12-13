@@ -1,4 +1,4 @@
-Changes since last release
+1.0.99
 --------------------------
 * StereoViewingMode renamed to StereoEye
 * Programm crashes no more in MouldTemperatureSolution on view of clustered solution

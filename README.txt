@@ -7,7 +7,7 @@ interactively displaying and evaluating large sets of highdimensional data.
 Its main intended use is the analysis of result sets from multi-objective
 evolutionary algorithms. 
 
-http://pavel.googlecode.com
+http://pavel.googlecode.com/
 
 REQUIREMENTS
 ------------

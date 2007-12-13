@@ -16,7 +16,7 @@
         "Entry"
         {
         "MsmKey" = "8:_146632D0F17DCCEAB0FE50CD4E487536"
-        "OwnerKey" = "8:_E7CA8CAA3B9E525668F38205163DBF64"
+        "OwnerKey" = "8:_76E80388D2A5F475B844979CC1B367D6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,7 +52,7 @@
         "Entry"
         {
         "MsmKey" = "8:_380A9EB6625534193EE0D6CA6301BB09"
-        "OwnerKey" = "8:_E7CA8CAA3B9E525668F38205163DBF64"
+        "OwnerKey" = "8:_76E80388D2A5F475B844979CC1B367D6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,7 +82,7 @@
         "Entry"
         {
         "MsmKey" = "8:_504523530DBB48DD762A32F8BE9E8827"
-        "OwnerKey" = "8:_E7CA8CAA3B9E525668F38205163DBF64"
+        "OwnerKey" = "8:_76E80388D2A5F475B844979CC1B367D6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -123,6 +123,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_76E80388D2A5F475B844979CC1B367D6"
+        "OwnerKey" = "8:_557704F9F10C48E6A73075E76959B733"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_76E80388D2A5F475B844979CC1B367D6"
+        "OwnerKey" = "8:_D67B3EAA323A4D059DD638F32CFED988"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_76E80388D2A5F475B844979CC1B367D6"
+        "OwnerKey" = "8:_62F71B0753F4462C967D4B8E210C7618"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D67B3EAA323A4D059DD638F32CFED988"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -131,24 +149,6 @@
         {
         "MsmKey" = "8:_E13779312F9745839D881C6B931699EA"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E7CA8CAA3B9E525668F38205163DBF64"
-        "OwnerKey" = "8:_557704F9F10C48E6A73075E76959B733"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E7CA8CAA3B9E525668F38205163DBF64"
-        "OwnerKey" = "8:_D67B3EAA323A4D059DD638F32CFED988"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E7CA8CAA3B9E525668F38205163DBF64"
-        "OwnerKey" = "8:_62F71B0753F4462C967D4B8E210C7618"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -178,7 +178,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E7CA8CAA3B9E525668F38205163DBF64"
+        "OwnerKey" = "8:_76E80388D2A5F475B844979CC1B367D6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -382,14 +382,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E7CA8CAA3B9E525668F38205163DBF64"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_76E80388D2A5F475B844979CC1B367D6"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Pavel, Version=1.0.1.18, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E7CA8CAA3B9E525668F38205163DBF64"
+                    "_76E80388D2A5F475B844979CC1B367D6"
                     {
                     "Name" = "8:Pavel.exe"
                     "Attributes" = "3:512"
@@ -502,17 +502,17 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Pavel"
-        "ProductCode" = "8:{7D942AAD-5ECD-468B-BA14-681688BBDF76}"
-        "PackageCode" = "8:{A097D759-D1D2-4DEA-A4A5-09263331420B}"
+        "ProductCode" = "8:{4181C13A-333A-40BB-BA69-7201BB0EE96B}"
+        "PackageCode" = "8:{4A5D42C9-3F68-45E3-89D1-CC5E1A0E2238}"
         "UpgradeCode" = "8:{E3D29C6F-3A98-4FDF-AFA5-2CA1FBD5560E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.1"
+        "ProductVersion" = "8:1.0.99"
         "Manufacturer" = "8:PG500"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:"
+        "ARPHELPLINK" = "8:http://pavel.googlecode.com/"
         "Title" = "8:Pavel Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:PG500"
