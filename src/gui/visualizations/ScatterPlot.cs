@@ -127,35 +127,7 @@ namespace Pavel.GUI.Visualizations {
             void  setOriginHandler(object sender, EventArgs e) { scatterPlot.SetTranslation(); }
             void      setCPHandler(object sender, EventArgs e) { scatterPlot.SetMinMax(); }
             void    resetCPHandler(object sender, EventArgs e) { scatterPlot.ResetCP(); }
-            void paretoEvalHandler(object sender, EventArgs e) {
-                try {
-                    scatterPlot.Control.Cursor = Cursors.WaitCursor;
-                    this.Cursor = Cursors.WaitCursor;
-                    if ((scatterPlot.AxisX != null) && (scatterPlot.AxisY != null)) {
-                        Selection sel;
-                        if ((scatterPlot.AxisZ) != null) {
-                            sel = ParetoFinder.EvaluateParetoFront(scatterPlot.VisualizationWindow.PointSet,
-                                scatterPlot.AxisX, scatterPlot.AxisY, scatterPlot.AxisZ);
-                        } else {
-                            sel = ParetoFinder.EvaluateParetoFront(scatterPlot.VisualizationWindow.PointSet,
-                                scatterPlot.AxisX, scatterPlot.AxisY);
-                        }
-                        //Deactivate all stored selections
-                        foreach (Selection s in ProjectController.Selections){
-                            s.Active = false;
-                        }
-                        //Add pareto-selection and show it
-                        sel.Active = true;
-                        ProjectController.AddSelection(sel);
-                        ProjectController.SetSelectionAsCurrentSelection();
-                    } else {
-                        PavelMain.LogBook.Error("no valid Column", true);
-                    }
-                } finally {
-                    this.Cursor = Cursors.Default;
-                    scatterPlot.Control.Cursor = Cursors.Default;
-                }
-            }
+            void paretoEvalHandler(object sender, EventArgs e) { scatterPlot.ParetoEval(); }
 
             void SelectionModified(object sender, EventArgs e) { UpdateButtonStates(); }
             #endregion
@@ -607,6 +579,36 @@ namespace Pavel.GUI.Visualizations {
 
         #endregion
 
+        /// <summary>
+        /// Calculate and show the Paretofront of the displayed PointSet
+        /// </summary>
+        private void ParetoEval() {
+            try {
+                Control.Cursor = Cursors.WaitCursor;
+                if ( null != AxisX && null != AxisY ) {
+                    Selection sel;
+                    if ( null != AxisZ ) {
+                        sel = ParetoFinder.EvaluateParetoFront(VisualizationWindow.PointSet,
+                            AxisX, AxisY, AxisZ);
+                    } else {
+                        sel = ParetoFinder.EvaluateParetoFront(VisualizationWindow.PointSet,
+                            AxisX, AxisY);
+                    }
+                    //Deactivate all stored selections
+                    foreach (Selection s in ProjectController.Selections) {
+                        s.Active = false;
+                    }
+                    //Add pareto-selection and show it
+                    sel.Active = true;
+                    ProjectController.AddSelection(sel);
+                    ProjectController.SetSelectionAsCurrentSelection();
+                } else {
+                    PavelMain.LogBook.Error("no valid Column", true);
+                }
+            } finally {
+                Control.Cursor = Cursors.Default;
+            }
+        }
     }
     public enum ScatterLines { None, xyAxes, xzAxes, yzAxes }
 
