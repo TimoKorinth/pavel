@@ -567,27 +567,15 @@ namespace Pavel.GUI.Visualizations {
             control.ColumnPropertiesChanged();
         }
 
-        #region EventHandler
-        public override void PointSetModified(object sender, EventArgs e) {
-            base.PointSetModified(sender, e);
-            control.PointSetChanged();
-        }
-
-        public override void  SelectionModified(object sender, EventArgs e) {
-            control.CurrentSelectionChanged();
-        }
-
-        #endregion
-
         /// <summary>
         /// Calculate and show the Paretofront of the displayed PointSet
         /// </summary>
         private void ParetoEval() {
             try {
                 Control.Cursor = Cursors.WaitCursor;
-                if ( null != AxisX && null != AxisY ) {
+                if (null != AxisX && null != AxisY) {
                     Selection sel;
-                    if ( null != AxisZ ) {
+                    if (null != AxisZ) {
                         sel = ParetoFinder.EvaluateParetoFront(VisualizationWindow.PointSet,
                             AxisX, AxisY, AxisZ);
                     } else {
@@ -609,6 +597,18 @@ namespace Pavel.GUI.Visualizations {
                 Control.Cursor = Cursors.Default;
             }
         }
+
+        #region EventHandler
+        public override void PointSetModified(object sender, EventArgs e) {
+            base.PointSetModified(sender, e);
+            control.PointSetChanged();
+        }
+
+        public override void  SelectionModified(object sender, EventArgs e) {
+            control.CurrentSelectionChanged();
+        }
+
+        #endregion
     }
     public enum ScatterLines { None, xyAxes, xzAxes, yzAxes }
 
