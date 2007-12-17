@@ -581,18 +581,18 @@ namespace Pavel.GUI.Visualizations {
                 Gl.glPopName();
             } else {
                 Gl.glDrawArrays(Gl.GL_POINTS, 0, vis.VisualizationWindow.DisplayedPointSet.Length);
-                if (vis.ShowLines != ScatterLines.None) {
+                if (vis.ShowLines != ScatterPlot.ScatterLines.None) {
                     Gl.glColor3f(0.5f, 0.5f, 0.5f);
                     for (int i = 0; i < vis.VisualizationWindow.DisplayedPointSet.Length; i++) {
                         Gl.glBegin(Gl.GL_LINES);
                         Gl.glVertex3f(vertexArray[i * 3], vertexArray[i * 3 + 1], vertexArray[i * 3 + 2]);
-                        if (vis.ShowLines == ScatterLines.xzAxes) {
+                        if (vis.ShowLines == ScatterPlot.ScatterLines.xzAxes) {
                             Gl.glVertex3f(vertexArray[i * 3], (float)vis.AxisY.Min, vertexArray[i * 3 + 2]);
                         }
-                        if (vis.ShowLines == ScatterLines.xyAxes) {
+                        if (vis.ShowLines == ScatterPlot.ScatterLines.xyAxes) {
                             Gl.glVertex3f(vertexArray[i * 3], vertexArray[i * 3 + 1], (float)vis.AxisZ.Min);
                         }
-                        if (vis.ShowLines == ScatterLines.yzAxes) {
+                        if (vis.ShowLines == ScatterPlot.ScatterLines.yzAxes) {
                             Gl.glVertex3f((float)vis.AxisX.Min, vertexArray[i * 3 + 1], vertexArray[i * 3 + 2]);
                         }
                         Gl.glEnd();

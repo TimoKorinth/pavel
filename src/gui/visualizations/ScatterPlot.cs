@@ -609,7 +609,7 @@ namespace Pavel.GUI.Visualizations {
         }
 
         #endregion
-    }
-    public enum ScatterLines { None, xyAxes, xzAxes, yzAxes }
 
+        public enum ScatterLines { None, xyAxes, xzAxes, yzAxes }
+    }
 }
