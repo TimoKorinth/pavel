@@ -62,7 +62,7 @@ namespace Pavel.Plugins.ProjectStarterPages {
         /// </summary>
         override public Boolean Execute() {
             Boolean flag = true;
-            StreamReader reader = new StreamReader(fileNameBox.Text);
+            StreamReader reader = new StreamReader(fileNameBox.Text, System.Text.Encoding.GetEncoding(1252));
             try {
                 this.Parent.Parent.Cursor = Cursors.WaitCursor;
                 Pavel.Framework.ParserResult pr = new CSVParser((string)decimalSeperatorComboBox.Text).Parse(reader);

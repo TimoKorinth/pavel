@@ -12,7 +12,7 @@ namespace Pavel.Test.Framework {
 
         [Test]
         public void SimpleTest() {
-            new Pavel.Plugins.CSVParser().Parse(new StreamReader(@"../..\..\dataFiles\TestFiles\Testdaten-CSV.csv")); 
+            new Pavel.Plugins.CSVParser().Parse(new StreamReader(@"../..\..\dataFiles\TestFiles\Testdaten-CSV.csv", System.Text.Encoding.GetEncoding(1252))); 
         }
 
         [Test]
