@@ -1,3 +1,4 @@
+* CSV Export added 
 * MillingSimulation UseCase Plugin added
 * Scatterplanes function added to Scatterplot
 * Removed PointLists completely. PointSets inherit all their functionality
