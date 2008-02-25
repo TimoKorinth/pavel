@@ -37,11 +37,11 @@ namespace Pavel.Clustering {
         
         #region Methods
 
-        protected override PointList CreateInitialClusterList() {
+        protected override ClusterSet CreateInitialClusterSet(ClusteringAlgorithm ca) {
             //Report
             SignalProgress(0, "Initialize Clusters by maximum distance");
 
-            PointList clusterList = new PointList(ColumnSet);
+            ClusterSet clusterSet = new ClusterSet(ca);
 
             // Remaining Indices
             int[] r = new int[PointSet.Length];
@@ -70,7 +70,7 @@ namespace Pavel.Clustering {
                         int minIndex = 0;
                         // All centers
                         for (int index = 0; index < clusterIndex; index++) {
-                            double dist = Point.Distance(ScaledFlatData[remainingIndex], ScaledFlatData[index]);
+                            double dist = Point.Distance(ScaledData[remainingIndex], ScaledData[index]);
                             if (dist < min) {
                                 min = dist;
                                 minIndex = remainingIndex;
@@ -90,11 +90,11 @@ namespace Pavel.Clustering {
             }
 
             foreach (int center in centers) {
-                Cluster cluster = new Cluster(center.ToString(), PointSet[center].Trim(ColumnSet));
-                clusterList.Add(cluster);
+                Cluster cluster = new Cluster(center.ToString(), PointSet[center]);
+                clusterSet.Add(cluster);
             }
 
-            return clusterList;
+            return clusterSet;
         }
 
         /// <summary>

@@ -121,7 +121,8 @@ namespace Pavel.Clustering {
             this.spaceLabel.TabIndex = 1;
             this.spaceLabel.Text = "Space:";
             this.spaceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.helpToolTip.SetToolTip(this.spaceLabel, "Select a Space to determine the Columns that will affect the clustering");
+            this.helpToolTip.SetToolTip(this.spaceLabel, "Select a Space for clustering that defines scaling  and offset of relevant column" +
+                    "s.");
             // 
             // actionButton
             // 

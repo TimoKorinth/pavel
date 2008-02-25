@@ -202,12 +202,12 @@ namespace Pavel.GUI.Visualizations {
             numberOfCluster = new ToolStripTextBox();
             numberOfCluster.Enabled = true;
             numberOfCluster.TextChanged += delegate(object sender, EventArgs e) {
-                Clustering.HierarchicalClusterList clusterList
-                    = visualization.VisualizationWindow.PointSet.PointLists[0]
-                    as Clustering.HierarchicalClusterList;
-                int number = clusterList.DefaultClusterCount;
+                Clustering.HierarchicalClusterSet clusterSet
+                    = visualization.VisualizationWindow.PointSet
+                    as Clustering.HierarchicalClusterSet;
+                int number = clusterSet.DefaultClusterCount;
                 if (int.TryParse(numberOfCluster.Text, out number)) {
-                    clusterList.DefaultClusterCount = number;
+                    clusterSet.DefaultClusterCount = number;
                 }
                 visualization.VisualizationWindow.CreateDisplayedPointSet();
                 visualization.PointSetModified(this, null);
@@ -219,9 +219,9 @@ namespace Pavel.GUI.Visualizations {
         public void UpdateToolStrip( ) {
             PointSet ps = visualization.VisualizationWindow.PointSet;
             clusterMode.Visible          = ps is Clustering.ClusterSet;
-            numberOfCluster.Visible      = ps.PointLists[0] is Clustering.HierarchicalClusterList;
+            numberOfCluster.Visible = ps is Clustering.HierarchicalClusterSet;
             numberOfClusterLabel.Visible = numberOfCluster.Visible;
-            Clustering.HierarchicalClusterList clusterList = ps.PointLists[0] as Clustering.HierarchicalClusterList;
+            Clustering.HierarchicalClusterSet clusterList = ps as Clustering.HierarchicalClusterSet;
 
             if ( clusterList != null ) numberOfCluster.Text = clusterList.DefaultClusterCount.ToString();
         }

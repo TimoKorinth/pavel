@@ -27,7 +27,7 @@ namespace Pavel.Test.Clustering {
             ClusterSet result = km.Start();
 
             Assert.AreEqual(4, result.Length);
-            IEnumerator<Point> clusters = result.PointLists[0].GetEnumerator();
+            IEnumerator<Point> clusters = result.GetEnumerator();
             Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(1, (clusters.Current as Cluster).PointSet.Length);
             Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(2, (clusters.Current as Cluster).PointSet.Length);
             Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(1, (clusters.Current as Cluster).PointSet.Length);
@@ -35,7 +35,7 @@ namespace Pavel.Test.Clustering {
             Assert.IsFalse(clusters.MoveNext());
 
             foreach (Column col in pst.ComplicatedPointSet.ColumnSet) {
-                clusters = result.PointLists[0].GetEnumerator();
+                clusters = result.GetEnumerator();
                 Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(ps[0][col], (clusters.Current as Cluster)[col]);
                 Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(new PointList(pst.ComplicatedPointSet.ColumnSet, new Point[] { ps[1], ps[2] }).MinMaxMean()[Result.MEAN][col], (clusters.Current as Cluster)[col]);
                 Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(ps[3][col], (clusters.Current as Cluster)[col]);
@@ -64,7 +64,7 @@ namespace Pavel.Test.Clustering {
             ClusterSet result = km.Start();
 
             Assert.AreEqual(4, result.Length);
-            IEnumerator<Point> clusters = result.PointLists[0].GetEnumerator();
+            IEnumerator<Point> clusters = result.GetEnumerator();
             Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(1, (clusters.Current as Cluster).PointSet.Length);
             Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(2, (clusters.Current as Cluster).PointSet.Length);
             Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(1, (clusters.Current as Cluster).PointSet.Length);
@@ -72,7 +72,7 @@ namespace Pavel.Test.Clustering {
             Assert.IsFalse(clusters.MoveNext());
 
             foreach (Column col in pst.ComplicatedPointSet.ColumnSet) {
-                clusters = result.PointLists[0].GetEnumerator();
+                clusters = result.GetEnumerator();
                 Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(ps[0][col], (clusters.Current as Cluster)[col]);
                 Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(new PointList(pst.ComplicatedPointSet.ColumnSet, new Point[] { ps[1], ps[2] }).MinMaxMean()[Result.MEAN][col], (clusters.Current as Cluster)[col]);
                 Assert.IsTrue(clusters.MoveNext()); Assert.AreEqual(ps[3][col], (clusters.Current as Cluster)[col]);
@@ -95,17 +95,15 @@ namespace Pavel.Test.Clustering {
             for (int i = 0; i < numColumns; i++) { cols[i] = new Column(); }
             ColumnSet columnSet = new ColumnSet(cols);
             Column[] columns = columnSet.Columns;
-            PointList pl = new PointList(columnSet);
+            PointSet ps = new PointSet("Random Set", columnSet);
             for(int i = 0; i<numPoints; i++) {
                 double[] vals = new double[numColumns];
                 for (int j = 0; j < numColumns; j++ ) {
                     vals[j] = random.NextDouble();
                 }
-                pl.Add(new Point(columnSet, vals));
+                ps.Add(new Point(columnSet, vals));
             }
-            PointSet ps = new PointSet("Random Set", columnSet);
-            ps.Add(pl);
-
+            
             KMeans km = new KMeans();
             km.PointSet  = ps;
             km.Space = new Space(ps.ColumnSet, "");

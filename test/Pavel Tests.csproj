@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clustering\ExtendedHACMTest.cs" />
-    <Compile Include="clustering\HierarchicalClusterListTest.cs" />
+    <Compile Include="clustering\HierarchicalClusterSetTest.cs" />
     <Compile Include="clustering\KMeansTest.cs" />
     <Compile Include="framework\ColumnSetTest.cs" />
     <Compile Include="framework\CSVParserTest.cs" />

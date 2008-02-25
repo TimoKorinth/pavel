@@ -54,10 +54,8 @@ namespace Pavel.Clustering {
         // Generated Data:
         private ColumnSet columnSet;
         private Space relevantSpace;
-        private double[][][] scaledData;
-        private double[][] scaledFlatData;
-
-
+        private double[][] scaledData;
+        
         // Clustering Args:
         private PointSet pointSet;
         private Space space;
@@ -117,26 +115,14 @@ namespace Pavel.Clustering {
         }
 
         /// <value>
-        /// A PointSet-like array that holds in the first dimension the PointLists, 
-        /// in the second dimension the Points and in the third dimension the values. Thus it
-        /// can be used as an alternative to the original PointSet with the difference that
-        /// it holds scaled values (in the context of the given Space) and all Columns of
-        /// the Space.
+        /// A PointSet-like array that holds in the first dimension the Points and in the
+        /// second dimension the values. Thus it can be used as an alternative to the original
+        /// PointSet with the difference that it holds scaled values (in the context of the
+        /// given Space) and all Columns of the Space.
         /// </value>
-        protected double[][][] ScaledData {
+        protected double[][] ScaledData {
             get { return scaledData; }
             private set { scaledData = value; }
-        }
-
-        /// <value>
-        /// A PointSet-like array that holds in the first dimension the Points and in the second dimension the values. Thus it
-        /// can be used as an alternative to the original PointSet with the difference that
-        /// it holds scaled values (in the context of the given Space) and all Columns of
-        /// the Space.
-        /// </value>
-        protected double[][] ScaledFlatData {
-            get { return scaledFlatData; }
-            private set { scaledFlatData = value; }
         }
 
         /// <value> Gets the basic PointSet or sets it </value>
@@ -186,11 +172,16 @@ namespace Pavel.Clustering {
         }
 
         /// <summary>
-        /// Abstract-Clustering-Engine
-        /// Return null if Clustering was canceled
+        /// Abstract-Clustering-Engine. 
+        /// By definition DoClustering does create a PointSet, containing only Clusters.
+        /// Each Cluster should represent a selection of Points from the original PointSet.
+        /// Thus DoClustering creates a partitioning of the input PointSet with a "center"
+        /// for each partition.
+        /// The resulting ClusterSet has the same ColumnSet as the given PointSet for
+        /// clustering.
         /// </summary>
-        /// <returns>The resulting PointList</returns>
-        protected abstract PointList DoClustering();
+        /// <returns>The resulting ClusterSet or null if clustering was canceled</returns>
+        protected abstract ClusterSet DoClustering();
 
         /// <summary>
         /// Startingpoint for external starting of clustering.
@@ -215,22 +206,12 @@ namespace Pavel.Clustering {
             SignalProgress(0, "Preprocessing Data...");
             try {
                 ScaledData = CreateScaledAndShrinkedData(PointSet, RelevantSpace);
-                ScaledFlatData = CopyToFlatData(ScaledData);
             } catch (OutOfMemoryException e) {
                 ErrorMessage = "Not enough memory for clustering. " + e.Message;
                 return null;
             }
-            
-            // The actual clustering
-            PointList clusterList = DoClustering();
-            if (clusterList != null) {
-                ClusterSet clusterSet = new ClusterSet(this);
-                clusterSet.Add(clusterList);
-                return clusterSet;
-            } else {
-                // Any Failure occured
-                return null;
-            }
+
+            return DoClustering();
         }
 
         /// <summary>
@@ -242,9 +223,9 @@ namespace Pavel.Clustering {
         }
 
         /// <summary>
-        /// Creates a PointSet-like array that holds in the first dimension the PointLists, 
-        /// in the second dimension the Points and in the third dimension the values. Thus it
-        /// can be used as an alternative to the original PointSet with the difference that
+        /// Creates a PointSet-like array that holds in the first dimension Points and in
+        /// the second dimension the values.
+        /// Thus it can be used as an alternative to the original PointSet with the difference that
         /// it holds scaled values (in the context of the given space) and all Columns of
         /// the <paramref name="space"/>.
         /// </summary>
@@ -252,36 +233,18 @@ namespace Pavel.Clustering {
         /// <param name="space">A Space with only relevant Columns and meaningful
         /// Column-scaling</param>
         /// <returns>A three-dimensional array with scaled and shrinked values. Its first dimension
-        /// corresponds to the Pointlists. The second holds the Points and the third the values.</returns>
-        private double[][][] CreateScaledAndShrinkedData(PointSet sourcePointSet, Space space) {
-            double[][][] data = new double[sourcePointSet.PointLists.Count][][];
+        /// corresponds to the Points and the second the values.</returns>
+        private double[][] CreateScaledAndShrinkedData(PointSet sourcePointSet, Space space) {
+            double[][] data = new double[sourcePointSet.Length][];
+            int[] map = space.CalculateMap(sourcePointSet.ColumnSet);
 
-            for (int plIndex = 0; plIndex < sourcePointSet.PointLists.Count; plIndex++) {
-                int[] map = space.CalculateMap(sourcePointSet.PointLists[plIndex].ColumnSet);
-                data[plIndex] = new double[sourcePointSet.PointLists[plIndex].Count][];
-                for (int index = 0; index < sourcePointSet.PointLists[plIndex].Count; index++) {
-                    data[plIndex][index] = new double[space.Dimension];
-                    for (int column = 0; column < space.Dimension; column++) {
-                        data[plIndex][index][column] = sourcePointSet.PointLists[plIndex][index].ScaledValue(map[column], space.ColumnProperties[column]);
-                    }
+            for (int index = 0; index < sourcePointSet.Length; index++) {
+                data[index] = new double[space.Dimension];
+                for (int column = 0; column < space.Dimension; column++) {
+                    data[index][column] = sourcePointSet[index].ScaledValue(map[column], space.ColumnProperties[column]);
                 }
             }
             return data;
-        }
-
-        private double[][] CopyToFlatData(double[][][] scaledData) {
-            // Remapping of the precomputed (scaled) distances without PointList-Structure
-            double[][] precomputedValues;
-            precomputedValues = new double[PointSet.Length][];
-            int vIndex = 0;
-            for (int plIndex = 0; plIndex < PointSet.PointLists.Count; plIndex++) {
-                for (int index = 0; index < PointSet.PointLists[plIndex].Count; index++) {
-                    // Copy precompute (scaled) Values
-                    precomputedValues[vIndex] = scaledData[plIndex][index];
-                    vIndex++;
-                }
-            }
-            return precomputedValues;
         }
 
         #endregion

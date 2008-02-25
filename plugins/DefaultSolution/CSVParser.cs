@@ -127,9 +127,7 @@ namespace Pavel.Plugins {
             ColumnSet masterSpaceColumnSet = new ColumnSet(masterSpaceColumnList);
 
             // Create MasterPointList and MasterPointSet
-            PointList masterPointList = new PointList(masterSpaceColumnSet);
             PointSet masterPointSet = new PointSet("MasterPointSet", masterSpaceColumnSet, true);
-            masterPointSet.Add(masterPointList);
 
             // Parse Points
             double[] pointValues = new double[masterSpaceColumnSet.Columns.Length];
@@ -147,7 +145,7 @@ namespace Pavel.Plugins {
                     for (int i = 0; i < splittedRow.Length; i++) {
                         pointValues[i] = Double.Parse(splittedRow[i], NumberStyles.Float, numberFormatInfo);
                     }
-                    masterPointList.Add(new Point(masterSpaceColumnSet, pointValues));
+                    masterPointSet.Add(new Point(masterSpaceColumnSet, pointValues));
                 }
             }
           

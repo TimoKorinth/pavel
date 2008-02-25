@@ -61,7 +61,7 @@ namespace Pavel.Clustering {
         /// of any ClusteringAlgorithm instance;
         /// </summary>
         /// <param name="ca">The Arguments that have been used to create the ClusterSet</param>
-        public ClusterSet(ClusteringAlgorithm ca) : base(ca.Name, ca.Space.ToColumnSet()) {
+        public ClusterSet(ClusteringAlgorithm ca) : base(ca.Name, ca.PointSet.ColumnSet) {
             this.basicPointSet = ca.PointSet;
             this.clusteringAlgorithm = ca;
         }
@@ -77,20 +77,14 @@ namespace Pavel.Clustering {
             ColumnSet cs = this.basicPointSet.ColumnSet;
             PointSet clusterPointSet = new PointSet(name, cs);
 
-            Dictionary<ColumnSet, PointList> pointLists = new Dictionary<ColumnSet, PointList>();
-            for (int i = 0; i < this.PointLists[0].Count; i++) {
-                PointSet ps = ((this.PointLists[0][i]) as Clustering.Cluster).PointSet;
-                foreach (PointList pl in ps.PointLists) {
-                    if (!pointLists.ContainsKey(pl.ColumnSet)) {
-                        pointLists.Add(pl.ColumnSet, new PointList(pl.ColumnSet));
-                    }
-                    pointLists[pl.ColumnSet].AddRange(pl);
+            for (int i = 0; i < this.Length; i++) {
+                PointSet ps_in_cluster = (this[i] as Cluster).PointSet;
+                int[] map = cs.SuperSetMap(ps_in_cluster.ColumnSet); //TODO: Unclear wether the map needs to be reconstructed for every ps in the cluster. Probably not.
+                for (int j = 0; j < ps_in_cluster.Length; j++) {
+                    clusterPointSet.Add(ps_in_cluster[j].Trim(cs, map));
                 }
             }
-
-            foreach (PointList pl in pointLists.Values){
-                clusterPointSet.Add(pl);
-            }
+			
             return clusterPointSet;
         }
 

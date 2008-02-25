@@ -177,40 +177,38 @@ namespace Pavel.GUI.Visualizations {
         /// containing the position of that Point in the displayed ScatterPlots.
         /// </summary>
         private void CreateVertexArray() {
+            PointSet ps = vis.VisualizationWindow.DisplayedPointSet;
+            ColumnProperty[] cp = vis.VisualizationWindow.Space.ColumnProperties;
             double scaledX, scaledY;
-            this.vertexArray = new short[vis.VisualizationWindow.DisplayedPointSet.Length][];
+            this.vertexArray = new short[ps.Length][];
             for (int i = 0; i < this.vertexArray.Length; i++) {
                 this.vertexArray[i] = new short[2 * displayed.Count];
             }
-            PavelMain.MainWindow.StatusBar.StartProgressBar(0, vis.VisualizationWindow.DisplayedPointSet.Length, "Create Vertex Array...");
-            for (int plIndex = 0; plIndex < vis.VisualizationWindow.DisplayedPointSet.PointLists.Count; plIndex++) {
-                PointList pl = vis.VisualizationWindow.DisplayedPointSet.PointLists[plIndex];
-                int[] map = vis.VisualizationWindow.Space.CalculateMap(pl.ColumnSet);
-                for (int pointIndex = 0; pointIndex < pl.Count; pointIndex++) {
+            PavelMain.MainWindow.StatusBar.StartProgressBar(0, ps.Length, "Create Vertex Array...");
+            int[] map = vis.VisualizationWindow.Space.CalculateMap(ps.ColumnSet);
+            for (int pointIndex = 0; pointIndex < ps.Length; pointIndex++) {
 
-                    if (pointIndex % 100 == 0) PavelMain.MainWindow.StatusBar.IncrementProgressBar(100);
-                    ColumnProperty[] cp = vis.VisualizationWindow.Space.ColumnProperties;
+                if (pointIndex % 100 == 0) PavelMain.MainWindow.StatusBar.IncrementProgressBar(100);
 
-                    for (int dispIndex = 0; dispIndex < displayed.Count; dispIndex++) {
-                        scaledX = pl[pointIndex].ScaledValue(map[displayed[dispIndex].X], cp[displayed[dispIndex].X]);
-                        scaledY = pl[pointIndex].ScaledValue(map[displayed[dispIndex].Y], cp[displayed[dispIndex].Y]);
-                    
-                        // plIndex * pointIndex + pointIndex determines the position in the pointset.
-                        // ((dispIndex % xDimension) * (xAxesSize + dist)) calculates the location of
-                        // the origin (x axis) of the current scatterplot.
-                        // ((dispIndex / xDimension) * (yAxesSize + dist)) calculates the location of
-                        // the origin (y axis) of the current scatterplot.
-                        // The point position is normalized and scaled to the AxesSize - 4.
-                        // In the end 2 is added. This, in combination with the scaling creates a slight
-                        // offset, shifting the extreme points into the boxes, instead of placing them on
-                        // the box-lines.
-                        if ((scaledX >= 0) && (scaledX <= 1) && (scaledY >= 0) && (scaledY <= 1)) {
-                            this.vertexArray[plIndex * pointIndex + pointIndex][2 * dispIndex] = (short)(((dispIndex % xDimension) * (xAxesSize + dist)) + (scaledX * (xAxesSize - 4)) + 2);
-                            this.vertexArray[plIndex * pointIndex + pointIndex][2 * dispIndex + 1] = (short)(((dispIndex / xDimension) * (yAxesSize + dist)) + (scaledY * (yAxesSize - 4)) + 2);
-                        } else {
-                            this.vertexArray[plIndex * pointIndex + pointIndex][2 * dispIndex] = -100;
-                            this.vertexArray[plIndex * pointIndex + pointIndex][2 * dispIndex + 1] = -100;
-                        }
+                for (int dispIndex = 0; dispIndex < displayed.Count; dispIndex++) {
+                    scaledX = ps[pointIndex].ScaledValue(map[displayed[dispIndex].X], cp[displayed[dispIndex].X]);
+                    scaledY = ps[pointIndex].ScaledValue(map[displayed[dispIndex].Y], cp[displayed[dispIndex].Y]);
+                
+                    // pointIndex determines the position in the pointset.
+                    // ((dispIndex % xDimension) * (xAxesSize + dist)) calculates the location of
+                    // the origin (x axis) of the current scatterplot.
+                    // ((dispIndex / xDimension) * (yAxesSize + dist)) calculates the location of
+                    // the origin (y axis) of the current scatterplot.
+                    // The point position is normalized and scaled to the AxesSize - 4.
+                    // In the end 2 is added. This, in combination with the scaling creates a slight
+                    // offset, shifting the extreme points into the boxes, instead of placing them on
+                    // the box-lines.
+                    if ((scaledX >= 0) && (scaledX <= 1) && (scaledY >= 0) && (scaledY <= 1)) {
+                        this.vertexArray[pointIndex][2 * dispIndex] = (short)(((dispIndex % xDimension) * (xAxesSize + dist)) + (scaledX * (xAxesSize - 4)) + 2);
+                        this.vertexArray[pointIndex][2 * dispIndex + 1] = (short)(((dispIndex / xDimension) * (yAxesSize + dist)) + (scaledY * (yAxesSize - 4)) + 2);
+                    } else {
+                        this.vertexArray[pointIndex][2 * dispIndex] = -100;
+                        this.vertexArray[pointIndex][2 * dispIndex + 1] = -100;
                     }
                 }
             }

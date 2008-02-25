@@ -170,13 +170,7 @@ namespace Pavel.GUI {
             if (( this.pointSetNameBox.Text.Trim() != "" ) && ( this.UniqueName() )) {
                 //Create new PointSet
                 PointSet newPointSet = new PointSet(this.pointSetNameBox.Text, this.selectedPointSet.ColumnSet);
-                foreach (PointList pl in this.selectedPointSet.PointLists) {
-                    PointList newPointList = new PointList(pl.ColumnSet);
-                    if ( pl.Count != 0 ) {
-                        newPointList.AddRange(pl);
-                    }
-                    newPointSet.Add(newPointList);
-                }
+                newPointSet.AddRange(this.selectedPointSet); //TODO: Kopierfunktion in PointSet.cs
                 ProjectController.Project.pointSets.Add(newPointSet);
                 this.UpdateList();
                 this.pointSetList.SelectedIndex = this.pointSetList.Items.IndexOf(newPointSet);

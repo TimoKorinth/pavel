@@ -105,9 +105,7 @@ namespace Pavel.Clustering {
             foreach (double d in this.values) {
                 values += d.ToString() + ", ";
             }
-            return this.label.ToString() + " " + values + " PointSet-Length: " + this.PointSet.Length
-                + " PointLists-Length: " + this.PointSet.PointLists.Count
-                + " PointLists[0].Length: " + this.PointSet.PointLists[0].Count;
+            return this.label.ToString() + " " + values + " PointSet-Length: " + this.PointSet.Length;
         }
 
         #endregion

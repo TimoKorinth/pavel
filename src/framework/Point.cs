@@ -186,24 +186,19 @@ namespace Pavel.Framework {
         /// <summary>
         /// Creates a new Point that contains only columns which are present in <paramref name="columnSet"/>.
         /// Calculates a SuperColumnSetMap each time. Use Trim(ColumnSet, int[]) if speed is a concern.
+        /// Trimming using the same columnSet yields a reference to this point, not a copy.
         /// </summary>
         /// <param name="columnSet">A ColumnSet</param>
         public Point Trim(ColumnSet columnSet) {
             if (columnSet == this.columnSet) return this;
 
-            int[]    map     = columnSet.SuperSetMap(this.columnSet);
-            double[] valNew  = new double[map.Length];
-
-            for (int i = 0; i < map.Length; i++ ) {
-                valNew[i] = values[map[i]];
-            }
-
-            return new Point(columnSet, valNew);
+            return Trim(columnSet, columnSet.SuperSetMap(this.columnSet));
         }
 
         /// <summary>
         /// Faster Version of the Trim Function that can be used if the
         /// SuperColumnSetMap is already known.
+        /// Always returns a new Point, even if the map is an identity map
         /// </summary>
         /// <param name="columnSet">A ColumnSet</param>
         /// <param name="superColumnSetMap">The SuperColumnSetMap, mapping indices
@@ -215,7 +210,7 @@ namespace Pavel.Framework {
                 valNew[i] = values[superColumnSetMap[i]];
             }
 
-            return new Point(columnSet, valNew);
+            return new Point(columnSet, tag, valNew);
         }
 
         #region static Point Operations

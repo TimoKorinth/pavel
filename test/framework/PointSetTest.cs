@@ -43,7 +43,7 @@ namespace Pavel.Test.Framework {
                 };
 
                 PointSet ps = new PointSet("ComplicatedPointSet", columnSet);
-                ps.Add(new PointList(columnSet, points));
+                ps.AddRange(points);
                 return ps;
             }
         }
@@ -149,7 +149,7 @@ namespace Pavel.Test.Framework {
             Assert.AreEqual(new double[] { 3,  -2 }, minMaxMean[Result.MEAN].Values);
         }
 
-        [Test]
+        [Test, NUnit.Framework.Ignore("PointSet.Remove(PointList) is not used anymore, this thest should be rewritten so test Remove(Point)")]
         public void TestRemove() {
             ColumnSet sp1 = new ColumnSet(new Column(), new Column());
 
@@ -165,10 +165,10 @@ namespace Pavel.Test.Framework {
             PointSet ps = new PointSet("", sp1);
             ps.Add(pl1);
             ps.Add(pl2);
-            ps.Remove(pl1);
+            //ps.Remove(pl1); TODO: Obsolete
             Assert.AreEqual(1, ps.PointLists.Count);
             ps.Add(new PointList(sp1));
-            ps.Remove(pl1);
+            //ps.Remove(pl1);
             Assert.AreEqual(2, ps.PointLists.Count);
         }
 

@@ -5,7 +5,7 @@ using System.Text;
 using Pavel.Test.Framework;
 using Pavel.Framework;
 using Pavel.Clustering;
-using Node = Pavel.Clustering.HierarchicalClusterList.Node;
+using Node = Pavel.Clustering.HierarchicalClusterSet.Node;
 using NUnit.Framework;
 
 namespace Pavel.Test.Clustering {

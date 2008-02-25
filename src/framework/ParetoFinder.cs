@@ -73,12 +73,11 @@ namespace Pavel.Framework {
             PavelMain.MainWindow.StatusBar.StartProgressBar(0, sorted.Length, "Calculating Paretofront...");
 
             //Create an array containing the scaled points
-            foreach (PointList pl in pointSet.PointLists) {
-                int column0 = pl.ColumnSet.IndexOf(cp0.Column);
-                int column1 = pl.ColumnSet.IndexOf(cp1.Column);
-                for (int i = 0; i < pl.Count; i++) {
-                    sorted[i] = new ParetoPoint(new double[] { pl[i].ScaledValue(column0,cp0), pl[i].ScaledValue(column1,cp1) }, pl[i]);
-                }
+            int column0 = pointSet.ColumnSet.IndexOf(cp0.Column);
+            int column1 = pointSet.ColumnSet.IndexOf(cp1.Column);
+            for (int i = 0; i < pointSet.Length; i++) {
+                //TODO: Make Faster by precomputing Scale and Translation
+                sorted[i] = new ParetoPoint(new double[] { pointSet[i].ScaledValue(column0, cp0), pointSet[i].ScaledValue(column1, cp1) }, pointSet[i]);
             }
 
             Array.Sort(sorted, Comparer2D);
@@ -111,13 +110,12 @@ namespace Pavel.Framework {
         private static Selection Sort(PointSet pointSet, ColumnProperty cp0, ColumnProperty cp1, ColumnProperty cp2) {
             ParetoPoint[] points = new ParetoPoint[pointSet.Length];
             //Create an array containing the scaled points
-            foreach (PointList pl in pointSet.PointLists) {
-                int column0 = pl.ColumnSet.IndexOf(cp0.Column);
-                int column1 = pl.ColumnSet.IndexOf(cp1.Column);
-                int column2 = pl.ColumnSet.IndexOf(cp2.Column);
-                for (int i = 0; i < pl.Count; i++) {
-                    points[i] = new ParetoPoint(new double[] { pl[i].ScaledValue(column0,cp0), pl[i].ScaledValue(column1,cp1), pl[i].ScaledValue(column2,cp2) }, pl[i]);
-                }
+            int column0 = pointSet.ColumnSet.IndexOf(cp0.Column);
+            int column1 = pointSet.ColumnSet.IndexOf(cp1.Column);
+            int column2 = pointSet.ColumnSet.IndexOf(cp2.Column);
+            for (int i = 0; i < pointSet.Length; i++) {
+                //TODO: Make Faster by precomputing Scale and Translation
+                points[i] = new ParetoPoint(new double[] { pointSet[i].ScaledValue(column0, cp0), pointSet[i].ScaledValue(column1, cp1), pointSet[i].ScaledValue(column2, cp2) }, pointSet[i]);
             }
             Selection paretoFront = new Selection();
             paretoFront.Active = true;

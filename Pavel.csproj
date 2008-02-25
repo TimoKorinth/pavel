@@ -88,7 +88,7 @@
     </Compile>
     <Compile Include="src\clustering\ClusterSet.cs" />
     <Compile Include="src\clustering\ExtendedHACM.cs" />
-    <Compile Include="src\clustering\HierarchicalClusterList.cs" />
+    <Compile Include="src\clustering\HierarchicalClusterSet.cs" />
     <Compile Include="src\clustering\KMeans.cs" />
     <Compile Include="src\clustering\MLA.cs" />
     <Compile Include="src\Common.cs" />
@@ -98,7 +98,6 @@
     <Compile Include="src\framework\ParetoFinder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\framework\PointList.cs" />
     <Compile Include="src\framework\PointSet.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -143,7 +142,7 @@
     <Compile Include="src\framework\LogBook.cs" />
     <Compile Include="src\gui\Export.cs" />
     <Compile Include="src\gui\solutionVisualizations\GlyphControl.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\gui\IndividualColumnWindow.cs">
       <SubType>Form</SubType>
@@ -179,7 +178,7 @@
       <DependentUpon>PointSetManager.cs</DependentUpon>
     </Compile>
     <Compile Include="src\gui\ProjectStarter.cs">
-      <SubType>Component</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\gui\ProjectStarter.Designer.cs">
       <DependentUpon>ProjectStarter.cs</DependentUpon>

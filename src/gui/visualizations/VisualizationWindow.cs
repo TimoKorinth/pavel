@@ -294,19 +294,18 @@ namespace Pavel.GUI.Visualizations {
             clusterSelections = new List<Selection>();
 
             PointSet clusterPointSet = new PointSet(clusterSet.Label, pointSet.ColumnSet);
-            if (clusterSet.PointLists.Count != 1)
-                throw new ApplicationException("Clustering is not valid. More than one PointList");
-            clusterPointSet.Add(clusterSet.PointLists[0]);
-            for (int i = 0; i < clusterSet.PointLists[0].Count; i++) {
-                PointSet ps = ((clusterSet.PointLists[0][i]) as Clustering.Cluster).PointSet;
+            clusterPointSet.AddRange(clusterSet);
+            for (int i = 0; i < clusterSet.Length; i++) {
+                PointSet ps = ((clusterSet[i]) as Clustering.Cluster).PointSet;
                 Selection s = new Selection();
-                s.Add(clusterSet.PointLists[0][i]);
+                // Add center
+                s.Add(clusterSet[i]);
                 s.Label = "Cluster " + i;
                 s.Active = true;
-                foreach (PointList pl in ps.PointLists) {
-                    clusterPointSet.Add(pl);
-                    s.AddRange(pl);
-                }
+                
+                // Add points
+                clusterPointSet.AddRange(ps);
+                s.AddRange(ps);
                 clusterSelections.Add(s); 
             }
             ProjectController.AddSelections(clusterSelections);

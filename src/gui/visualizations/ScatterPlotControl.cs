@@ -205,31 +205,27 @@ namespace Pavel.GUI.Visualizations {
             this.colorArray  = new float[ps.Length * 4];
             int colorIndex;
             PavelMain.MainWindow.StatusBar.StartProgressBar(0, ps.Length, "Create Vertex Array...");
-            int pointIndex = 0;
-            foreach (PointList pl in ps.PointLists) {
-                int[] map = space.CalculateMap(pl.ColumnSet);
-                for (int i = 0; i < pl.Count; i++) {
-                    if (pointIndex % 100 == 0) PavelMain.MainWindow.StatusBar.IncrementProgressBar(100);
-                    vertexArray[pointIndex * 3 + 0] = (float)pl[i][map[iX]];
-                    vertexArray[pointIndex * 3 + 1] = (float)pl[i][map[iY]];
-                    if (mode3D) { vertexArray[pointIndex * 3 + 2] = (float)pl[i][map[iZ]]; } else { vertexArray[pointIndex * 3 + 2] = 0f; }
-                    if ( this.StereoMode ) {
-                        colorArray[pointIndex * 4 + 0] = 1;
-                        colorArray[pointIndex * 4 + 1] = 1;
-                        colorArray[pointIndex * 4 + 2] = 1;
-                    } else if (vis.AxisC != null) {
-                        colorIndex = (int)(pl[i].ScaledValue(map[iC], vis.AxisC) * 255);
-                        colorArray[pointIndex * 4 + 0] = vis.ColorTable[colorIndex].R;
-                        colorArray[pointIndex * 4 + 1] = vis.ColorTable[colorIndex].G;
-                        colorArray[pointIndex * 4 + 2] = vis.ColorTable[colorIndex].B;
-                    } else {
-                        colorArray[pointIndex * 4 + 0] = ColorManagement.UnselectedColor.R;
-                        colorArray[pointIndex * 4 + 1] = ColorManagement.UnselectedColor.G;
-                        colorArray[pointIndex * 4 + 2] = ColorManagement.UnselectedColor.B;
-                    }
-                    colorArray[pointIndex * 4 + 3] = alphaPoints;
-                    pointIndex++;
+            int[] map = space.CalculateMap(ps.ColumnSet);
+            for (int pointIndex = 0; pointIndex < ps.Length; pointIndex++) {
+                if (pointIndex % 100 == 0) PavelMain.MainWindow.StatusBar.IncrementProgressBar(100);
+                vertexArray[pointIndex * 3 + 0] = (float)ps[pointIndex][map[iX]];
+                vertexArray[pointIndex * 3 + 1] = (float)ps[pointIndex][map[iY]];
+                if (mode3D) { vertexArray[pointIndex * 3 + 2] = (float)ps[pointIndex][map[iZ]]; } else { vertexArray[pointIndex * 3 + 2] = 0f; }
+                if ( this.StereoMode ) {
+                    colorArray[pointIndex * 4 + 0] = 1;
+                    colorArray[pointIndex * 4 + 1] = 1;
+                    colorArray[pointIndex * 4 + 2] = 1;
+                } else if (vis.AxisC != null) {
+                    colorIndex = (int)(ps[pointIndex].ScaledValue(map[iC], vis.AxisC) * 255);
+                    colorArray[pointIndex * 4 + 0] = vis.ColorTable[colorIndex].R;
+                    colorArray[pointIndex * 4 + 1] = vis.ColorTable[colorIndex].G;
+                    colorArray[pointIndex * 4 + 2] = vis.ColorTable[colorIndex].B;
+                } else {
+                    colorArray[pointIndex * 4 + 0] = ColorManagement.UnselectedColor.R;
+                    colorArray[pointIndex * 4 + 1] = ColorManagement.UnselectedColor.G;
+                    colorArray[pointIndex * 4 + 2] = ColorManagement.UnselectedColor.B;
                 }
+                colorArray[pointIndex * 4 + 3] = alphaPoints;
             }
             PavelMain.MainWindow.StatusBar.EndProgressBar();
             this.colorArrayBase = (float[])this.colorArray.Clone();

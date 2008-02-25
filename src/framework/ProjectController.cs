@@ -231,7 +231,7 @@ namespace Pavel.Framework {
             File.WriteAllLines(dir + @"\recentprojects.prp", rplist.ToArray());
         }
 
-        public static void SetProjectChanged(bool changed) {
+        public static void SetProjectChanged(bool changed) { //TODO: Property
             if (changed && !project.Changed || !changed && project.Changed) {
                 project.Changed = changed;
                 if (ProjectChanged != null) ProjectChanged(PavelMain.MainWindow, new EventArgs());
@@ -248,16 +248,8 @@ namespace Pavel.Framework {
         /// PointSet</returns>
         public static PointSet FilterPointSetBySelection(PointSet ps, Selection selection) {
             PointSet newPointSet = new PointSet(ps.Label, ps.ColumnSet);
-            foreach (PointList pl in ps.PointLists) {
-                PointList newPointList = new PointList(pl.ColumnSet);
-                for (int i = 0; i < pl.Count; i++) {
-                    if (selection.Contains(pl[i])) {
-                        newPointList.Add(pl[i]);
-                    }
-                }
-                if ( newPointList.Count != 0 ) {
-                    newPointSet.PointLists.Add(newPointList);
-                }
+            for (int i = 0; i < ps.Length; i++) {
+                if (selection.Contains(ps[i])) newPointSet.Add(ps[i]);
             }
             if (newPointSet.Length != 0) {
                 // Return filtered PointSet by Selection

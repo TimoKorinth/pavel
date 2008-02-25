@@ -37,7 +37,7 @@ namespace Pavel.Clustering {
     /// A horizontal cut throught the tree results in a PointList
     /// </summary>
     [Serializable]
-    public class HierarchicalClusterList : PointList {
+    public class HierarchicalClusterSet : ClusterSet {
 
         #region Fields
 
@@ -77,8 +77,8 @@ namespace Pavel.Clustering {
         /// <param name="columnSet">A ColumnSet. Must not be null</param>
         /// <param name="rootNode">The Root-Node of the dendogramm</param>
         /// <param name="defaultClusterCount">The default number of Clusters</param>
-        public HierarchicalClusterList(ColumnSet columnSet, Node rootNode, int defaultClusterCount)
-            : base(columnSet) {
+        public HierarchicalClusterSet(ClusteringAlgorithm ca, Node rootNode, int defaultClusterCount)
+            : base(ca) {
             this.rootNode = rootNode;
             this.defaultClusterCount = defaultClusterCount;
             RecomputeClusters();
@@ -104,16 +104,11 @@ namespace Pavel.Clustering {
         /// <returns></returns>
         public static Node MergeNodes(Node left, Node right, int splittingNumber) {
             PointSet pointSet = new PointSet("" /*left.ToString() + " & " + right.ToString()*/, left.Cluster.PointSet.ColumnSet);
-
-            for (int listIndex=0; listIndex < left.Cluster.PointSet.PointLists.Count; listIndex++) {
-                // Add structure
-                pointSet.Add(new PointList(left.Cluster.PointSet.PointLists[listIndex].ColumnSet));
-                // Add left points
-                pointSet.PointLists[listIndex].AddRange(left.Cluster.PointSet.PointLists[listIndex]);
-                // Add right points
-                pointSet.PointLists[listIndex].AddRange(right.Cluster.PointSet.PointLists[listIndex]);
-            }
             
+            // Check for equality of clusterSets will be perfomed in PointList.AddRange()
+			pointSet.AddRange(left.Cluster.PointSet);
+            pointSet.AddRange(right.Cluster.PointSet);
+			
             // create Cluster with mean
             double[] center = new double[left.Cluster.Values.Length];
             double leftCount   = left.Cluster.PointSet.Length;
@@ -150,7 +145,11 @@ namespace Pavel.Clustering {
             foreach (Cluster cluster in rootNode.GetClusters(this.defaultClusterCount)) {
                 tmpClusters.Add(cluster);
             }
-            this.points = tmpClusters;
+            // TODO: Check if Clear-Method would be better
+            int[] allIndices = new int[this.Length];
+            for (int i = 0; i < this.Length; i++) { allIndices[i] = i; } 
+            this.RemoveAtRange(allIndices);
+            this.AddRange(tmpClusters);
         }
 
         #endregion

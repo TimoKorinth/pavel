@@ -196,10 +196,8 @@ namespace Pavel.GUI.Visualizations {
         public bool VisiblePointsAreSelected() {
             PointSet displayedPointSet = VisualizationWindow.DisplayedPointSet;
             Selection currentSelection = ProjectController.CurrentSelection;
-            foreach (PointList pointList in displayedPointSet.PointLists) {
-                for (int pi = 0; pi < pointList.Count; pi++) {
-                    if (currentSelection.Contains(pointList[pi])) return true;
-                }
+            for (int pi = 0; pi < displayedPointSet.Length; pi++) {
+                if (currentSelection.Contains(displayedPointSet[pi])) return true;
             }
             return false;
         }

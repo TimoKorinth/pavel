@@ -44,7 +44,7 @@ namespace Pavel.Plugins {
         private string[] row;
         private NumberFormatInfo numberFormatInfo = new NumberFormatInfo();
         private int rowCount;
-        private List<PointList> pointLists;
+        private List<PointSet> pointSets;
 
         #endregion
 
@@ -112,9 +112,8 @@ namespace Pavel.Plugins {
             List<Column> columns = ReadHeader(cReader);
             ColumnSet space = new ColumnSet(columns);
 
-            // Create PointList
-            PointList pointList = new PointList(space);
-            pointList.Label = "Point List";
+            // Create PointSet
+            PointSet pointSet = new PointSet("Point List", space);
 
             // Read data
             while (cReader.Peek() != -1) {
@@ -124,17 +123,16 @@ namespace Pavel.Plugins {
                         List<double> currentValues = NextPoint(cReader);
                         if (space.Dimension != currentValues.Count) {
                             space = ExtendSpace(space, currentValues.Count);
-                            pointList = new PointList(space);
-                            pointList.Label = "Point List";
+                            pointSet = new PointSet("Point List", space);
                         }
-                        pointList.Add(new Point(space, currentValues.ToArray()));
+                        pointSet.Add(new Point(space, currentValues.ToArray()));
                     }
 
                 } catch (Exception e) {
                     throw new InvalidDataException("Individual does not match axes", e);
                 }
             }
-            pointLists.Add(pointList);
+            pointSets.Add(pointSet);
             cReader.Close();
             return space;
         }
@@ -220,7 +218,7 @@ namespace Pavel.Plugins {
         public ParserResult Parse(params StreamReader[] reader) {
             numberFormatInfo.NumberDecimalSeparator = ".";
             String message = "";
-            pointLists = new List<PointList>();
+            pointSets = new List<PointSet>();
 
             // creating objective space
             ColumnSet objSpace = ReadSpace(reader[0]);
@@ -243,28 +241,24 @@ namespace Pavel.Plugins {
             }
 
             // uniting point lists
-            PointList masterPointList;
-            PointList[] pointListArray = pointLists.ToArray();
-            masterPointList = new PointList(masterSpace);
+            PointSet masterPointSet;
+            PointSet[] pointSetArray = pointSets.ToArray();
+            masterPointSet = new PointSet("MasterPointSet", masterSpace, true);
 
-            for (int i = 0; i < pointListArray[0].Count; i++) {
+            for (int i = 0; i < pointSetArray[0].Length; i++) {
                 List<double> values = new List<double>();
-                for (int j = 0; j < pointListArray.Length; j++) {
-                    values.AddRange(pointListArray[j][i].Values);
+                for (int j = 0; j < pointSetArray.Length; j++) {
+                    values.AddRange(pointSetArray[j][i].Values);
                 }
-                masterPointList.Add(new Point(masterSpace, values.ToArray()));
+                masterPointSet.Add(new Point(masterSpace, values.ToArray()));
             }
-            masterPointList.Label = "Master Points";
-
-            PointSet masterPointSet = new PointSet("MasterPointSet", masterSpace, true);
-            masterPointSet.Add(masterPointList);
 
             // reading sim values
             if (reader.Length >= 3 && reader[2] != null) {
                 ReadSimValues(reader[2], masterPointSet);
             }
 
-            message += "Master Point Set Length: " + masterPointList.Count;
+            message += "Master Point Set Length: " + masterPointSet.Length;
 
             // Some informational stuff
             if (null != PavelMain.LogBook) {

@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Node = Pavel.Clustering.HierarchicalClusterList.Node;
+using Node = Pavel.Clustering.HierarchicalClusterSet.Node;
 using Pavel.Framework;
 
 namespace Pavel.Clustering {
@@ -107,7 +107,7 @@ namespace Pavel.Clustering {
         /// Does the Clustering and creates a HierarchicalClusterList
         /// </summary>
         /// <returns>A PointList</returns>
-        protected override Pavel.Framework.PointList DoClustering() {
+        protected override ClusterSet DoClustering() {
             #region Initializiation
             // Test for validity
             if (PointSet.Length < 2) {
@@ -132,24 +132,18 @@ namespace Pavel.Clustering {
             try {
                 clusters = new Node[PointSet.Length];
                 int vIndex = 0;
-                for (int plIndex = 0; plIndex < PointSet.PointLists.Count; plIndex++) {
-                    int[] superColumnSetMap = ColumnSet.SuperSetMap(PointSet.PointLists[plIndex].ColumnSet);
-                    for (int index = 0; index < PointSet.PointLists[plIndex].Count; index++) {
-                        // Init Cluster
-                        Cluster cluster = new Cluster("Base-Cluster " + vIndex,
-                            PointSet.PointLists[plIndex][index].Trim(ColumnSet, superColumnSetMap));
-                        // One PointSet to each cluster
-                        cluster.PointSet = new PointSet("", PointSet.ColumnSet);
-                        // Create PointList-Structure for each PointSet
-                        for (int listIndex = 0; listIndex < PointSet.PointLists.Count; listIndex++) {
-                            cluster.PointSet.Add(new PointList(PointSet.PointLists[listIndex].ColumnSet));
-                        }
-                        // Add single point to cluster
-                        cluster.PointSet.PointLists[plIndex].Add(PointSet.PointLists[plIndex][index]);
-                        // Add cluster to dendogrammLine
-                        clusters[vIndex] = new Node(cluster, int.MaxValue, null, null, new int[] { vIndex });
-                        vIndex++;
-                    }
+                //int[] superColumnSetMap = ColumnSet.SuperSetMap(PointSet.ColumnSet);
+                for (int index = 0; index < PointSet.Length; index++) {
+                    // Init Cluster
+                    Cluster cluster = new Cluster("Base-Cluster " + vIndex, PointSet[index]);
+                    // One PointSet to each cluster
+                    cluster.PointSet = new PointSet("", PointSet.ColumnSet);
+                    
+                    // Add single point to cluster
+                    cluster.PointSet.Add(PointSet[index]);
+                    // Add cluster to dendogrammLine
+                    clusters[vIndex] = new Node(cluster, int.MaxValue, null, null, new int[] { vIndex });
+                    vIndex++;
                 }
             } catch {
                 ErrorMessage = "Not enought Memory for Clustering yet!";
@@ -170,7 +164,7 @@ namespace Pavel.Clustering {
                     for (int i = 0; i < PointSet.Length; i++) {
                         for (int j = i + 1; j < PointSet.Length; j++) {
                             // Compute distance
-                            float distance = (float)Point.Distance(ScaledFlatData[i], ScaledFlatData[j]);
+                            float distance = (float)Point.Distance(ScaledData[i], ScaledData[j]);
                             matrix.Set(j, i, distance);
                             count++;
                             if (count >= maxDistances) {
@@ -213,7 +207,7 @@ namespace Pavel.Clustering {
                             } while (clusters[j] == null);
                         } while (matrix.Exist(i, j));
                         // Empty position for valid Clusters found
-                        float distance = (float)Point.Distance(ScaledFlatData[i], ScaledFlatData[j]);
+                        float distance = (float)Point.Distance(ScaledData[i], ScaledData[j]);
                         matrix.Set(i, j, distance);
                         SignalProgress(0, "Refill matrix: " + matrix.Count + "/" + maxDistances);
                     }
@@ -232,7 +226,7 @@ namespace Pavel.Clustering {
                 int first = matrix.Minimum.Row;
                 int second = matrix.Minimum.Column;
                 // Merge Nodes (Clusters) with minimum distance
-                newNode = HierarchicalClusterList.MergeNodes(clusters[first], clusters[second], nodes--);
+                newNode = HierarchicalClusterSet.MergeNodes(clusters[first], clusters[second], nodes--);
                 // Update second Node
                 clusters[second] = newNode;
                 // Remove first Node
@@ -264,7 +258,7 @@ namespace Pavel.Clustering {
                         }
                         else if (Mode == (int)MODE.MODE_AVERAGE_LINK) {
                             matrix.Update(entry, Distance(clusters[entry.Row],
-                                clusters[entry.Column], ScaledFlatData, Mode));
+                                clusters[entry.Column], ScaledData, Mode));
                         } else {
                             ErrorMessage = "Invalid Clustering Mode.";
                             return null;
@@ -272,7 +266,7 @@ namespace Pavel.Clustering {
                     } else {
                         // Compute Distance
                         matrix.Update(entry,
-                            Distance(clusters[entry.Row], clusters[entry.Column], ScaledFlatData, Mode));
+                            Distance(clusters[entry.Row], clusters[entry.Column], ScaledData, Mode));
                     }
 
                 }
@@ -302,7 +296,7 @@ namespace Pavel.Clustering {
                             }
                         } else if (Mode == (int)MODE.MODE_AVERAGE_LINK) {
                             matrix.Update(entry, Distance(clusters[entry.Row],
-                                clusters[entry.Column], ScaledFlatData, Mode));
+                                clusters[entry.Column], ScaledData, Mode));
                         } else {
                             ErrorMessage = "Invalid Clustering Mode.";
                             return null;
@@ -310,7 +304,7 @@ namespace Pavel.Clustering {
                     } else {
                         // Compute Distance
                         matrix.Update(entry,
-                            Distance(clusters[entry.Row], clusters[entry.Column], ScaledFlatData, Mode));
+                            Distance(clusters[entry.Row], clusters[entry.Column], ScaledData, Mode));
                     }
                 }
 
@@ -340,7 +334,7 @@ namespace Pavel.Clustering {
                     int mergedNodes = 0;
                     for (int i = first + 1; i < clusters.Length; i++) {
                         if (clusters[i] != null) {
-                            clusters[first] = HierarchicalClusterList.MergeNodes(clusters[first], clusters[i], count--);
+                            clusters[first] = HierarchicalClusterSet.MergeNodes(clusters[first], clusters[i], count--);
                             mergedNodes++;
                             if (mergedNodes % 200 == 0) {
                                 //SignalProgress((int)(((float)mergedNodes / (float)nodes) * 1000f), "Finishing work... (Remaining: " + (nodes - mergedNodes) + " nodes to merge)");
@@ -349,9 +343,9 @@ namespace Pavel.Clustering {
                         
                     }
                     int split = ((nodes < DefaultClusterCount) ? DefaultClusterCount : nodes);
-                    return new HierarchicalClusterList(ColumnSet, clusters[first], split);
+                    return new HierarchicalClusterSet(this, clusters[first], split);
                 } else {
-                    return new HierarchicalClusterList(ColumnSet, newNode, DefaultClusterCount);
+                    return new HierarchicalClusterSet(this, newNode, DefaultClusterCount);
                 }
             } catch (OutOfMemoryException) {
                 ErrorMessage = "Not enought Memory! Try to reduce the number of distances";

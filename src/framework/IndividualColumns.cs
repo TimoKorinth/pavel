@@ -75,29 +75,27 @@ namespace Pavel.Framework {
 
             //1. Step: Copy all Points, with extended columnSet and a new column
             foreach (PointSet ps in pointSets) {
-                for (int i = 0; i < ps.PointLists.Count; i++) {
-                    ColumnSet extendedColumnSet = ColumnSet.Union(ps.PointLists[i].ColumnSet, newColColumnSet);
-                    foreach (Point p in ps.PointLists[i]) {
-                        if (!copiedPoints.ContainsKey(p)) {
-                            double[] copiedValues = new double[p.Values.Length + 1];
-                            p.Values.CopyTo(copiedValues, 0);
+                ColumnSet extendedColumnSet = ColumnSet.Union(ps.ColumnSet, newColColumnSet);
+                for (int pi = 0; pi < ps.Length; pi++) {
+                    if (!copiedPoints.ContainsKey(ps[pi])) {
+                        double[] copiedValues = new double[ps[pi].Values.Length + 1];
+                        ps[pi].Values.CopyTo(copiedValues, 0);
 
-                            String editedFormula = formula;
-                            for (int j = ProjectController.Project.columns.Count - 1; j >= 0; j--) {
-                                if (editedFormula.Contains("$" + j)) {
-                                    editedFormula = editedFormula.Replace("$" + j, p[ProjectController.Project.columns[j]].ToString());
-                                }
+                        String editedFormula = formula;
+                        for (int j = ProjectController.Project.columns.Count - 1; j >= 0; j--) {
+                            if (editedFormula.Contains("$" + j)) {
+                                editedFormula = editedFormula.Replace("$" + j, ps[pi][ProjectController.Project.columns[j]].ToString());
                             }
-                            double value = Evaluate(editedFormula);
-
-                            if (value > max) { max = value; }
-                            if (value < min) { min = value; }
-
-                            copiedValues[copiedValues.Length - 1] = value;
-                            Point copiedPoint = new Point(extendedColumnSet, copiedValues);
-                            copiedPoint.Tag = p.Tag;
-                            copiedPoints.Add(p, copiedPoint);
                         }
+                        double value = Evaluate(editedFormula);
+
+                        if (value > max) { max = value; }
+                        if (value < min) { min = value; }
+
+                        copiedValues[copiedValues.Length - 1] = value;
+                        Point copiedPoint = new Point(extendedColumnSet, copiedValues);
+                        copiedPoint.Tag = ps[pi].Tag;
+                        copiedPoints.Add(ps[pi], copiedPoint);
                     }
                 }
             }
@@ -108,20 +106,10 @@ namespace Pavel.Framework {
             //2. Step: Copy the pointSets and PointLists, extend their columnSets and fill them with the copied points
             List<PointSet> copiedPointSets = new List<PointSet>();
             foreach (PointSet ps in pointSets) {
-                List<PointList> copiedPointsList = new List<PointList>();
-                for (int i = 0; i < ps.PointLists.Count; i++) {
-                    List<Point> points = new List<Point>();
-                    ColumnSet extendedColumnSet = ColumnSet.Union(ps.PointLists[i].ColumnSet, newColColumnSet);
-                    //Create a new PointList, with the copied Points
-                    foreach (Point p in ps.PointLists[i]) {
-                        points.Add(copiedPoints[p]);
-                    }
-                    PointList copiedPointList = new PointList(extendedColumnSet, points);
-                    copiedPointsList.Add(copiedPointList);
-                }
-                PointSet copiedPointSet = new PointSet(ps.Label, ColumnSet.Union(ps.ColumnSet, newColColumnSet));
-                foreach (PointList pl in copiedPointsList) {
-                    copiedPointSet.Add(pl);
+                ColumnSet extendedColumnSet = ColumnSet.Union(ps.ColumnSet, newColColumnSet);
+                PointSet  copiedPointSet = new PointSet(ps.Label, extendedColumnSet);
+                foreach (Point p in ps) {
+                    copiedPointSet.Add(copiedPoints[p]);
                 }
                 copiedPointSets.Add(copiedPointSet);
             }

@@ -75,8 +75,8 @@ namespace Pavel.GUI.Visualizations {
         private int sortColumn = 0;  
 
         //Caches for used Point and their maps
-        private CachePoint[] cacheTable;
-        private int[][] maps;
+        private Pavel.Framework.Point[] cacheTable;
+        private int[] map;
 
         private int lastSelectedIndex = -1;
 
@@ -173,11 +173,11 @@ namespace Pavel.GUI.Visualizations {
             if ( columnsReordered ) { columnsReordered = false; InitDrawing(); }
 
             //Creating item from values stored in cacheTable
-            CachePoint cachePoint = cacheTable[e.ItemIndex];
-            ListViewItem item = new ListViewItem(cachePoint.point[maps[cachePoint.map][0]].ToString());
+            Pavel.Framework.Point cachePoint = cacheTable[e.ItemIndex];
+            ListViewItem item = new ListViewItem(cachePoint[map[0]].ToString());
             item.Tag = cachePoint;
-            for(int i=1;i<maps[cachePoint.map].Length;i++) {
-                item.SubItems.Add(cachePoint.point[maps[cachePoint.map][i]].ToString());
+            for(int i=1;i<map.Length;i++) {
+                item.SubItems.Add(cachePoint[map[i]].ToString());
             }
             e.Item = item;
         }        
@@ -187,10 +187,10 @@ namespace Pavel.GUI.Visualizations {
             Color backgroundColor = Color.White;
             Color highLightColor = System.Drawing.SystemColors.Highlight;
             Color textColor = Color.Black;
-            CachePoint cachePoint = (CachePoint)e.Item.Tag;
+            Pavel.Framework.Point cachePoint = (Pavel.Framework.Point)e.Item.Tag;
 
             if ( coloringStyle == ColoringStyles.Value ) {                
-                double relValue = cachePoint.point.ScaledValue(maps[cachePoint.map][e.ColumnIndex],
+                double relValue = cachePoint.ScaledValue(map[e.ColumnIndex],
                     VisualizationWindow.Space.ColumnProperties[e.ColumnIndex]);
 
                 if ( relValue > 1 ) { relValue = 1; }
@@ -198,20 +198,20 @@ namespace Pavel.GUI.Visualizations {
                     || Double.IsInfinity(relValue)) { relValue = 0; }
                 if ( relValue > 0.5 ) { backgroundColor = Color.FromArgb(255, (int)(255 - (relValue - 0.5) * 2 * 255), 0); }
                 else { backgroundColor = Color.FromArgb((int)((relValue * 2) * 255), 255, 0); }
-                if ( ProjectController.CurrentSelection.Contains(cachePoint.point) ) {
+                if ( ProjectController.CurrentSelection.Contains(cachePoint) ) {
                     backgroundColor = System.Drawing.SystemColors.Highlight;
                     textColor = System.Drawing.SystemColors.HighlightText;
                 }
             }
             else if ( coloringStyle == ColoringStyles.Selection ) {
-                backgroundColor = ProjectController.GetSelectionColor(cachePoint.point).ToColor();
+                backgroundColor = ProjectController.GetSelectionColor(cachePoint).ToColor();
             }
             else if ( coloringStyle == ColoringStyles.None ) {
                 if ( e.ItemIndex % 2 == 0 ) {
                     backgroundColor = Color.FromArgb(255, 245, 245, 245);
                 }
                 else backgroundColor = Color.White;
-                if ( ProjectController.CurrentSelection.Contains(cachePoint.point) ) {
+                if ( ProjectController.CurrentSelection.Contains(cachePoint) ) {
                     backgroundColor = System.Drawing.SystemColors.Highlight;
                     textColor = System.Drawing.SystemColors.HighlightText;
                 }
@@ -251,17 +251,17 @@ namespace Pavel.GUI.Visualizations {
                 } else {
                     //Store which line is clicked
                     if ( lastSelectedIndex == -1 ) lastSelectedIndex = listView.SelectedIndices[0];
-                    Pavel.Framework.Point p = cacheTable[(listView.SelectedIndices[0])].point;
+                    Pavel.Framework.Point p = cacheTable[(listView.SelectedIndices[0])];
                     //Ctrl and shift pressed -> Mark a range and add all items in the selection
                     if ( Control.ModifierKeys == (Keys.Control | Keys.Shift) ) {
                         List<Pavel.Framework.Point> points = new List<Pavel.Framework.Point>();
                         if ( listView.SelectedIndices[0] > lastSelectedIndex ) {
                             for ( int i = lastSelectedIndex; i <= listView.SelectedIndices[0]; i++ ) {
-                                points.Add(cacheTable[i].point);
+                                points.Add(cacheTable[i]);
                             }
                         } else {
                             for ( int i = listView.SelectedIndices[0]; i < lastSelectedIndex; i++ ) {
-                                points.Add(cacheTable[i].point);
+                                points.Add(cacheTable[i]);
                             }
                         }
                         ProjectController.CurrentSelection.AddRange(points);
@@ -273,11 +273,11 @@ namespace Pavel.GUI.Visualizations {
                         //Mark lines between this lines
                         if ( listView.SelectedIndices[0] > lastSelectedIndex ) {
                             for ( int i = lastSelectedIndex; i <= listView.SelectedIndices[0]; i++ ) {
-                                points.Add(cacheTable[i].point);
+                                points.Add(cacheTable[i]);
                             }
                         } else {
                             for ( int i = listView.SelectedIndices[0]; i <= lastSelectedIndex; i++ ) {
-                                points.Add(cacheTable[i].point);
+                                points.Add(cacheTable[i]);
                             }
                         }
                         ProjectController.CurrentSelection.ClearAndAddRange(points);
@@ -323,21 +323,11 @@ namespace Pavel.GUI.Visualizations {
             catch ( ArgumentOutOfRangeException ) { }
 
             //Creating cacheTable
-            maps = new int[VisualizationWindow.DisplayedPointSet.PointLists.Count][];
-            cacheTable = new CachePoint[VisualizationWindow.DisplayedPointSet.Length];
-            int position = 0;
-            for ( int i = 0; i < VisualizationWindow.DisplayedPointSet.PointLists.Count; i++ ) {
-                maps[i] = VisualizationWindow.Space.CalculateMap(VisualizationWindow.DisplayedPointSet.PointLists[i].ColumnSet);
-                for ( int j = 0; j < VisualizationWindow.DisplayedPointSet.PointLists[i].Count; j++ ) {
-                    Pavel.Framework.Point point = VisualizationWindow.DisplayedPointSet.PointLists[i][j];
-                    cacheTable[position] = new CachePoint(
-                        VisualizationWindow.DisplayedPointSet.PointLists[i][j],  //The Point in the List
-                        i,                                              //The map for this PointList
-                        VisualizationWindow.DisplayedPointSet.PointLists[i],     //The PointList itself
-                        j                                               //Index of the Point in PointList
-                    );
-                    position++;
-                }
+            cacheTable = new Pavel.Framework.Point[VisualizationWindow.DisplayedPointSet.Length];
+            map = VisualizationWindow.Space.CalculateMap(VisualizationWindow.DisplayedPointSet.ColumnSet);
+            for ( int j = 0; j < VisualizationWindow.DisplayedPointSet.Length; j++ ) {
+                Pavel.Framework.Point point = VisualizationWindow.DisplayedPointSet[j];
+                cacheTable[j] = VisualizationWindow.DisplayedPointSet[j];
             }
             Array.Sort(cacheTable, OrderByValue);
             listView.Columns[sortColumn].Text = "* " + listView.Columns[sortColumn].Text;
@@ -370,9 +360,9 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private int OrderByValue(CachePoint a, CachePoint b) {
-            double valueA = a.point[maps[a.map][sortColumn]];
-            double valueB = b.point[maps[b.map][sortColumn]];
+        private int OrderByValue(Pavel.Framework.Point a, Pavel.Framework.Point b) {
+            double valueA = a[map[sortColumn]];
+            double valueB = b[map[sortColumn]];
             if ( valueA == valueB ) return 0;
             if ( valueA < valueB ) return -1;
             else return 1;
@@ -401,14 +391,14 @@ namespace Pavel.GUI.Visualizations {
             if (lastItemIndex == cacheTable.Length-1) { showline = 0; }
             if ( lastItemIndex != -1 ) {
                 while ( showline<cacheTable.Length-1 && 
-                    !ProjectController.CurrentSelection.Contains(cacheTable[showline].point) ) {
+                    !ProjectController.CurrentSelection.Contains(cacheTable[showline]) ) {
                     showline++;
                 }
                 // if no selected line was found under the last item, restart at the top of the list
                 if ( showline > cacheTable.Length ) {
                     showline = 0;
                     while ( showline != lastItemIndex &&
-                    !ProjectController.CurrentSelection.Contains(cacheTable[showline].point) ) {
+                    !ProjectController.CurrentSelection.Contains(cacheTable[showline]) ) {
                         showline++;
                     }
                 }
@@ -424,8 +414,7 @@ namespace Pavel.GUI.Visualizations {
         /// </summary>
         private void ResetProperties( ) {
         }
-
-        
+     
         #endregion
 
         # region public accessors
@@ -551,22 +540,6 @@ namespace Pavel.GUI.Visualizations {
             return cm;
         }
 
-        #endregion
-
-        #region Inner Class CachePoint
-        private class CachePoint {
-            public Pavel.Framework.Point point = null;
-            public int map = 0;
-            public PointList pointList;
-            public int indexInPointList;
-
-            public CachePoint(Pavel.Framework.Point point, int map, PointList pointList, int indexInPointList){
-                this.point = point;
-                this.map = map;
-                this.pointList = pointList;
-                this.indexInPointList = indexInPointList;
-            }
-        }
         #endregion
 
         private class CustomListView: ListView {
