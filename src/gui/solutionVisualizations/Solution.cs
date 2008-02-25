@@ -131,8 +131,10 @@ namespace Pavel.GUI.SolutionVisualizations {
             this.TabPag.Text = "Solution Window";
         }
 
+        //TODO Name doof, Doku fehlt
         public abstract int ChangePoint(bool forwardDirection);
 
+        //TODO Doku fehlt
         protected abstract void ChangeMode();
 
         /// <summary>

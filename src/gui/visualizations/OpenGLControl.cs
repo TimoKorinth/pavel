@@ -311,6 +311,35 @@ namespace Pavel.GUI.Visualizations {
             Gl.glPopAttrib();
         }
 
+        /// <summary>
+        /// Initialize the PickingMatrix
+        ///
+        /// Sets the MatrixMode to Projection,
+        /// creates a picking region for the given coordinates and
+        /// calls SetupProjection
+        /// </summary>
+        /// <param name="x">x-Coordinate (Window based, left is 0) of the picking region's center</param>
+        /// <param name="y">y-Coordinate (Window based, top is 0) of the picking region's center</param>
+        /// <param name="w">Width of the Picking Rectangle</param>
+        /// <param name="h">Height of the Picking Rectangle</param>
+        protected void InitializePickingMatrix(int x, int y, int w, int h) {
+            int[] viewport = new int[4];
+
+            //Extract viewport
+            Gl.glGetIntegerv(Gl.GL_VIEWPORT, viewport);
+
+            Gl.glMatrixMode(Gl.GL_PROJECTION);
+            Gl.glLoadIdentity();
+            // create picking region near cursor location
+            Glu.gluPickMatrix(x, (viewport[3] - y), w, h, viewport);
+
+            if (!this.stereoMode) {
+                SetupProjection(false);
+            } else {
+                SetupProjectionStereo(StereoEye.Picking);
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -633,7 +662,11 @@ namespace Pavel.GUI.Visualizations {
                         err = "Unknown GL error.  This should never happen.";
                         break;
                 }
+#if DEBUG
+                throw new ApplicationException(err);
+#else
                 ShowError(err);
+#endif
             }
         }
 

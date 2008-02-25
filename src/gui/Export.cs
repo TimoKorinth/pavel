@@ -44,21 +44,19 @@ namespace Pavel.GUI {
         public static void ExportData() {
             SpaceSelectDialog sSD = new SpaceSelectDialog(ProjectController.Project.pointSets);
             if (sSD.ShowDialog() == DialogResult.OK && sSD.SelectedSpace != null) {
-                if (sSD.SelectedPointSet as ClusterSet == null) {
-                    MessageBox.Show("Sorry, Export only for Clusterings!");
-                } else {
-                    // Show FileDialog
-                    SaveFileDialog saveDlg = new SaveFileDialog();
-                    saveDlg.Title = "Export to File";
-                    saveDlg.Filter = "Text file|*.txt|All files|*.*";
-                    saveDlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                    if (saveDlg.ShowDialog() == DialogResult.OK) {
-                        SaveDataToFile(saveDlg.FileName, sSD.SelectedSpace, sSD.SelectedPointSet);
+                SaveFileDialog saveDlg = new SaveFileDialog();
+                saveDlg.Title = "Export to File";
+                saveDlg.Filter = "CSV file|*.csv|All files|*.*";
+                saveDlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                if (saveDlg.ShowDialog() == DialogResult.OK) {
+                    using(StreamWriter output= new StreamWriter(saveDlg.FileName)){
+                        sSD.SelectedPointSet.ExportCSV(sSD.SelectedSpace, output);
                     }
                 }
             }
         }
 
+        [Obsolete("Replaced by PointSet.ExportCSV")]
         private static void SaveDataToFile(String filename, Space space, PointSet selectedPointSet) {
             // Export Data
             StreamWriter output = null;

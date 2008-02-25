@@ -95,6 +95,10 @@ namespace Pavel.Plugins {
             
             String[] splittedRow = completeRow.Split(splitter);
 
+            //Determine number of columns
+            int numColumns = splittedRow.Length;
+            if ("" == splittedRow[splittedRow.Length - 1]) numColumns--;
+
             // Throw an exception, if no labels can be found
             // Assuming, there must be two rows, not only one
             if (splittedRow.Length <= 1) {
@@ -104,8 +108,8 @@ namespace Pavel.Plugins {
             // Parsing header for Spaces
             List<Column> masterSpaceColumnList = new List<Column>();
             Dictionary<String, List<Column>> columnSetsDictionary = new Dictionary<string, List<Column>>();
-            for ( int i = 0; i < splittedRow.Length; i++ ) {
-                String[] splittedColumn = splittedRow[i].Split(new char[] { ':' }, 2);
+            for ( int colIndex = 0; colIndex < numColumns; colIndex++ ) {
+                String[] splittedColumn = splittedRow[colIndex].Split(new char[] { ':' }, 2);
                 String colName;
                 Column column;
                 if (splittedColumn.Length < 2) {
@@ -137,12 +141,12 @@ namespace Pavel.Plugins {
                 ++rownum;
                 if (!RowEmpty(completeRow)) {
                     splittedRow = completeRow.Split(splitter);
-                    pointValues = new double[splittedRow.Length];
+                    pointValues = new double[numColumns];
                     if (pointValues.Length != masterSpaceColumnList.Count) {
                         throw new InvalidDataException(masterSpaceColumnList.Count.ToString() + " Columns in Header, " +
                             pointValues.Length + " Columns in line " + rownum);
                     }
-                    for (int i = 0; i < splittedRow.Length; i++) {
+                    for (int i = 0; i < numColumns; i++) {
                         pointValues[i] = Double.Parse(splittedRow[i], NumberStyles.Float, numberFormatInfo);
                     }
                     masterPointSet.Add(new Point(masterSpaceColumnSet, pointValues));

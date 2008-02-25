@@ -46,6 +46,8 @@ namespace Pavel.GUI.Visualizations {
             ToolStripButton setCP;
             ToolStripButton resetCP;
             ToolStripButton paretoEval;
+            ToolStripButton planeSelection;
+            ToolStripButton planeGeneration;
 
             ScatterPlot     scatterPlot;
 
@@ -65,6 +67,12 @@ namespace Pavel.GUI.Visualizations {
                 } else {
                     setOrigin.Enabled = false;
                     setCP.Enabled     = false;
+                }
+                if (ScatterPlot.LeftMouseButtonModes.ScatterPlanesAdd == scatterPlot.LeftMouseButtonMode
+                     || ScatterPlot.LeftMouseButtonModes.ScatterPlanesRemove == scatterPlot.LeftMouseButtonMode) {
+                    planeSelection.Checked = true;
+                } else {
+                    planeSelection.Checked = false;
                 }
             }
 
@@ -92,28 +100,43 @@ namespace Pavel.GUI.Visualizations {
                 paretoEval                       = new ToolStripButton(Pavel.Properties.Resources.Pareto);
                 paretoEval.ImageTransparentColor = System.Drawing.Color.Red;
                 paretoEval.ToolTipText           = "Evaluate the Pareto Front";
-
                 this.Items.Add(paretoEval);
+
+                planeSelection = new ToolStripButton(Pavel.Properties.Resources.scatterplanes_add);
+                planeSelection.ImageTransparentColor = System.Drawing.Color.White;
+                planeSelection.ToolTipText = "ScatterPlane Selection. Click to add, CTRL-Click to remove";
+                this.Items.Add(planeSelection);
+
+                planeGeneration = new ToolStripButton(Pavel.Properties.Resources.scatterplanes_auto);
+                planeGeneration.ImageTransparentColor = System.Drawing.Color.White;
+                planeGeneration.ToolTipText = "Autogenerate Scatterplanes";
+                this.Items.Add(planeGeneration);
             }
 
             void SubscribeToEvents() {
-                resetView.Click  += this.resetViewHandler;
-                setOrigin.Click  += this.setOriginHandler;
-                setCP.Click      += this.setCPHandler;
-                resetCP.Click    += this.resetCPHandler;
-                paretoEval.Click += this.paretoEvalHandler;
+                resetView.Click       += this.resetViewHandler;
+                setOrigin.Click       += this.setOriginHandler;
+                setCP.Click           += this.setCPHandler;
+                resetCP.Click         += this.resetCPHandler;
+                paretoEval.Click      += this.paretoEvalHandler;
+                planeSelection.Click  += this.planeSelectionHandler;
+                planeGeneration.Click += this.planeGenerationHandler;
 
                 ProjectController.CurrentSelection.SelectionModified += this.SelectionModified;
+                scatterPlot.leftMouseButtonModeChanged += this.LeftMouseButtonModeChanged;
             }
 
             void UnsubscribeFromEvents() {
-                resetView.Click  -= this.resetViewHandler;
-                setOrigin.Click  -= this.setOriginHandler;
-                setCP.Click      -= this.setCPHandler;
-                resetCP.Click    -= this.resetCPHandler;
-                paretoEval.Click -= this.paretoEvalHandler;
+                resetView.Click       -= this.resetViewHandler;
+                setOrigin.Click       -= this.setOriginHandler;
+                setCP.Click           -= this.setCPHandler;
+                resetCP.Click         -= this.resetCPHandler;
+                paretoEval.Click      -= this.paretoEvalHandler;
+                planeSelection.Click  -= this.planeSelectionHandler;
+                planeGeneration.Click -= this.planeGenerationHandler;
 
                 ProjectController.CurrentSelection.SelectionModified -= this.SelectionModified;
+                scatterPlot.leftMouseButtonModeChanged -= this.LeftMouseButtonModeChanged;
             }
 
             protected override void Dispose(bool disposing) {
@@ -123,13 +146,22 @@ namespace Pavel.GUI.Visualizations {
             }
 
             #region Handler
-            void  resetViewHandler(object sender, EventArgs e) { scatterPlot.Reset(); }
-            void  setOriginHandler(object sender, EventArgs e) { scatterPlot.SetTranslation(); }
-            void      setCPHandler(object sender, EventArgs e) { scatterPlot.SetMinMax(); }
-            void    resetCPHandler(object sender, EventArgs e) { scatterPlot.ResetCP(); }
-            void paretoEvalHandler(object sender, EventArgs e) { scatterPlot.ParetoEval(); }
+            void       resetViewHandler(object sender, EventArgs e) { scatterPlot.Reset(); }
+            void       setOriginHandler(object sender, EventArgs e) { scatterPlot.SetTranslation(); }
+            void           setCPHandler(object sender, EventArgs e) { scatterPlot.SetMinMax(); }
+            void         resetCPHandler(object sender, EventArgs e) { scatterPlot.ResetCP(); }
+            void      paretoEvalHandler(object sender, EventArgs e) { scatterPlot.ParetoEval(); }
+            void  planeSelectionHandler(object sender, EventArgs e) {
+                if (LeftMouseButtonModes.Picking == scatterPlot.LeftMouseButtonMode) {
+                    scatterPlot.LeftMouseButtonMode = LeftMouseButtonModes.ScatterPlanesAdd;
+                } else {
+                    scatterPlot.LeftMouseButtonMode = LeftMouseButtonModes.Picking;
+                }
+            }
+            void planeGenerationHandler(object sender, EventArgs e) { new ScatterPlaneSettings(scatterPlot).ShowDialog(); }
 
-            void SelectionModified(object sender, EventArgs e) { UpdateButtonStates(); }
+            void          SelectionModified(object sender, EventArgs e) { UpdateButtonStates(); }
+            void LeftMouseButtonModeChanged(object sender, EventArgs e) { UpdateButtonStates(); }
             #endregion
         }
 
@@ -151,6 +183,10 @@ namespace Pavel.GUI.Visualizations {
         private ColumnProperty axisX, axisY, axisZ, axisC;
         private int   pointsAlpha;
         private float pointSize;
+
+        private List<ScatterPlane>   scatterPlanes = new List<ScatterPlane>();
+        private LeftMouseButtonModes leftMouseButtonMode = LeftMouseButtonModes.Picking;
+        public event EventHandler    leftMouseButtonModeChanged;
         #endregion
 
         #region Properties
@@ -360,6 +396,19 @@ namespace Pavel.GUI.Visualizations {
         
         #endregion
 
+        public List<ScatterPlane> ScatterPlanes {
+            get { return scatterPlanes; }
+        }
+
+        public LeftMouseButtonModes LeftMouseButtonMode {
+            get { return leftMouseButtonMode; }
+            set {
+                leftMouseButtonMode = value;
+                if (null != leftMouseButtonModeChanged)
+                    leftMouseButtonModeChanged(this, new EventArgs());
+            }
+        }
+
         public ColorOGL[] ColorTable {
             get { return this.colorTable; }
             set {
@@ -549,7 +598,7 @@ namespace Pavel.GUI.Visualizations {
             control.ColumnPropertiesChanged();
         }
 
-        public void ResetCP() { //TODO: Auslagern nach Visualization?
+        public void ResetCP() {
             bool xAscending = axisX.IsAscendingOrder();
             bool yAscending = axisY.IsAscendingOrder();
             bool zAscending = true;
@@ -598,6 +647,67 @@ namespace Pavel.GUI.Visualizations {
             }
         }
 
+        /// <summary>
+        /// f: lhs -> rhs
+        /// 
+        /// Regard f as a distribution. This method then places scatterplanes around peaks in
+        /// the distribution.
+        /// </summary>
+        /// <param name="sourceColumn">LHS of the function</param>
+        /// <param name="targetColumn">RHS of the function</param>
+        public void PlaceScatterPlanes(int slices, double medianPos, int threshold) {
+            //former Parameters:
+            ColumnProperty sourceColumn = AxisX;
+            ColumnProperty targetColumn = AxisY;
+
+            ColumnSet working_colummns = new ColumnSet(sourceColumn.Column, targetColumn.Column);
+            //Werte in ein Array laden
+            double[] sourceValues = new double[this.VisualizationWindow.PointSet.Length];
+            double[] targetValues = new double[this.VisualizationWindow.PointSet.Length];
+            int valuesIndex = 0;
+            PointSet ps = VisualizationWindow.PointSet;
+            int[] map = working_colummns.SuperSetMap(ps.ColumnSet);
+            for (int pointIndex = 0; pointIndex < ps.Length; pointIndex++) {
+                sourceValues[valuesIndex]   = ps[pointIndex][map[0]];
+                targetValues[valuesIndex++] = ps[pointIndex][map[1]];
+            }
+            //Array sortieren nach lhs / source / x
+            Array.Sort(sourceValues, targetValues);
+            
+            //Schwellwert bestimmen
+            double[] sortedArray = (double[])targetValues.Clone();
+            Array.Sort(sortedArray);
+            double median = sortedArray[(int)(sortedArray.Length * medianPos)];
+
+            //Test: Scatterplane fuer den Median einzeichnen
+            ScatterPlanes.Clear();
+            ScatterPlanes.Add(new ScatterPlane(targetColumn, median));
+
+            //Schranken ermitteln
+
+            //in scheiben schneiden und in jeder scheibe die dichte der punkte ueber dem median betrachten, scheiben dann ggf vereinigen
+
+            //x-Achse in Scheiben einer double-laenge teilen
+            double sliceWidth = (sourceColumn.Max - sourceColumn.Min) / slices;
+            //alle punkte in einer x-scheibe raussuchen, anzahl der y ueber dem median zaehlen
+            int i = 0;
+            int yOver = 0;
+            bool oldActive = false;
+            for (double x = sourceColumn.Min; x < sourceColumn.Max; x += sliceWidth) {
+                double xUpper = x + sliceWidth;
+                yOver = 0;
+                for (; i < sourceValues.Length && sourceValues[i] < xUpper; i++) {
+                    if (median <= targetValues[i]) yOver++;
+                }
+                if ((threshold < yOver) != oldActive) {
+                    this.ScatterPlanes.Add(new ScatterPlane(sourceColumn, x));
+                }
+                oldActive = threshold < yOver;
+            }
+
+            Control.Invalidate();
+        }
+
         #region EventHandler
         public override void PointSetModified(object sender, EventArgs e) {
             base.PointSetModified(sender, e);
@@ -609,6 +719,22 @@ namespace Pavel.GUI.Visualizations {
         }
 
         #endregion
+
+        public enum LeftMouseButtonModes {
+            Picking,
+            ScatterPlanesAdd,
+            ScatterPlanesRemove
+        }
+
+        public class ScatterPlane {
+            public ColumnProperty axis;
+            public double position;
+
+            public ScatterPlane(ColumnProperty axis, double position) {
+                this.axis = axis;
+                this.position = position;
+            }
+        }
 
         public enum ScatterLines { None, xyAxes, xzAxes, yzAxes }
     }

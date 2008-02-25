@@ -178,7 +178,7 @@
       <DependentUpon>PointSetManager.cs</DependentUpon>
     </Compile>
     <Compile Include="src\gui\ProjectStarter.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\gui\ProjectStarter.Designer.cs">
       <DependentUpon>ProjectStarter.cs</DependentUpon>
@@ -241,6 +241,12 @@
     <Compile Include="src\gui\visualizations\ParallelPlot.cs" />
     <Compile Include="src\gui\visualizations\ParallelPlotControl.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\ScatterPlaneSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\gui\visualizations\ScatterPlaneSettings.Designer.cs">
+      <DependentUpon>ScatterPlaneSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="src\gui\visualizations\ScatterPlot.cs" />
     <Compile Include="src\gui\visualizations\ScatterPlotControl.cs">
@@ -363,6 +369,10 @@
       <DependentUpon>SpaceSelectDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\gui\visualizations\ScatterPlaneSettings.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ScatterPlaneSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\gui\visualizations\VisualizationWindow.resx">
       <DependentUpon>VisualizationWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -414,6 +424,8 @@
     <None Include="Resources\screenshot.bmp" />
     <Content Include="LICENSE.txt" />
     <None Include="Resources\InvertSelection.png" />
+    <None Include="Resources\scatterplanes_add.bmp" />
+    <None Include="Resources\scatterplanes_auto.bmp" />
     <Content Include="TAO-LICENSE.txt" />
     <None Include="Resources\xroot.png" />
     <None Include="Resources\Up.bmp" />

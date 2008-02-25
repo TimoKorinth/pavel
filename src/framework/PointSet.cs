@@ -311,25 +311,33 @@ namespace Pavel.Framework {
         }
 
         /// <summary>
-        /// Returns a copy of this PointSet.
-        /// Each of the Points contained is trimmed to the newColumnSet.
+        /// Exports this PointSet to a StreamWriter
         /// </summary>
-        /// <param name="newColumnSet"></param>
-        /// <returns></returns>
-        //public PointSet CopyWithColumnSet(ColumnSet newColumnSet) {
-        //    if (newColumnSet.IsSubSetOf(columnSet))
-        //        throw new ApplicationException("newColumnSet is not a subColumnSet of this PointSet");
+        /// <param name="space">The space to export</param>
+        /// <param name="writer">A StreamWriter that actually writes the output somewhere</param>
+        public void ExportCSV(Space space, System.IO.StreamWriter writer) {
+            ColumnSet columnSet = space.ToColumnSet();
+            if (!columnSet.IsSubSetOf(this.columnSet))
+                throw new ApplicationException("Space is not a subcolumnSet of this PointSet");
 
-        //    int[] superColumnSetMap = newColumnSet.SuperSetMap(columnSet);
+            for (int colIndex = 0; colIndex < columnSet.Dimension; colIndex++) {
+                writer.Write(columnSet.Columns[colIndex].Label);
+                writer.Write(";");
+            }
+            writer.Write("\n");
+            writer.Flush();
 
-        //    PointSet newPointSet = new PointSet("Copied and Reduced Pointset" + label, newColumnSet);
-        //    for (int i = 0; i < this.Length; i++) {
-        //        newPointSet.Add(this[i].Trim(newColumnSet, superColumnSetMap));
-        //    }
-
-        //    return newPointSet;
-        //}
-
+            int[] map = columnSet.SuperSetMap(this.ColumnSet);
+            for (int pointIndex = 0; pointIndex < points.Count; pointIndex++) {
+                for (int colIndex = 0; colIndex < map.Length; colIndex++) {
+                    writer.Write(points[pointIndex][map[colIndex]]);
+                    writer.Write(";");
+                }
+                writer.Write("\n");
+            }
+            writer.Flush();
+        }
+        
         /// <summary>
         /// Overrides the ToString() method to return the label of this PointSet.
         /// </summary>

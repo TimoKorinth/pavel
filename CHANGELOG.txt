@@ -1,3 +1,5 @@
+* MillingSimulation UseCase Plugin added
+* Scatterplanes function added to Scatterplot
 * Removed PointLists completely. PointSets inherit all their functionality
 * Fixed the "Umlaut-Problem" (Issue 3). Should work independently of the current culture.
   However, there will still be a problem with Chinese or Kyrilic (etc.) characters.

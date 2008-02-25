@@ -302,6 +302,8 @@ namespace Pavel.GUI.Visualizations {
             Gl.glDisable(Gl.GL_CULL_FACE);
             Gl.glEnable(Gl.GL_LINE_SMOOTH);
             Gl.glEnable(Gl.GL_POINT_SMOOTH);
+            Gl.glEnable(Gl.GL_DEPTH_TEST);
+            Gl.glDepthFunc(Gl.GL_ALWAYS);
             Gl.glEnable(Gl.GL_BLEND);
             Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
             Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
@@ -430,6 +432,7 @@ namespace Pavel.GUI.Visualizations {
         protected override void RenderContent( ) {
             DrawAxes();
             DrawPoints();
+            DrawScatterPlanes();
             DrawCube();
             DrawPickingRectangle();
             if ( vis.ShowLegend ) { DrawLegend(); }
@@ -627,6 +630,72 @@ namespace Pavel.GUI.Visualizations {
             }
         }
 
+        /// <summary>
+        /// Draw the ScatterPlanes.
+        /// </summary>
+        /// <remarks>
+        /// ScatterPlanes are drawn two times, once for the plane,
+        /// once for the planes edges. Because of this the OpenGL Drawing commands
+        /// are extraced to DrawScatterPlane.
+        /// </remarks>
+        private void DrawScatterPlanes() {
+            if (0 == vis.ScatterPlanes.Count) return;
+
+            Gl.glPushAttrib(Gl.GL_POLYGON_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+            Gl.glDepthFunc(Gl.GL_LESS);
+            Gl.glDepthMask(Gl.GL_FALSE);
+            Gl.glLineWidth(2f);
+
+            int name = 0;
+            Gl.glPushName(name);
+            foreach (ScatterPlot.ScatterPlane sp in vis.ScatterPlanes) {
+                Gl.glLoadName(name++);
+
+                //Draw Edges
+                Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_LINE);
+                Gl.glColor3f(0.3f, 0.3f, 0.3f);
+                DrawScatterPlane(sp);
+
+                //Draw Plane
+                Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL);
+                Gl.glColor4f(0.5f, 0.5f, 0.7f, 0.7f);
+                DrawScatterPlane(sp);
+            }
+            Gl.glPopName();
+            Gl.glPopAttrib();
+        }
+
+        /// <summary>
+        /// Helper for DrawScatterPlanes.
+        /// 
+        /// Draws a single ScatterPlane.
+        /// </summary>
+        /// <param name="sp">The ScatterPlane to Draw</param>
+        private void DrawScatterPlane(ScatterPlot.ScatterPlane sp) {
+            float offSet;
+            Gl.glBegin(Gl.GL_QUADS);
+            if (sp.axis == vis.AxisX) {
+                offSet = ScaleToOpenGL(new VectorF((float)sp.position, 0, 0)).X;
+                Gl.glVertex3f(offSet, 0, 0);
+                Gl.glVertex3f(offSet, 1, 0);
+                Gl.glVertex3f(offSet, 1, 1);
+                Gl.glVertex3f(offSet, 0, 1);
+            } else if (sp.axis == vis.AxisY) {
+                offSet = ScaleToOpenGL(new VectorF(0, (float)sp.position, 0)).Y;
+                Gl.glVertex3f(0, offSet, 0);
+                Gl.glVertex3f(1, offSet, 0);
+                Gl.glVertex3f(1, offSet, 1);
+                Gl.glVertex3f(0, offSet, 1);
+            } else if (sp.axis == vis.AxisZ) {
+                offSet = ScaleToOpenGL(new VectorF(0, 0, (float)sp.position)).Z;
+                Gl.glVertex3f(0, 0, offSet);
+                Gl.glVertex3f(1, 0, offSet);
+                Gl.glVertex3f(1, 1, offSet);
+                Gl.glVertex3f(0, 1, offSet);
+            }
+            Gl.glEnd();
+        }
+
         #endregion
 
         #region Manual Event Handling (communication with ScatterPlot3D)
@@ -730,13 +799,29 @@ namespace Pavel.GUI.Visualizations {
                 udAngleTemp = udAngle;
                 lrAngleTemp = lrAngle;
             } else if (ev.Button == MouseButtons.Left) {
-                PickingBegin(new Vector(ev.X, ev.Y));
+                switch (vis.LeftMouseButtonMode) {
+                    case ScatterPlot.LeftMouseButtonModes.Picking:
+                        PickingBegin(new Vector(ev.X, ev.Y)); break;
+                    default:
+                        break;
+                }
             }
         }
 
         private void MouseUpEventHandler(object sender, MouseEventArgs ev) {
             if (ev.Button == MouseButtons.Left) {
-                PickingEnd(new Vector( ev.X, ev.Y));
+                switch (vis.LeftMouseButtonMode) {
+                    case ScatterPlot.LeftMouseButtonModes.Picking:
+                        PickingEnd(new Vector(ev.X, ev.Y)); break;
+                    case ScatterPlot.LeftMouseButtonModes.ScatterPlanesAdd:
+                        if (Control.ModifierKeys != Keys.Control)
+                            ScatterPlaneAddPicking(ev.X, ev.Y);
+                        else
+                            ScatterPlaneRemovePicking(ev.X, ev.Y);
+                        break;
+                    default:
+                        break;
+                }
             } else if (ev.Button == MouseButtons.Right
                 && ev.X == mouseDragStartPoint.X
                 && ev.Y == mouseDragStartPoint.Y) {
@@ -832,32 +917,14 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="h">Height of the Picking Rectangle</param>
         private Point[] PerformPicking(int x, int y, int w, int h) {
             PushMatrices();
-            int[] selectBuffer = new int[vis.VisualizationWindow.DisplayedPointSet.Length * 4];
-            int[] viewport     = new int[4];
-            int hits;
-
-            //Extract viewport
-            Gl.glGetIntegerv(Gl.GL_VIEWPORT, viewport);
-
             //Designate SelectBuffer and switch to Select mode
+            int[] selectBuffer = new int[vis.VisualizationWindow.DisplayedPointSet.Length * 4];
+            int hits;
             Gl.glSelectBuffer(selectBuffer.Length, selectBuffer);
             Gl.glRenderMode(Gl.GL_SELECT);
-
-            //Clear Namestack
             Gl.glInitNames();
 
-            //Initialize Picking Matrix
-            Gl.glMatrixMode(Gl.GL_PROJECTION);
-            Gl.glLoadIdentity();
-            // create picking region near cursor location
-            Glu.gluPickMatrix(x, (viewport[3]-y), w, h, viewport);
-
-            if ( !this.stereoMode ) {
-                SetupProjection(false);
-            } else {
-                SetupProjectionStereo(StereoEye.Picking);
-            }
-
+            InitializePickingMatrix(x, y, w, h);
             SetupModelView(true);
 
             DrawPoints();
@@ -867,6 +934,7 @@ namespace Pavel.GUI.Visualizations {
 
             PopMatrices();
 
+            //Post processing-------------------------------
             //Calculate actual Points and return them
             Point[] selectedPointsBuffer = new Point[hits];
             for (int i = 0; i < hits; i++) {
@@ -874,6 +942,170 @@ namespace Pavel.GUI.Visualizations {
             }
             return selectedPointsBuffer;
         }
+        #endregion
+
+        #region Scatterplane manipulation
+
+        private void ScatterPlaneAddPicking(int x, int y) {
+            PushMatrices();
+
+            //Designate SelectBuffer and switch to Select mode
+            int[] selectBuffer = new int[100 * 5]; //there won't be more than 100 hits, each hit = ["2", znear, zfar, axis, offset]
+            int hits;
+            Gl.glSelectBuffer(selectBuffer.Length, selectBuffer);
+            Gl.glRenderMode(Gl.GL_SELECT);
+            Gl.glInitNames();
+
+            InitializePickingMatrix(x, y, 5, 5);
+            SetupModelView(true);
+
+            DrawScatterPlaneSelector();
+
+            //Switch Back to Render Mode
+            hits = Gl.glRenderMode(Gl.GL_RENDER);
+
+            PopMatrices();
+
+            //Post processing-------------------------------
+            if (0 < hits) {
+                AxisName axis     = (AxisName)selectBuffer[3]; ;
+                float    offSet   = (float)selectBuffer[4] / 100f;;
+                int      minDepth = selectBuffer[1];
+
+                //fetch only the frontmost hit
+                for (int i = 0; i < hits; i++) {
+                    if (selectBuffer[i * 5 + 1] > minDepth) {
+                        minDepth = selectBuffer[i * 5 + 1];
+                        axis     = (AxisName)selectBuffer[i * 5 + 3];
+                        offSet   = (float)selectBuffer[i * 5 + 4] / 100f;
+                    }
+                }
+
+                ColumnProperty cp;
+                double position;
+                if (AxisName.X == axis) {
+                    cp = vis.AxisX;
+                    position = ScaleToPoint(new VectorF((float)offSet + 0.005f, 0, 0)).X;
+                } else if (AxisName.Y == axis) {
+                    cp = vis.AxisY;
+                    position = ScaleToPoint(new VectorF(0, (float)offSet + 0.005f, 0)).Y;
+                } else {
+                    cp = vis.AxisZ;
+                    position = ScaleToPoint(new VectorF(0, 0, (float)offSet + 0.005f)).Z;
+                }
+
+                //TODO temporaer, richtigen Ablauf in den EventHandlern ueberlegen:
+                vis.ScatterPlanes.Add(new ScatterPlot.ScatterPlane(cp, position));
+            }
+            Invalidate();
+        }
+
+        private void ScatterPlaneRemovePicking(int x, int y) {
+            PushMatrices();
+
+            //Designate SelectBuffer and switch to Select mode
+            int[] selectBuffer = new int[100 * 4]; //there won't be more than 100 hits, each hit = ["1", znear, zfar, plane nr.]
+            int hits;
+            Gl.glSelectBuffer(selectBuffer.Length, selectBuffer);
+            Gl.glRenderMode(Gl.GL_SELECT);
+            Gl.glInitNames();
+
+            InitializePickingMatrix(x, y, 5, 5);
+            SetupModelView(true);
+
+            DrawScatterPlanes();
+
+            //Switch Back to Render Mode
+            hits = Gl.glRenderMode(Gl.GL_RENDER);
+
+            PopMatrices();
+
+            //Post processing-------------------------------
+            if (0 < hits) {
+                int planeNr = selectBuffer[3];
+                int minDepth = selectBuffer[1];
+
+                //fetch only the frontmost hit
+                for (int i = 0; i < hits; i++) {
+                    if (selectBuffer[i * 4 + 1] > minDepth) {
+                        minDepth = selectBuffer[i * 4 + 1];
+                        planeNr  = selectBuffer[i * 4 + 3];
+                    }
+                }
+
+                //TODO temporaer, richtigen Ablauf in den EventHandlern ueberlegen:
+                vis.ScatterPlanes.RemoveAt(planeNr);
+            }
+            Invalidate();
+        }
+
+
+        private void DrawScatterPlaneSelector() {
+            //Push
+            PushMatrices();
+            Gl.glPushAttrib(Gl.GL_ENABLE_BIT);
+            Gl.glEnable(Gl.GL_DEPTH_TEST);
+            Gl.glDisable(Gl.GL_CULL_FACE);
+            Gl.glMatrixMode(Gl.GL_MODELVIEW);
+
+            //X-Achse (XY Ebene)
+            Gl.glColor3f(100,0,0);
+            Gl.glPushName((int)AxisName.X);
+            Gl.glPushName(0);
+            for (int i = 0; i < 100; ++i) {
+                Gl.glLoadName(i);
+                //Draw Rectangle
+                Gl.glBegin(Gl.GL_QUADS);
+                    Gl.glVertex3f((i + 0) * 0.01f, 0, 0);
+                    Gl.glVertex3f((i + 0) * 0.01f, 1, 0);
+                    Gl.glVertex3f((i + 1) * 0.01f, 1, 0);
+                    Gl.glVertex3f((i + 1) * 0.01f, 0, 0);
+                Gl.glEnd();
+            }
+            Gl.glPopName();
+            Gl.glPopName();
+            //Y-Achse (YZ Ebene)
+            Gl.glColor3f(0,1,0);
+            Gl.glPushName((int)AxisName.Y);
+            Gl.glPushName(0);
+            for (int i = 0; i < 100; ++i) {
+                Gl.glLoadName(i);
+                //Draw Rectangle
+                Gl.glBegin(Gl.GL_QUADS);
+                Gl.glVertex3f(0, (i + 0) * 0.01f, 0);
+                Gl.glVertex3f(0, (i + 0) * 0.01f, 1);
+                Gl.glVertex3f(0, (i + 1) * 0.01f, 1);
+                Gl.glVertex3f(0, (i + 1) * 0.01f, 0);
+                Gl.glEnd();
+            }
+            Gl.glPopName();
+            Gl.glPopName();
+            //Z-Achse (XZ Ebene)
+            Gl.glColor3f(0, 0, 1);
+            Gl.glPushName((int)AxisName.Z);
+            Gl.glPushName(0);
+            for (int i = 0; i < 100; ++i) {
+                Gl.glLoadName(i);
+                //Draw Rectangle
+                Gl.glBegin(Gl.GL_QUADS);
+                    Gl.glVertex3f(0, 0, (i + 0) * 0.01f);
+                    Gl.glVertex3f(1, 0, (i + 0) * 0.01f);
+                    Gl.glVertex3f(1, 0, (i + 1) * 0.01f);
+                    Gl.glVertex3f(0, 0, (i + 1) * 0.01f);
+                Gl.glEnd();
+            }
+            Gl.glPopName();
+            Gl.glPopName();
+
+            Gl.glPopAttrib();
+            PopMatrices();
+        }
+
+        /// <summary>
+        /// Axis Names for use in the OpenGL NameStack in the ScatterPlaneSelector
+        /// </summary>
+        private enum AxisName { X, Y, Z, C };
+
         #endregion
 
         /// <summary>

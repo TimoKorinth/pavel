@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24D17043-1CE9-4A6F-BE3E-7F633E37FE9E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MillingSimulation</RootNamespace>
+    <AssemblyName>MillingSimulation</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\Plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Compile Include="ExtendedDataStructures.cs" />
+    <Compile Include="MillingsimulationParser.cs" />
+    <Compile Include="MillingSimulationSolution.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MillingSimulationSolutionControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MillingSimulationUseCase.cs" />
+    <Compile Include="ProfilePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProfilePanel.Designer.cs">
+      <DependentUpon>ProfilePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectStarterPages\HistogramOpener.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectStarterPages\HistogramOpener.Designer.cs">
+      <DependentUpon>HistogramOpener.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectStarterPages\SimProfileOpener.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectStarterPages\SimProfileOpener.Designer.cs">
+      <DependentUpon>SimProfileOpener.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectStarterPages\ProfileOpener.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectStarterPages\ProfileOpener.Designer.cs">
+      <DependentUpon>ProfileOpener.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tao.FreeGlut, Version=2.4.0.1, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d, processorArchitecture=MSIL" />
+    <Reference Include="Tao.OpenGl, Version=2.1.0.4, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL" />
+    <Reference Include="Tao.Platform.Windows, Version=1.0.0.4, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Pavel.csproj">
+      <Project>{9D28BEDE-2CC4-4311-9EB0-3DF11355272F}</Project>
+      <Name>Pavel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DefaultSolution\DefaultSolution.csproj">
+      <Project>{9B2F7DF0-729C-4EE6-BC1F-506F9300CC9C}</Project>
+      <Name>DefaultSolution</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProfilePanel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ProfilePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectStarterPages\HistogramOpener.resx">
+      <DependentUpon>HistogramOpener.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectStarterPages\SimProfileOpener.resx">
+      <DependentUpon>SimProfileOpener.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectStarterPages\ProfileOpener.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ProfileOpener.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

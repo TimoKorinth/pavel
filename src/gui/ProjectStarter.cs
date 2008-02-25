@@ -105,15 +105,15 @@ namespace Pavel.GUI {
             Pavel.Framework.ProjectController.Project.UseCase = selectedUseCase;
             Control contr = null;
             // Obtains the next ProjectStarter page
+#if !DEBUG
             try {
                 contr = selectedUseCase.ProjectStarterPages.nextPageControl();
-            } catch(Exception e) {
-#if !DEBUG
+            } catch (Exception e) {
                 return;
-#else
-                throw e;
-#endif
             }
+#else
+            contr = selectedUseCase.ProjectStarterPages.nextPageControl();
+#endif
 
             // The last page is reached and this form closed
             if (contr == null) {
