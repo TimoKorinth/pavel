@@ -50,6 +50,8 @@ namespace Pavel.Plugins.ProjectStarterPages {
                     height++;
                 }
             }
+            ProjectController.Project.pointSets.AddRange(profilePointSets);
+            ProjectController.Project.spaces.Add(new Space(MillingSimulationParser.ProfileColumnSet, "Profile Space"));
             try {
                 foreach (Point p in ProjectController.Project.pointSets[0]) {
                     HeightPoint hp = p as HeightPoint;

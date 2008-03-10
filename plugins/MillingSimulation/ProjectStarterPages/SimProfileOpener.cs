@@ -51,6 +51,7 @@ namespace Pavel.Plugins.ProjectStarterPages {
                     height++;
                 }
             }
+            ProjectController.Project.pointSets.AddRange(profilePointSets);
             try {
                 if (null != MillingSimulationUseCase.simulationPointSet) {
                     foreach (Point p in MillingSimulationUseCase.simulationPointSet) {
