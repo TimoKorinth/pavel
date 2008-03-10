@@ -35,6 +35,7 @@ using Pavel.GUI.SolutionVisualizations;
 using Tao.OpenGl;
 using System.Drawing.Design;
 using System.Windows.Forms.Design;
+using Tao.FreeGlut;
 
 namespace Pavel.Plugins {
     public class MillingSimulationSolution : Solution {
@@ -358,6 +359,20 @@ namespace Pavel.Plugins {
                     Gl.glVertex2d(end, -y);
                 }
                 Gl.glEnd();
+
+                int[] rasterpos;
+                int[] gueltig = new int[1];
+
+                for (double y = 0d; y <= yMax; y += scaleStep) {
+                    rasterpos = new int[2];
+                    Gl.glRasterPos3d(-xTranslation, y, 0);
+                    Gl.glGetIntegerv(Gl.GL_CURRENT_RASTER_POSITION, rasterpos);
+                    Gl.glGetBooleanv(Gl.GL_CURRENT_RASTER_POSITION_VALID, gueltig);
+                    if (gueltig[0] == 1) {
+                        Gl.glWindowPos2d(rasterpos[0], rasterpos[1] + 2);
+                        Glut.glutBitmapString(Glut.GLUT_BITMAP_HELVETICA_10, "  " + y.ToString());
+                    }
+                }                
             }
         }
 
