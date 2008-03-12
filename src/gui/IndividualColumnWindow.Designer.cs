@@ -822,7 +822,6 @@ namespace Pavel.GUI {
             // 
             // closeBButton
             // 
-            this.closeBButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.closeBButton.Location = new System.Drawing.Point(171, 235);
             this.closeBButton.Name = "closeBButton";
             this.closeBButton.Size = new System.Drawing.Size(50, 23);
