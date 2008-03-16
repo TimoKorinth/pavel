@@ -558,9 +558,9 @@ namespace Pavel.GUI.Visualizations {
         }
 
         /// <summary>Handler signature for the PickRegionChanged Event</summary>
-        protected delegate void PickRegionChangedEventHandler(object sender, PickRegionChangedEventArgs e);
+        delegate void PickRegionChangedEventHandler(object sender, PickRegionChangedEventArgs e);
         /// <summary>Fired whenever the PickRegion under the mouse cursor changes</summary>
-        protected event PickRegionChangedEventHandler PickRegionChanged;
+        event PickRegionChangedEventHandler PickRegionChanged;
 
         /// <summary>Checks wether the PickRegion has changed and fires the PickRegionChangedEvent if necessary</summary>
         private void FirePickRegionChangedEventIfNecessary(MouseEventArgs ev) {
