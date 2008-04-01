@@ -10,7 +10,7 @@ namespace Pavel.GUI.Visualizations {
     public partial class ScatterPlaneSettings : Form {
         private ScatterPlot scatterplot;
         private static decimal slices    = 250;
-        private static decimal median    = 0.91M;
+        private static decimal quantile  = 0.91M;
         private static decimal threshold = 60;
 
         public ScatterPlaneSettings(ScatterPlot scatterplot) {
@@ -22,11 +22,11 @@ namespace Pavel.GUI.Visualizations {
             slicesUpDown.Value     = slices;
             slicesUpDown.Increment = 10;
 
-            medianUpDown.Minimum       = 0;
-            medianUpDown.Maximum       = 1;
-            medianUpDown.DecimalPlaces = 3;
-            medianUpDown.Value         = median;
-            medianUpDown.Increment     = 0.01M;
+            quantileUpDown.Minimum       = 0;
+            quantileUpDown.Maximum       = 1;
+            quantileUpDown.DecimalPlaces = 3;
+            quantileUpDown.Value         = quantile;
+            quantileUpDown.Increment     = 0.01M;
 
             thresholdUpDown.Minimum   = 0;
             thresholdUpDown.Maximum   = 10000;
@@ -36,9 +36,9 @@ namespace Pavel.GUI.Visualizations {
 
         private void okButton_Click(object sender, EventArgs e) {
             slices    = slicesUpDown.Value;
-            median    = medianUpDown.Value;
+            quantile  = quantileUpDown.Value;
             threshold = thresholdUpDown.Value;
-            scatterplot.PlaceScatterPlanes((int)slicesUpDown.Value, (double)medianUpDown.Value, (int)thresholdUpDown.Value);
+            scatterplot.PlaceScatterPlanes((int)slicesUpDown.Value, (double)quantileUpDown.Value, (int)thresholdUpDown.Value);
             this.Close();
         }
 

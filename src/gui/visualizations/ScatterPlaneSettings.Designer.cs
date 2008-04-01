@@ -27,14 +27,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.slicesUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.medianUpDown = new System.Windows.Forms.NumericUpDown();
+            this.quantileUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.thresholdUpDown = new System.Windows.Forms.NumericUpDown();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slicesUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.medianUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.quantileUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.thresholdUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +46,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.slicesUpDown, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.medianUpDown, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.quantileUpDown, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.thresholdUpDown, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.cancelButton, 0, 3);
@@ -84,16 +84,16 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 26);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 13);
+            this.label2.Size = new System.Drawing.Size(46, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Median";
+            this.label2.Text = "Quantile";
             // 
-            // medianUpDown
+            // quantileUpDown
             // 
-            this.medianUpDown.Location = new System.Drawing.Point(87, 29);
-            this.medianUpDown.Name = "medianUpDown";
-            this.medianUpDown.Size = new System.Drawing.Size(99, 20);
-            this.medianUpDown.TabIndex = 3;
+            this.quantileUpDown.Location = new System.Drawing.Point(87, 29);
+            this.quantileUpDown.Name = "quantileUpDown";
+            this.quantileUpDown.Size = new System.Drawing.Size(99, 20);
+            this.quantileUpDown.TabIndex = 3;
             // 
             // label3
             // 
@@ -147,7 +147,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slicesUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.medianUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.quantileUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.thresholdUpDown)).EndInit();
             this.ResumeLayout(false);
 
@@ -159,7 +159,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown slicesUpDown;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown medianUpDown;
+        private System.Windows.Forms.NumericUpDown quantileUpDown;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown thresholdUpDown;
         private System.Windows.Forms.Button cancelButton;
