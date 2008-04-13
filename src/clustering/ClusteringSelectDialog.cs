@@ -301,8 +301,8 @@ namespace Pavel.Clustering {
 
             for (int i = 0; i < columnProperties.Count; i++) {
                 TreeNode node = new TreeNode(columnProperties[i].Label);
-                clusteringAlgorithm.RelevantColumns[i] = true;
-                node.Checked = true;
+                clusteringAlgorithm.RelevantColumns[i] = false;
+                node.Checked = false;
                 relevanceList.Nodes.Add(node);
             }
 
