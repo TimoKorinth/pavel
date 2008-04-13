@@ -128,7 +128,7 @@ namespace Pavel.Framework {
         /// </summary>
         public void DeleteSelectedPoints() {
             List<Point> removedPoints = new List<Point>();
-            for (int i = 0; i < points.Count; i++) {
+            for (int i = points.Count - 1; i >= 0; i--) {
                 //The last point in a pointset cannot be removed -> cause to many problems
                 if (this.Length == 1) { return; }
                 if (ProjectController.CurrentSelection.Contains(points[i])) {
