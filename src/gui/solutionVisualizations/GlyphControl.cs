@@ -277,6 +277,8 @@ namespace Pavel.GUI.SolutionVisualizations {
         protected override void RenderScene() {
             this.SetView();
             Gl.glDrawBuffer(Gl.GL_BACK);
+            ColorOGL backColor = ColorManagement.BackgroundColor;
+            Gl.glClearColor(backColor.R, backColor.G, backColor.B, 0.0f);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
             Gl.glPushMatrix();
 

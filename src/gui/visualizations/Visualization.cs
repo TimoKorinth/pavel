@@ -135,6 +135,12 @@ namespace Pavel.GUI.Visualizations {
         public abstract void UpdateSpace();
 
         /// <summary>
+        /// Colors changed.
+        /// </summary>
+        public abstract void UpdateColors();
+
+
+        /// <summary>
         /// Make a screenshot
         /// </summary>
         /// <returns>Image of the contents of the VisualizationWindow</returns>

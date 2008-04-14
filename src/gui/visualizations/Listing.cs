@@ -433,6 +433,14 @@ namespace Pavel.GUI.Visualizations {
         }
 
         /// <summary>
+        /// Forces the ListView to redrawn, because the colors was changed
+        /// </summary>
+        public override void UpdateColors() {
+            sortColumn = 0;
+            InitDrawing();
+        }
+
+        /// <summary>
         /// Forces the ListView to redrawn, because the displayed space was changed
         /// </summary>
         public override void UpdateSpace() {

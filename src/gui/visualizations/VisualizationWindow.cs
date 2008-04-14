@@ -197,6 +197,7 @@ namespace Pavel.GUI.Visualizations {
                 this.Deactivate += VisualizationWindow_Deactivated;
                 this.Activated += VisualizationWindow_Activate;
                 this.FormClosed += VisualizationWindow_Closed;
+                ColorManagement.ColorProfileChanged += ColorProfileChanged;
             } catch (OutOfMemoryException) { }
 
         }
@@ -398,6 +399,15 @@ namespace Pavel.GUI.Visualizations {
         /// <param name="e">Standard EventArgs</param>
         public void SpaceChanged(object o, EventArgs e) {
             this.Space = this.space.Parent;
+        }
+
+        /// <summary>
+        /// Updates the VisualizationWindow when the Space is changed.
+        /// </summary>
+        /// <param name="o">The displayed Space</param>
+        /// <param name="e">Standard EventArgs</param>
+        public void ColorProfileChanged(object o, EventArgs e) {
+            visualization.UpdateColors();
         }
 
         #endregion

@@ -1,3 +1,4 @@
+* Interface for Color-Profile-Management
 * Bux in removing of Points fixed
 * CSV Export added 
 * MillingSimulation UseCase Plugin added

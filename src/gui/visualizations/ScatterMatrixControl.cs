@@ -628,6 +628,7 @@ namespace Pavel.GUI.Visualizations {
             this.displayed.Clear();
             this.selected.Clear();
             this.zoomLog.Clear();
+            this.InitOpenGL();
             this.xDimension = this.yDimension = vis.VisualizationWindow.Space.Dimension;
             this.xAxesSize = this.yAxesSize = (int)((800 - (this.xDimension - 1) * dist) / this.xDimension);
             for (int column = 0; column < this.yDimension; column++) {

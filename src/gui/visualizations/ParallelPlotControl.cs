@@ -516,6 +516,8 @@ namespace Pavel.GUI.Visualizations {
         /// Performs necessary actions to account for changed PointSets or Spaces in the Visualization
         /// </summary>
         public void ReInit() {
+            MakeCurrentContext();
+            InitOpenGL();
             CreateLineDisplayList();
             CreateScaleText();
             addColumnMenuStrip.ReGenerateEntries();

@@ -54,6 +54,7 @@ namespace Pavel.GUI {
 
         private ToolStripMenuItem viewMenuItem;
         private ToolStripMenuItem propertiesItem;
+        private ToolStripMenuItem colorProfileItem;
 
         private ToolStripMenuItem windowsMenuItem;
         private ToolStripMenuItem tileHorizontalWindows;
@@ -162,6 +163,12 @@ namespace Pavel.GUI {
 
             propertiesItem.Click += delegate(object sender, EventArgs e) { PavelMain.MainWindow.ShowPropertyWindow(propertiesItem.Checked); };
 
+            colorProfileItem = new ToolStripMenuItem("&ColorProfile...");
+            colorProfileItem.Click += delegate(object sender, EventArgs e) {
+                ColorProfileDialog dlg = new ColorProfileDialog();
+                dlg.ShowDialog();
+            };
+            viewMenuItem.DropDownItems.Add(colorProfileItem);
         }
 
         /// <summary>

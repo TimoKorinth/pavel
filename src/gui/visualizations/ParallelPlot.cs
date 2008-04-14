@@ -178,6 +178,11 @@ namespace Pavel.GUI.Visualizations {
             control.ReInit();
         }
 
+        public override void UpdateColors() {
+            this.ResetProperties();
+            control.ReInit();
+        }
+
         public override void PointSetModified(object sender, EventArgs e) {
             base.PointSetModified(sender, e);
             control.ReInit();

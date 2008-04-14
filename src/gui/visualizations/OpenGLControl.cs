@@ -527,6 +527,8 @@ namespace Pavel.GUI.Visualizations {
         /// </remarks>
         protected virtual void RenderScene() {
             Gl.glDrawBuffer(Gl.GL_BACK);
+            ColorOGL backColor = ColorManagement.BackgroundColor;
+            Gl.glClearColor(backColor.R, backColor.G, backColor.B, 0.0f);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
 
             SetupModelView(true);
@@ -607,7 +609,14 @@ namespace Pavel.GUI.Visualizations {
             char[] chars = text.ToCharArray();                                  // Holds Our String
 
             for (int loop = 0; loop < text.Length; loop++) {                    // Loop To Find Text Length
-                length += gmf[chars[loop]].gmfCellIncX;                         // Increase Length By Each Characters Width
+                try {
+                    length += gmf[chars[loop]].gmfCellIncX;                         // Increase Length By Each Characters Width
+                } catch (IndexOutOfRangeException) {
+                    // Character not in Field?
+                    // TODO: Expand field with unicode characters?
+                    // Use "O" instead
+                    length += gmf[79].gmfCellIncX;
+                }
             }
 
             Gl.glPushMatrix();

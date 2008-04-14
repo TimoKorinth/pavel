@@ -253,6 +253,15 @@ namespace Pavel.GUI.Visualizations {
         }
 
         /// <summary>
+        /// Updates the Settings, when Colors are changed.
+        /// </summary>
+        public override void UpdateColors() {
+            this.ResetProperties();
+            SetToolTipText();
+            this.control.UpdateSpace();
+        }
+
+        /// <summary>
         /// Returns the screenshot for this Visualization.
         /// </summary>
         /// <returns>Screenshot of the ScatterMatrix</returns>
