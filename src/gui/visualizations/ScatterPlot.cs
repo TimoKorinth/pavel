@@ -498,9 +498,8 @@ namespace Pavel.GUI.Visualizations {
         /// Resets Everything after changes to the Space have been made
         /// </summary>
         public override void UpdateColors() {
-            this.InitializeSettings();
-            this.control.Update();
-            control.SpaceChanged();
+            this.control.UpdateColors();
+            this.control.Refresh();
         }
 
         public void Reset() {

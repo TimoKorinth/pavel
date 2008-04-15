@@ -773,6 +773,15 @@ namespace Pavel.GUI.Visualizations {
         /// Used by ScatterPlot to inform the ScatterPlotControl about
         /// a changed space, triggering necessary redraws.
         /// </summary>
+        public void UpdateColors() {
+            this.MakeCurrentContext();
+            this.CreateArrays();
+        }
+
+        /// <summary>
+        /// Used by ScatterPlot to inform the ScatterPlotControl about
+        /// a changed space, triggering necessary redraws.
+        /// </summary>
         public void SpaceChanged(){
             this.MakeCurrentContext();
             ResetViewParameters(true, true);
