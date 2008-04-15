@@ -220,8 +220,6 @@ namespace Pavel.GUI.Visualizations {
             this.PointsAlpha = 80;
             this.PickMode = ScattermatrixPickModes.Plots;
             this.SelectionColor = new ColorOGL(Color.Azure, Color.Azure.Name);
-
-            control.MakeCurrentContext();
         }
 
         /// <summary>
@@ -256,9 +254,7 @@ namespace Pavel.GUI.Visualizations {
         /// Updates the Settings, when Colors are changed.
         /// </summary>
         public override void UpdateColors() {
-            this.ResetProperties();
-            SetToolTipText();
-            this.control.UpdateSpace();
+            this.control.UpdateColors();
         }
 
         /// <summary>

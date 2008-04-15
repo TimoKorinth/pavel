@@ -622,13 +622,21 @@ namespace Pavel.GUI.Visualizations {
         /// <summary>
         /// Makes the necessary changes, when the Space is changed.
         /// </summary>
+        public void UpdateColors() {
+            this.SetBackColor(ColorManagement.BackgroundColor);
+            this.CreateVertexArray();
+            Refresh();
+        }
+
+        /// <summary>
+        /// Makes the necessary changes, when the Space is changed.
+        /// </summary>
         public void UpdateSpace() {
             this.MakeCurrentContext();
             //this.SetToolTipText();
             this.displayed.Clear();
             this.selected.Clear();
             this.zoomLog.Clear();
-            this.InitOpenGL();
             this.xDimension = this.yDimension = vis.VisualizationWindow.Space.Dimension;
             this.xAxesSize = this.yAxesSize = (int)((800 - (this.xDimension - 1) * dist) / this.xDimension);
             for (int column = 0; column < this.yDimension; column++) {
