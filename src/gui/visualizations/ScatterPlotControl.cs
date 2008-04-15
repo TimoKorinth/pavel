@@ -774,7 +774,6 @@ namespace Pavel.GUI.Visualizations {
         /// a changed space, triggering necessary redraws.
         /// </summary>
         public void UpdateColors() {
-            this.MakeCurrentContext();
             this.CreateArrays();
         }
 
