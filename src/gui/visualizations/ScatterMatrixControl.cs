@@ -625,7 +625,7 @@ namespace Pavel.GUI.Visualizations {
         public void UpdateColors() {
             this.SetBackColor(ColorManagement.BackgroundColor);
             this.CreateVertexArray();
-            Refresh();
+            Invalidate();
         }
 
         /// <summary>
