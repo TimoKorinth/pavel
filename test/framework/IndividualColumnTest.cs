@@ -30,9 +30,9 @@ namespace Pavel.Test.Framework {
                 new Point(columnSet,4,9),
             };
             
-            PointList pl = new PointList(columnSet,values);
             PointSet ps = new PointSet("",columnSet);
-            ps.Add(pl);
+            ps.AddRange(values);
+            
             return ps;
         }
 
@@ -60,7 +60,7 @@ namespace Pavel.Test.Framework {
             PointSet pointset2 = new PointSet("test2", pointset.ColumnSet);
             ProjectController.Project.pointSets.Add(pointset);
             ProjectController.Project.pointSets.Add(pointset2);
-            pointset2.Add(pointset.PointLists[0]);
+            pointset2.AddRange(pointset);
             List<PointSet> ps = new List<PointSet>();
             ps.Add(pointset);
 
@@ -74,7 +74,7 @@ namespace Pavel.Test.Framework {
                 Assert.AreEqual(pointset[i][0] * 2, pointset[i][2]);
             }
 
-            Assert.AreNotEqual(pointset.PointLists[0], pointset2.PointLists[0]);
+            Assert.AreNotEqual(pointset, pointset2);
 
             for ( int i = 0; i < pointset.Length - 1; i++ ) {
                 Assert.AreEqual(pointset[i][0], pointset2[i][0]);
@@ -85,41 +85,6 @@ namespace Pavel.Test.Framework {
             for ( int i = 0; i < pointset.Length - 1; i++ ) {
                 Assert.AreEqual(pointset[i][0] * 2, pointset[i][2]);
             }
-
-            ProjectController.Project.pointSets.Clear();
-        }
-
-        [Test]
-        public void TwoPointSetsCommonPointListTest( ) {
-            PointSet pointset = PointSet();
-            PointSet pointset2 = new PointSet("test2", pointset.ColumnSet);
-            ProjectController.Project.pointSets.Add(pointset);
-            ProjectController.Project.pointSets.Add(pointset2);
-
-            PointList pl = new PointList(new ColumnSet(cols));
-            pointset2.Add(pl);
-            Point point = new Point(new ColumnSet(cols), new double[] { 20, 30 });
-            pl.Add(point);
-
-            pointset.PointLists[0].Add(point);
-            List<PointSet> ps = new List<PointSet>();
-            ps.Add(pointset);
-
-            Assert.AreEqual(2, pointset.ColumnSet.Dimension);
-
-            Column col = IndividualColumns.CreateColumn(1, "$0*2", ps, "newCol");
-            pointset = ProjectController.Project.pointSets[1];
-            Assert.AreEqual(3, pointset.ColumnSet.Dimension);
-
-            for ( int i = 0; i < pointset.Length - 1; i++ ) {
-                Assert.AreEqual(pointset[i][0] * 2, pointset[i][2]);
-            }
-
-            Assert.AreEqual(pointset2[0], point);
-            Assert.AreNotEqual(pointset[5], point);
-
-            Assert.AreEqual(pointset[5][0], pointset2[0][0]);
-            Assert.AreEqual(pointset[5][1], pointset2[0][1]);
 
             ProjectController.Project.pointSets.Clear();
         }

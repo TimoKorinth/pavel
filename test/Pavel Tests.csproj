@@ -57,7 +57,6 @@
     <Compile Include="framework\IndividualColumnTest.cs" />
     <Compile Include="framework\LogBookTest.cs" />
     <Compile Include="framework\PluginManagerTest.cs" />
-    <Compile Include="framework\PointListTest.cs" />
     <Compile Include="framework\PointSetTest.cs" />
     <Compile Include="framework\PointTest.cs" />
     <Compile Include="framework\ProjectControllerTest.cs" />

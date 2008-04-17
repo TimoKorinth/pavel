@@ -140,8 +140,9 @@ namespace Pavel.Test.Clustering {
 
             Node node4 = HierarchicalClusterSet.MergeNodes(node12, node3, 3);
             
-            PointList pl = new PointList(anyColumnSet, new Point[] {node1.Cluster, node2.Cluster, node3.Cluster});
-            Assert.AreEqual(pl.MinMaxMean()[Result.MEAN].Values, node4.Cluster.Values);
+            PointSet ps = new PointSet("", anyColumnSet);
+            ps.AddRange(new Point[] {node1.Cluster, node2.Cluster, node3.Cluster});
+            Assert.AreEqual(ps.MinMaxMean()[Result.MEAN].Values, node4.Cluster.Values);
 
         }
 

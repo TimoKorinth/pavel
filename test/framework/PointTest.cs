@@ -54,7 +54,7 @@ namespace Pavel.Test.Framework {
 
         [Test]
         public void DistanceSameColumnSet() {
-            PointList pl = new PointSetTest().ComplicatedPointSet.PointLists[0];
+            PointSet pl = new PointSetTest().ComplicatedPointSet;
 
             //Euclidean Distance
             Assert.AreEqual(2304681372.0, Point.Distance(pl[0], pl[1]));
@@ -83,29 +83,29 @@ namespace Pavel.Test.Framework {
 
         [Test]
         public void DistanceCommonSubColumnSet() {
-            PointList pl = new PointSetTest().ComplicatedPointSet.PointLists[0];
+            PointSet ps = new PointSetTest().ComplicatedPointSet;
             int[] pointMap;
 
             // Distance for no Columns
             pointMap = new int[0];
-            Assert.AreEqual(0.0, Point.Distance(pl[0], pl[3], pointMap, pointMap));
+            Assert.AreEqual(0.0, Point.Distance(ps[0], ps[3], pointMap, pointMap));
 
             pointMap = new int[] { 0, 1, 2 };
-            Assert.AreEqual(1231531065, Point.Distance(pl[0], pl[3], pointMap, pointMap));
+            Assert.AreEqual(1231531065, Point.Distance(ps[0], ps[3], pointMap, pointMap));
         }
 
         [Test]
         public void ScaledDistance() {
-            PointList pl = new PointSetTest().ComplicatedPointSet.PointLists[0];
+            PointSet ps = new PointSetTest().ComplicatedPointSet;
             int[] pointMap;
-            Space space = new Space(pl.ColumnSet, "");
+            Space space = new Space(ps.ColumnSet, "");
 
             // Distance for no Columns
             pointMap = new int[0];
-            Assert.AreEqual(0.0, Point.ScaledDistance(pl[0], pl[3], pointMap, space, new bool[] { }));
+            Assert.AreEqual(0.0, Point.ScaledDistance(ps[0], ps[3], pointMap, space, new bool[] { }));
 
             pointMap = new int[] { 0, 1, 2 };
-            Assert.AreEqual(1231531065, Point.ScaledDistance(pl[0], pl[3], pointMap, space, new bool[] { true, true, true }));
+            Assert.AreEqual(1231531065, Point.ScaledDistance(ps[0], ps[3], pointMap, space, new bool[] { true, true, true }));
         }
 
 
