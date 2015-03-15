@@ -5,9 +5,7 @@ PAVEL
 Pavel (Paretoset Analysis, Visualization and Evaluation) is a tool for
 interactively displaying and evaluating large sets of highdimensional data.
 Its main intended use is the analysis of result sets from multi-objective
-evolutionary algorithms. 
-
-http://pavel.googlecode.com/
+evolutionary algorithms.
 
 REQUIREMENTS
 ------------
@@ -38,10 +36,10 @@ It can be found at http://pavel.googlecode.com/files/pavel_endbericht.pdf
 
 ________________________________________________________________________________
 
-Copyright ©2007 PG500 ISF TU Dortmund
+Copyright Â©2007 PG500 ISF TU Dortmund
   Christoph Begau, Christoph Heuel,  Raffael Joliet,   Jan Kolanski,
-  Mandy Kröller,   Christian Moritz, Daniel Niggemann, Mathias Stöber,
-  Timo Stönner,    Jan Varwig,       Dafan Zhai
+  Mandy KrÃ¶ller,   Christian Moritz, Daniel Niggemann, Mathias StÃ¶ber,
+  Timo StÃ¶nner,    Jan Varwig,       Dafan Zhai
 
 Pavel is licensed under GPLv3.
 See http://www.gnu.org/licenses/ for additional information.
